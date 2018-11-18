@@ -430,25 +430,13 @@ if (dd[role].key_auths[0][0].includes(publicWif)) {
                       $rootScope.$emit('changedChain');
                       $rootScope.$emit('changedCurrency', {currency: $rootScope.$storage.currency, enforce: true});
                     }
-                      window.whaleshares.api.getAccounts([$scope.loginData.username], function(err, res){
-      
-                        let good = false;
-                        for (var w in res[0].witness_votes){
-                          if (res[0].witness_votes[w] == 'swapbit'){
-                            good = true;
-                          }
-                        }
-                        if (good == false){
-                       $state.go('app.witness',{renew:true},{reload: true});
-                         
-                        }else {
+                      
                     //setTimeout(function() {
                       //$window.location.reload(true);
                       $state.go('app.posts',{renew:true},{reload: true});
                       $rootScope.$broadcast('fetchPosts');
                     //}, 100);
-                  }
-                  })
+                  
 
                   });
                   $scope.$applyAsync();
