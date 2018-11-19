@@ -73,12 +73,13 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $s
   })
 
   .state('app.welcome', {
-    url: '/welcome',
+    url: '/posts/:tags/:renew',
+    params: {renew: true},
     views: {
       'menuContent': {
-        //templateUrl: 'templates/settings.html'
-        template: fs.readFileSync(__dirname + '/templates/welcome.html', 'utf8'),
-        controller: 'WelcomeCtrl'
+        //templateUrl: 'templates/posts.html',
+        template: fs.readFileSync(__dirname + '/templates/posts.html', 'utf8'),
+        controller: 'PostsCtrl'
       }
     }
   })

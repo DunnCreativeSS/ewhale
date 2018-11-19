@@ -38,7 +38,7 @@
       <div ng-if="showExtra" class="extra-menu" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
         <ion-list>
           <ion-item menu-close class="item-borderless item-icon-left" ng-if="$root.$storage.users" ng-repeat="user in $root.$storage.users" href ng-click="selectAccount(user)" ng-class="{'active': (user.username==$root.user.username&&user.chain==$root.$storage.user.chain) }">
-            <img class="icon logos" ng-src="https://whalesharesitimages.com/u/{{user.username}}/avatar/small" />
+            <img class="icon logos" ng-src="https://imgp.whaleshares.io/profileimage/{{user.username}}/128x128" />
             {{user.username}}
             <!--<span class="badge badge-assertive">{{user.chain}}</span>-->
           </ion-item>
