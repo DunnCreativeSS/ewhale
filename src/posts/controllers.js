@@ -4992,8 +4992,8 @@ app.controller('MarketCtrl', function($scope, $rootScope, $state, $ionicPopover,
         }
       } else {
         if (name == 'WhaleSharesMonitor') {
-          //cordova.plugins.market.open('com.netsolutions.ewhaleshareswitness');
-          window.open("market://details?id=com.netsolutions.ewhaleshareswitness", "_system");
+          //cordova.plugins.market.open('com.whaleshares.ewhalewitness');
+          window.open("market://details?id=com.whaleshares.ewhalewitness", "_system");
         }
         if (name == 'WhaleSharesFest') {
           //cordova.plugins.market.open('com.netsolutions.whalesharesfest');
