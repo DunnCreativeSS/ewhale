@@ -30,7 +30,6 @@
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.7.1",
         "cordova-plugin-firebase-analytics": "^0.10.2",
-        "cordova-plugin-firebase-dynamiclinks": "^0.10.1",
         "cordova-plugin-globalization": "^1.11.0",
         "cordova-plugin-inappbrowser": "^1.7.2",
         "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
@@ -135,12 +134,6 @@
             },
             "cordova-plugin-compat": {},
             "cordova-plugin-device": {},
-            "cordova-plugin-firebase-dynamiclinks": {
-                "APP_DOMAIN": "ewhaleshares.ws",
-                "APP_PATH": "/",
-                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.727329145824-csv1i34de9h95lgguot23rs4umg36g7d",
-                "CONTACTS_USAGE_DESCRIPTION": "Inviting friends"
-            },
             "cordova-plugin-globalization": {},
             "cordova-plugin-inappbrowser": {},
             "cordova-plugin-splashscreen": {},
@@ -172,7 +165,8 @@
             },
             "cordova-android-support-gradle-release": {
                 "ANDROID_SUPPORT_VERSION": "27.+"
-            }
+            },
+            "cordova-plugin-cocoapod-support": {}
         },
         "platforms": [
             "ios",
