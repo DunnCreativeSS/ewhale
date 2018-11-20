@@ -423,7 +423,9 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     }
 
     if (!$rootScope.$storage.welcome) {
-      $state.go('app.welcome');
+      $state.go('app.posts');
+	
+    $scope.fetchPosts();
     }
 
     if (!$rootScope.$storage.socketgolos) {

@@ -3441,9 +3441,14 @@ app.controller('WelcomeCtrl', function($scope, $http, $ionicSlideBoxDelegate, $i
     speed: 500,
   }
 
+
+
   $scope.skipSlides = function(){
-    $rootScope.$storage.welcome = true;
+    console.log('skip');
+	$rootScope.$storage.welcome = true;
     $state.go('app.posts');
+    $scope.fetchPosts();
+
   }
   $scope.nextSlide = function(){
     $scope.slider.slideNext();
@@ -3451,6 +3456,10 @@ app.controller('WelcomeCtrl', function($scope, $http, $ionicSlideBoxDelegate, $i
 
   APIs.getWelcome().then(function(res){
     $scope.slides = res.data;
+console.log('getwelcome');
+        $rootScope.$storage.welcome = true;
+    $state.go('app.posts');
+    $scope.fetchPosts();
   });
 
   $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
