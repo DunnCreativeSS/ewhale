@@ -508,7 +508,7 @@ module.exports = function (app) {
       var x1 = inp.json_metadata.split('"image":');
       
       if (x1 && x1.length>1){
-        return "https://whalesharesitimages.com/0x0/"+x1[1].split('"')[1];
+        return "https://imgp.whaleshares.io/0x0/"+x1[1].split('"')[1];
       } else {
         /*if (x1.length == 1) {
           var match = regg.exec(inp.body);
