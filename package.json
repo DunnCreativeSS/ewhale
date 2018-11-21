@@ -176,8 +176,7 @@
       "cordova-plugin-cocoapod-support": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }
