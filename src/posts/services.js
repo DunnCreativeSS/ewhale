@@ -1,7 +1,7 @@
 //angular.module('window.whaleshares.services', [])
 module.exports = function (app) {
   console.log('services.js');
-	app.service('APIs', ['$http', '$rootScope', 'API_END_POINT', function ($http, $rootScope, API_END_POINT) {
+	app.service('APIs', ['$http', '$rootScope', 'API_END_POINT','API_END_POINT2', function ($http, $rootScope, API_END_POINT, API_END_POINT2) {
 		'use strict';
 	API_END_POINT="http://api.esteem.ws:8080";
 		return {
@@ -81,19 +81,19 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/votes/"+user);
       },
       getMyVotes: function(user) {
-        return $http.get(API_END_POINT+"/api/rvotes/"+user);
+        return $http.get(API_END_POINT2+"/api/rvotes/"+user);
       },
       getMyMentions: function(user) {
-        return $http.get(API_END_POINT+"/api/mentions/"+user);
+        return $http.get(API_END_POINT2+"/api/mentions/"+user);
       },
       getMyFollows: function(user) {
-        return $http.get(API_END_POINT+"/api/follows/"+user);
+        return $http.get(API_END_POINT2+"/api/follows/"+user);
       },
       getMyReblogs: function(user) {
-        return $http.get(API_END_POINT+"/api/reblogs/"+user);
+        return $http.get(API_END_POINT2+"/api/reblogs/"+user);
       },
       getMyReplies: function(user) {
-        return $http.get(API_END_POINT+"/api/replies/"+user);
+        return $http.get(API_END_POINT2+"/api/replies/"+user);
       },
       getLeaderboard: function() {
         return $http.get(API_END_POINT+"/api/leaderboard");
