@@ -103,7 +103,7 @@ delete notifications.notification
 app.get('/api/replies/:key', function (req, res){
 	let toSend = [];
 console.log(req.key);
-console.log(notifications)
+//console.log(notifications)
 	notifications.forEach(notification => {
 console.log(notification[0])
                 if (req.key && req.key	 === notification[0]) {
@@ -282,20 +282,27 @@ steem.api.getBlock(blockNum, function(err, result) {
 
 
   const operations = [];
+//  console.log(result.timestamp);
+// operations.timestamp= result.timestamp;
   result.transactions.forEach(transaction => {
+//    transaction.operations.timestamp =result.timestamp;
     operations.push(...transaction.operations);
-  
-       const notifications = getNotifications(operations);
 });
+//console.log(operations);  
+       const notifications = getNotifications(operations,result.timestamp, blockNum);
+
 });
 }
 let perms = [];
-const getNotifications = ops => {
+const getNotifications = (ops,thetimestamp, blockNum) => {
   //const notifications = [];
  
  ops.forEach(op => {
     const type = op[0];
     const params = op[1];
+	op.timestamp = thetimestamp;
+	op.block=blockNum;
+	console.log(op);
     switch (type) {
       case 'comment': {
         const isRootPost = !params.parent_author;
@@ -319,7 +326,7 @@ let ts = Date.parse(op.timestamp) / 1000
 	if (!perms.includes(params.permlink)){
 perms.push(params.permlink)
           notifications.push([params.parent_author, notification]);
-console.log(notifications); 
+//console.log(notifications); 
 }       
 }
 
@@ -490,6 +497,7 @@ let ts= Date.parse(op.timestamp) / 1000
       }
     }
   });
+console.log(notifications);
 
 
 

@@ -128,7 +128,7 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $s
        { text: $filter('translate')('SHARE') },
        { text: $filter('translate')('OTHER') }
      ],
-     titleText: 'eWhaleShares',
+     titleText: 'WhalesApp',
      cancelText: $filter('translate')('CANCEL'),
      cancel: function() {
         // add cancel code..
@@ -187,8 +187,8 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $s
       host = "ewhaleshares://";
     }
     var link = host+$rootScope.sitem.category+"/@"+$rootScope.sitem.author+"/"+$rootScope.sitem.permlink;
-    var message = "Hey! Checkout blog post on eWhaleShares!";
-    var subject = "Sharing via eWhaleShares Mobile";
+    var message = "Hey! Checkout blog post on WhalesApp!";
+    var subject = "Sharing via WhalesApp Mobile";
     var file = null;
    
     $ionicPlatform.ready(function() {

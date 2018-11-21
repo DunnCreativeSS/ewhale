@@ -15,7 +15,7 @@
   </ion-nav-bar>
   <ion-content class="padding" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
     <center><img src="img/ewhaleshares.png" width="40%"></center>
-    <p><b>eWhaleShares</b> {{'ABOUT_2'|translate}} <div ng-bind-html="'ABOUT_11'|translate"></div>
+    <p><b>WhalesApp</b> {{'ABOUT_2'|translate}} <div ng-bind-html="'ABOUT_11'|translate"></div>
     </p>
 <h3>Following two people forked eSteem for WLS</h3>
 <p ng-of="$root.user">WhaleShares Fork CEO and CoFounder <a href="#app/profile/dcrazy">DCrazy</a></p>

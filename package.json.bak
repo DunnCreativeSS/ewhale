@@ -1,7 +1,7 @@
 {
     "name": "ewhaleshares-hybrid",
     "version": "1.1.1",
-    "description": "eWhaleShares Mobile Application",
+    "description": "WhalesApp Mobile Application",
     "dependencies": {
         "@whaleshares/wlsjs": "^0.1.1",
         "acorn": "^3.3.0",

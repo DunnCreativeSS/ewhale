@@ -2,7 +2,7 @@
 <widget android-versionCode="10600" id="com.whaleshares.ewhale" ios-CFBundleVersion="1.7.0" version="1.7.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>WhalesApp</name>
     <description>
-        eWhaleShares Mobile App
+        WhalesApp Mobile App
     </description>
     <author email="info@ewhaleshares.ws" href="http://ewhaleshares.ws/">
       Feruz M
