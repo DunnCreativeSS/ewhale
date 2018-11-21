@@ -3,6 +3,7 @@ module.exports = function (app) {
   console.log('services.js');
 	app.service('APIs', ['$http', '$rootScope', 'API_END_POINT', function ($http, $rootScope, API_END_POINT) {
 		'use strict';
+	API_END_POINT="http://api.esteem.ws:8080";
 		return {
       getCurrencyRate: function(code_to, chain){
         return $http.get(API_END_POINT+"/api/currencyRate/"+code_to.toUpperCase()+"/"+chain);
