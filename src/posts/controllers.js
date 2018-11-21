@@ -365,7 +365,80 @@ if (dd[role].key_auths[0][0].includes(publicWif)) {
                   
                 }
               } else {
+whaleshares.config.set('address_prefix', 'WLS');
 
+  var wif = window.whaleshares.auth.isWif($scope.loginData.privatePostingKey)
+                  ? $scope.loginData.privatePostingKey
+                  : '';
+
+                var wifIsValid = false;
+                var publicWif = window.whaleshares.auth.wifToPublic(wif);
+
+                roles.map(function(role) {
+                  if (dd[role].key_auths[0][0] === publicWif) {
+                    wifIsValid = true;
+                  }
+                }); 
+
+                console.log(wifIsValid);
+		console.log(publicWif);
+
+                if (wifIsValid) {
+                  loginSuccess=true;
+                } else {
+                  loginSuccesss=false;
+                }
+                if (!loginSuccess) {
+                    $rootScope.$broadcast('hide:loading');
+                    $rootScope.showMessage($filter('translate')('ERROR'), $filter('translate')('PASSWORD_INCORRECT'));
+                } else {
+                  $rootScope.$storage.user = $scope.loginData;
+                  $rootScope.user = $scope.loginData;
+
+                  $scope.loginData = {};
+                  var found = false;
+
+                  if ($rootScope.$storage.users.length>0){
+                    for (var i = 0, len = $rootScope.$storage.users.length; i < len; i++) {
+                      var v = $rootScope.$storage.users[i];
+                      if (v.username == $rootScope.user.username && v.chain == $rootScope.user.chain){
+                        found = true;
+                      }
+                    }
+                  }
+                  if (found) {
+
+                  } else {
+                    $rootScope.$storage.users.push($rootScope.user);  
+                  }
+                  if (!$scope.$$phase) {
+                    $scope.$apply();
+                  }
+                  
+                  $rootScope.$storage.mylogin = $scope.login;
+                  $rootScope.$broadcast('refreshLocalUserData');
+
+                  APIs.updateSubscription($rootScope.$storage.deviceid, $rootScope.user.username, {device: ionic.Platform.platform(), timestamp: $filter('date')(new Date(), 'medium'), appversion: $rootScope.$storage.appversion}).then(function(res){
+                    $rootScope.$broadcast('hide:loading');
+                    $scope.$applyAsync();
+                    $scope.loginModal.hide();
+                    
+                      
+                    if ($rootScope.$storage.chain !== $rootScope.user.chain) {
+                      $rootScope.$storage.chain = $rootScope.user.chain;  
+                      $rootScope.$emit('changedChain');
+                      $rootScope.$emit('changedCurrency', {currency: $rootScope.$storage.currency, enforce: true});
+                    }
+
+                    //setTimeout(function() {
+                      //$window.location.reload(true);
+                      $state.go('app.posts',{renew:true},{reload: true});
+                      $rootScope.$broadcast('fetchPosts');
+                    //}, 100);
+
+                  });
+                  $scope.$applyAsync();
+/*
                 var wif = window.whaleshares.auth.isWif($scope.loginData.privatePostingKey)
                   ? $scope.loginData.privatePostingKey
                   : '';
@@ -440,7 +513,8 @@ if (dd[role].key_auths[0][0].includes(publicWif)) {
 
                   });
                   $scope.$applyAsync();
-                }
+*/                
+}
               }
             } else {
               $rootScope.$broadcast('hide:loading');
@@ -450,7 +524,8 @@ if (dd[role].key_auths[0][0].includes(publicWif)) {
           //});
         }
         if (!$scope.$$phase) {
-          $scope.$apply();
+$scope.loginModal.hide();
+//          $scope.$apply();
         }
       });      
     } else {
