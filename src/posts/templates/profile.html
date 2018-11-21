@@ -17,8 +17,6 @@
               <h4 class="center">
                 <span class="light">@{{::$root.user.username}}</span>
                 &nbsp;
-                <div class="reputation">{{$root.user.reputation|reputation}}
-                </div>
               </h4>
               <div class="about">{{$root.user.json_metadata.profile.about}}</div>
               <div class="padding profile_stats">
@@ -181,7 +179,7 @@
             <div class="col col-67">
             {{::$root.$storage.platformpower}} <br><span class="gray wrap">{{::'PROFILE_2'|translate:translationData}}</span>
             </div>
-            <div class="col col-33" ng-if="accounts.delegated_vesting_shares">
+            <div class="col col-33" ng-if="accounts.vesting_shares">
             {{::accounts.vesting_shares | sp | number}}&nbsp;{{::$root.$storage.platformpunit}}
             <div ng-if="accounts.delegated_vesting_shares != '0.000000 VESTS'"><br>
             -{{::accounts.delegated_vesting_shares | sp | number}}&nbsp;{{::$root.$storage.platformpunit}}
@@ -191,7 +189,7 @@
             +{{::accounts.received_vesting_shares | sp | number}}&nbsp;{{::$root.$storage.platformpunit}}
             </div>
             </div>
-          </div>
+          </div> <!--
           <div class="row">
             <div class="col col-67">
             {{::$root.$storage.platformdollar}} <br><span class="gray wrap">{{::'PROFILE_3'|translate:translationData}}</span>
@@ -199,7 +197,7 @@
             <div class="col col-33" ng-if="accounts.sbd_balance">
             {{::accounts.sbd_balance | sbd | number}} {{::$root.$storage.platformdunit}}
             </div>
-          </div>
+          </div> --!>
           <div class="row">
             <div class="col col-67">
             {{::'ESTIMATED_VALUE'|translate}} <br><span class="gray wrap">{{::'PROFILE_4'|translate:translationData}}</span>

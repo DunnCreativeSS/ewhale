@@ -1,6 +1,6 @@
 { 
 	"whalesharesd" : [
-		"https://rpc.wls.services", 
+		"ws://188.166.99.136:8090", 
 		"https://rpc.ewhaleshares.ws",
 		"https://rpc.whalesharesviz.com",
 		"https://rpc.buildteam.io",

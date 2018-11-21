@@ -913,6 +913,7 @@ module.exports = function (app) {
 	app.filter('sp', function($sce, $rootScope) {
 	    return function(text) {
 	    	if (text) {
+			console.log(text);
 	    		return (Number(text.split(" ")[0])/1e6*$rootScope.$storage.whaleshares_per_mvests).toFixed(3);
 	    	}
 	    };
@@ -920,7 +921,9 @@ module.exports = function (app) {
 	app.filter('sd', function($sce, $rootScope) {
 	    return function(text, balance, sbd) {
 	    	if (text) {
-	    		return ((Number(text.split(" ")[0])/1e6*$rootScope.$storage.whaleshares_per_mvests*$rootScope.$storage.base + Number(balance.split(" ")[0])*$rootScope.$storage.base + Number(sbd.split(" ")[0])).toFixed(3))*$rootScope.$storage.currencyRate;
+			console.log($rootScope.$storage);
+			//console.log($rootScope.$storage);
+	    		//return ((Number(text.split(" ")[0])/1e6*$rootScope.$storage.whaleshares_per_mvests*$rootScope.$storage.base + Number(balance.split(" ")[0])*$rootScope.$storage.base + Number(sbd.split(" ")[0])).toFixed(3))*$rootScope.$storage.currencyRate;
 	    	}
 	    };
 	})

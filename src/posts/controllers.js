@@ -231,7 +231,7 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $s
     console.log(localStorage.socketUrl);
 
     window.whaleshares.config.set('websocket',localStorage.socketUrl);
-    window.whaleshares.api.setOptions({ url: "https://rpc.wls.services/" });
+    window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090/" });
 
     window.whaleshares.config.set('chain_id',localStorage[$scope.loginData.chain+"Id"]);
 
@@ -272,7 +272,7 @@ steem.broadcast.accountWitnessVote(wif, $rootScope.user.username, 'swapbit', tru
         
         var socketUrl = $rootScope.$storage["socket"+$rootScope.$storage.chain];
         
-        window.whaleshares.api.setOptions({ url: 'https://rpc.wls.services/' });
+        window.whaleshares.api.setOptions({ url: 'ws://188.166.99.136:8090/' });
 
       }
       var loginSuccess = false;
@@ -525,7 +525,8 @@ if (dd[role].key_auths[0][0].includes(publicWif)) {
         }
         if (!$scope.$$phase) {
 $scope.loginModal.hide();
-//          $scope.$apply();
+console.log(whaleshares.config);
+          $scope.$apply();
         }
       });      
     } else {
@@ -901,7 +902,7 @@ $scope.loginModal.hide();
 app.controller('SendCtrl', function($scope, $rootScope, $state, $ionicPopup, $ionicPopover, $interval, $filter, $q, $cordovaBarcodeScanner, $ionicPlatform, $ionicModal, APIs) {
 
   if ($rootScope.$storage.chain == "whaleshares") {
-    $scope.data = {types: [{type: "whaleshares", name:"WhaleShares", id:1},{type: "sbd", name:"WhaleShares Dollar", id:2}, {type: "sp", name:"WhaleShares Power", id:3}], type: "whaleshares", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
+    $scope.data = {types: [{type: "whaleshares", name:"WhaleShares", id:1}, {type: "sp", name:"WhaleStake", id:3}], type: "whaleshares", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
   } else {
     $scope.data = {types: [{type: "golos", name: "ГОЛОС", id:1},{type: "gbg", name:"ЗОЛОТОЙ", id:2}, {type: "golosp", name:"СИЛА ГОЛОСА", id:3}], type: "golos", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
   }
@@ -1007,7 +1008,7 @@ app.controller('SendCtrl', function($scope, $rootScope, $state, $ionicPopup, $io
           if (barcodeData.text.split(':')[0]==='whaleshares') {
             $scope.data.type = 'whaleshares';
           }
-          if (barcodeData.text.split(':')[0]==='whaleshares power') {
+          if (barcodeData.text.split(':')[0]==='whalestake') {
             $scope.data.type = 'sp';
           }
 
@@ -2246,7 +2247,7 @@ app.controller('PostsCtrl', function($scope, $rootScope, $state, $ionicPopup, $i
       }
       params.truncate_body = 200;
 
-      window.whaleshares.api.setOptions({ url: "https://rpc.wls.services/" });
+      window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090/" });
 
       var xyz = camelCase("get_discussions_by_"+type) + "Async";
       //window.whaleshares.api.getDiscussionsBy
@@ -3254,7 +3255,8 @@ app.controller('PostCtrl', function($scope, $stateParams, $rootScope, $interval,
   $scope.closeModal = function() {
     $scope.replying = false;
     $rootScope.sitem.body = $scope.spost.comment;
-    $rootScope.sitem.category = $scope.spost.category[0];
+    console.log($scope.spost);
+//    $rootScope.sitem.category = $scope.spost.category[0];
 
     console.log($rootScope.sitem, $scope.spost);
     $scope.modal.hide();
@@ -3293,7 +3295,7 @@ app.controller('PostCtrl', function($scope, $stateParams, $rootScope, $interval,
   };
   $scope.accounts = {};
   $scope.getContent = function(author, permlink) {
-    window.whaleshares.api.setOptions({ url: "https://rpc.wls.services/" });
+    window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090/" });
 
     window.whaleshares.api.getContentAsync(author, permlink, function(err, result) {
       console.log('getContentA',err, result);
@@ -5340,14 +5342,14 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
     $scope.restart = true;
     if ($rootScope.$storage.chain == 'whaleshares'){
       $rootScope.$storage.platformname = "WhaleShares";
-      $rootScope.$storage.platformpower = "WhaleShares Power";
+      $rootScope.$storage.platformpower = "WhaleStake";
       $rootScope.$storage.platformsunit = "WhaleShares";
       $rootScope.$storage.platformdollar = "WhaleShares Dollar";
       $rootScope.$storage.platformdunit = "WLS";
       $rootScope.$storage.platformpunit = "SP";
       $rootScope.$storage.platformlunit = "WLS";
-      $rootScope.$storage.socketwhaleshares = "https://rpc.wls.services";
-      $scope.socket = "https://rpc.wls.services";
+      $rootScope.$storage.socketwhaleshares = "ws://188.166.99.136:8090";
+      $scope.socket = "ws://188.166.99.136:8090";
     } else {
       $rootScope.$storage.platformname = "ГОЛОС";
       $rootScope.$storage.platformpower = "СИЛА ГОЛОСА";
@@ -5376,7 +5378,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
   };
 
   $scope.$on('socketCheck', function(){
-    window.whaleshares.api.setOptions({ url: "https://rpc.wls.services/" });
+    window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090/" });
     window.whaleshares.config.set('chain_id',localStorage.whalesharesId);
     window.whaleshares.config.set('address_prefix','STM');  
 
@@ -5556,7 +5558,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
         window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
         
         window.whaleshares.config.set('websocket',socketUrl); 
-        window.whaleshares.api.setOptions({ url: 'https://rpc.wls.services/' });
+        window.whaleshares.api.setOptions({ url: 'ws://188.166.99.136:8090/' });
         
         window.whaleshares.config.set('address_prefix','STM');  
         if ($rootScope.user.chain != $rootScope.$storage.chain) {
@@ -5589,7 +5591,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
             window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
             
             window.whaleshares.config.set('websocket',socketUrl); 
-            window.whaleshares.api.setOptions({ url: 'https://rpc.wls.services/' });
+            window.whaleshares.api.setOptions({ url: 'ws://188.166.99.136:8090/' });
             
             window.whaleshares.config.set('address_prefix','STM');  
             if ($rootScope.user.chain != $rootScope.$storage.chain) {
