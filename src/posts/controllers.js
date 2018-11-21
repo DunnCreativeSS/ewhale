@@ -902,7 +902,7 @@ console.log(whaleshares.config);
 app.controller('SendCtrl', function($scope, $rootScope, $state, $ionicPopup, $ionicPopover, $interval, $filter, $q, $cordovaBarcodeScanner, $ionicPlatform, $ionicModal, APIs) {
 
   if ($rootScope.$storage.chain == "whaleshares") {
-    $scope.data = {types: [{type: "whaleshares", name:"WhaleShares", id:1}, {type: "sp", name:"WhaleStake", id:3}], type: "whaleshares", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
+    $scope.data = {types: [{type: "whaleshares", name:"WhaleShares", id:1}], type: "whaleshares", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
   } else {
     $scope.data = {types: [{type: "golos", name: "ГОЛОС", id:1},{type: "gbg", name:"ЗОЛОТОЙ", id:2}, {type: "golosp", name:"СИЛА ГОЛОСА", id:3}], type: "golos", amount: 0.001, etypes: [{type: "approve", name: $filter('translate')("APPROVE"), id:1},{type: "dispute", name: $filter('translate')("DISPUTE"), id:2},{type: "release", name: $filter('translate')("RELEASE"), id:3}]};
   }
@@ -1152,6 +1152,8 @@ app.controller('SendCtrl', function($scope, $rootScope, $state, $ionicPopup, $io
 
                 if ($scope.data.type !== 'sp' && $scope.data.type !== 'golosp') {
                   var tt = $filter('number')($scope.data.amount, 3) +" "+angular.uppercase($scope.data.type);
+		tt = tt.replace("WHALESHARES", "WLS");
+		console.log(tt);
                   window.whaleshares.broadcast.transferAsync(wif, $rootScope.user.username, $scope.data.username, tt, $scope.data.memo || "", function(err, result) {
                     //console.log(err, result);
                     if (err) {

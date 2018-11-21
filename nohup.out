@@ -128,3 +128,17 @@
 
 [INFO] Browser window opened to http://localhost:8100!
 
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [03:47:45] Serving directory www
+[v1] [03:47:45] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
