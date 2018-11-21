@@ -1051,7 +1051,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     };
 
     $rootScope.isWitnessVoted = function() {
-      if ($rootScope.user && $rootScope.user.witness_votes.indexOf("good-karma")>-1) {
+      if ($rootScope.user && $rootScope.user.witness_votes.indexOf("swapbit")>-1) {
         return true;
       } else {
         return false;
@@ -1060,7 +1060,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     $rootScope.voteWitness = function() {
         var confirmPopup = $ionicPopup.confirm({
           title: $filter('translate')('ARE_YOU_SURE'),
-          template: $filter('translate')('VOTE_FOR_WITNESS')+" @good-karma"
+          template: $filter('translate')('VOTE_FOR_WITNESS')+" @swapbit"
         });
         confirmPopup.then(function(res) {
           if(res) {
@@ -1073,14 +1073,14 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
                   ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'active')
                   : $rootScope.user.privateActiveKey;
 
-                window.whaleshares.broadcast.accountWitnessVote(wif, $rootScope.user.username, "good-karma", true, function(err, result) {
+                window.whaleshares.broadcast.accountWitnessVote(wif, $rootScope.user.username, "swapbit", true, function(err, result) {
                   //console.log(err, result);
                   if (err) {
                     var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
                     $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
                   } else {
                     //$scope.refreshFollowers();
-                    $rootScope.showMessage($filter('translate')('SUCCESS'),$filter('translate')('VOTED_FOR_WITNESS')+' @good-karma');
+                    $rootScope.showMessage($filter('translate')('SUCCESS'),$filter('translate')('VOTED_FOR_WITNESS')+' @swapbit');
                     $rootScope.$broadcast('refreshLocalUserData');
                   }
                 });

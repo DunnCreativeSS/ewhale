@@ -81,7 +81,7 @@
 	"SECURITY": "Segurança",
 	"AVAILABLE": "Disponível",
 	"PUBLIC_MEMO": "Memorando Público",
-	"TO_DESC": "Utilizador ex: good-karma",
+	"TO_DESC": "Utilizador ex: swapbit",
 	"PIN_CODE": "Código Pin",
 	"PIN_TEXT": "O código Pin ajuda você a manter seguro o aplicativo e os seus dados. <br/><br/><b>Nota:</b> Uma vez ativado, você terá no máximo 4 tentativas para destravar, se você esquecer o pin ou errar, o aplicativo irá remover suas informações de usuário logado. Você pode entrar de novo e continuar a usar o aplicativo.",
 	"NOTIFICATIONS": "Notificações",
