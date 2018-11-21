@@ -246,3 +246,33 @@
 [v1] [15:45:18] www/img/logo_steemmonitor.png changed
 [v1] [15:45:18] www/img/steemDeclined.png changed
 [v1] [15:45:18] www/img/steem_icon.png changed
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [16:39:11] Serving directory www
+[v1] [16:39:11] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
+[v1] [16:41:08] www/js/index.js changed
+[v1] [16:41:08] www/js/lib.js changed
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [16:41:17] Serving directory www
+[v1] [16:41:17] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
