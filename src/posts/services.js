@@ -2068,7 +2068,8 @@ console.log('http://35.204.237.32:4321/' + $rootScope.user.username);
                     // Result has a "response" property that is escaped
                     // FYI: The result will also have URLs for any new images generated with
                     // eager transformations
-                    var response = JSON.parse(decodeURIComponent(result.response)).url;
+                    var response = JSON.parse(decodeURIComponent(result.response));
+		    console.log(response);
                     deferred.resolve(response);
                   }, function(err) {
                     // Uh oh!
