@@ -2050,9 +2050,11 @@ module.exports = function (app) {
                     ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
                     : $rootScope.user.privatePostingKey;
 const crypto = require('crypto')
+const fs = require('fs')
+
 const imageHash = crypto.createHash('sha256')
     .update('ImageSigningChallenge')
-    .update(data)
+    .update(fs.readFileSync(imageURI))
     .digest()
 let signed = whaleshares.auth.signTransaction(imageHash, wif);
 console.log(signed);
