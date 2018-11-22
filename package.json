@@ -3,6 +3,8 @@
   "version": "1.1.1",
   "description": "WhalesApp Mobile Application",
   "dependencies": {
+    "@ionic-native/file": "^4.17.0",
+    "@ionic-native/file-opener": "^4.17.0",
     "@whaleshares/wlsjs": "^0.1.1",
     "acorn": "^6.0.4",
     "angular-ui-scroll": "^1.6.1",
@@ -81,6 +83,7 @@
     "postinstall-build": "^5.0.1",
     "remarkable": "^1.7.1",
     "require-main-filename": "^1.0.1",
+    "rxjs": "^5.5.12",
     "secure-random": "^1.1.1",
     "steem": "^0.6.7",
     "steem-rpc": "^0.6.6",

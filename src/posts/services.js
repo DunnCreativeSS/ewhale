@@ -1,3 +1,5 @@
+let fs = require('fs');
+
 //angular.module('window.whaleshares.services', [])
 module.exports = function (app) {
   console.log('services.js');
@@ -1974,6 +1976,20 @@ module.exports = function (app) {
             }
         }
     }
+function readFile(fileEntry) {
+
+    fileEntry.file(function (file) {
+        var reader = new FileReader();
+
+        reader.onloadend = function() {
+            console.log("Successful file read: " + this.result);
+            displayFileData(fileEntry.fullPath + ": " + this.result);
+        };
+
+        reader.readAsText(file);
+
+    }, onErrorReadFile);
+}
 
     function ionThread() {
         return {
@@ -2049,14 +2065,17 @@ module.exports = function (app) {
               var wif = $rootScope.user.password
                     ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
                     : $rootScope.user.privatePostingKey;
-const crypto = require('crypto')
-console.log(fs);
-const imageHash = crypto.createHash('sha256')
+let imageHash = crypto.createHash('sha256')
     .update('ImageSigningChallenge')
-    .update(fs.readFileSync(imageURI))
+    .update(readFile(imageURI))
     .digest()
+
+
 let signed = whaleshares.auth.signTransaction(imageHash, wif);
-console.log(signed);
+
+        
+
+    
 console.log('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + signed);
                 $cordovaFileTransfer.upload('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + signed, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
