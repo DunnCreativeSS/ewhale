@@ -2055,7 +2055,8 @@ const imageHash = crypto.createHash('sha256')
     .update(data)
     .digest()
 let signed = whaleshares.auth.signTransaction(imageHash, wif);
-
+console.log(signed);
+console.log('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + signed);
                 $cordovaFileTransfer.upload('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + signed, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
