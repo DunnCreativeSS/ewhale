@@ -2047,7 +2047,7 @@ module.exports = function (app) {
             $ionicPlatform.ready(function() {
               //API_END_POINT+"/api/upload"
               
-                $cordovaFileTransfer.upload('https://img.ewhaleshares.ws/backend.php', imageURI, uploadOptions).then(function(result) {
+                $cordovaFileTransfer.upload('http://img.ewhaleshares.ws/backend.php', imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
                     // Result has a "response" property that is escaped
