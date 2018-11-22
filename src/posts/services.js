@@ -2052,8 +2052,6 @@ module.exports = function (app) {
                     ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
                     : $rootScope.user.privatePostingKey;
 
-window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
-            fileEntry.file(function(fileObj) {
               //fileSize = fileObj.size;
               // Display a loading indicator reporting the start of the upload
               //$ionicLoading.show({template : $filter('translate')('UPLOADING_PICTURE') +' '+ 0 + '%'});
@@ -2081,7 +2079,7 @@ console.log('http://35.204.237.32:4321/' + $rootScope.user.username);
                     // on some interval.  Use this with the original file size to show a progress indicator.
                     percentage = Math.floor((progress.loaded / fileSize) * 100);
                     $ionicLoading.show({template : $filter('translate')('UPLOADING_PICTURE') +' '+ percentage + '%'});
-             });});     });
+                });
             });
           }
           return deferred.promise;
