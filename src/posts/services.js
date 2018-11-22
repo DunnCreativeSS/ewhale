@@ -1769,7 +1769,7 @@ module.exports = function (app) {
                             }
                           },
                           function(err) {
-                            $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('UPLOAD_ERROR'));
+                            $rootScope.showAlert($filter('translate')('ERROR'), err);
                             if (!ionic.Platform.isAndroid() || !ionic.Platform.isWindowsPhone()) {
                               $cordovaCamera.cleanup();
                             }

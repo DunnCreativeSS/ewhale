@@ -1507,9 +1507,10 @@ app.controller('PostsCtrl', function($scope, $rootScope, $state, $ionicPopup, $i
   //http://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
   $scope.insertText = function(text, position) {
     var input = $scope.lastFocused;
-    //console.log(input);
-    input.focus();
+    console.log(input);
+    //input.focus();
     if (input == undefined) { return; }
+    input.focus();
     var scrollPos = input.scrollTop;
     var pos = 0;
     var browser = ((input.selectionStart || input.selectionStart == "0") ?
