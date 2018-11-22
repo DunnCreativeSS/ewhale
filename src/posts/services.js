@@ -1976,20 +1976,6 @@ module.exports = function (app) {
             }
         }
     }
-function readFile(fileEntry) {
-
-    fileEntry.file(function (file) {
-        var reader = new FileReader();
-
-        reader.onloadend = function() {
-            console.log("Successful file read: " + this.result);
-            displayFileData(fileEntry.fullPath + ": " + this.result);
-        };
-
-        reader.readAsText(file);
-
-    }, onErrorReadFile);
-}
 
     function ionThread() {
         return {
@@ -2065,9 +2051,20 @@ function readFile(fileEntry) {
               var wif = $rootScope.user.password
                     ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
                     : $rootScope.user.privatePostingKey;
+
+window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
+            fileEntry.file(function(fileObj) {
+              //fileSize = fileObj.size;
+              // Display a loading indicator reporting the start of the upload
+              //$ionicLoading.show({template : $filter('translate')('UPLOADING_PICTURE') +' '+ 0 + '%'});
+              // Trigger the upload
+              //uploadFile();
+            
+          
+
 let imageHash = crypto.createHash('sha256')
     .update('ImageSigningChallenge')
-    .update(readFile(imageURI))
+    .update(fileObj)
     .digest()
 
 
@@ -2094,7 +2091,7 @@ console.log('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + sign
                     // on some interval.  Use this with the original file size to show a progress indicator.
                     percentage = Math.floor((progress.loaded / fileSize) * 100);
                     $ionicLoading.show({template : $filter('translate')('UPLOADING_PICTURE') +' '+ percentage + '%'});
-                  });
+             });});     });
             });
           }
           return deferred.promise;
