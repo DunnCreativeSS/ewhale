@@ -117,7 +117,7 @@ module.exports = function (app) {
         return $http.post(API_END_POINT+"/api/image", {username: user, image_url:url});
       },
       getNodes: function() {
-        return $http.get("https://storage.googleapis.com/ewhaleshares/public_nodes.json",{headers:{'Cache-Control': 'no-cache'}});
+        return $http.get("http://localhost:8100/public_nodes.json",{headers:{'Cache-Control': 'no-cache'}});
       },
       getWelcome: function() {
         return $http.get(API_END_POINT+"/media/welcome.json",{headers:{'Cache-Control': 'no-cache'}});
@@ -2047,7 +2047,7 @@ module.exports = function (app) {
             $ionicPlatform.ready(function() {
               //API_END_POINT+"/api/upload"
               
-                $cordovaFileTransfer.upload('http://img.ewhaleshares.ws/backend.php', imageURI, uploadOptions).then(function(result) {
+                $cordovaFileTransfer.upload('http://imgp.whaleshares.io/backend.php', imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
                     // Result has a "response" property that is escaped
