@@ -2046,14 +2046,23 @@ module.exports = function (app) {
             };
             $ionicPlatform.ready(function() {
               //API_END_POINT+"/api/upload"
-              
-                $cordovaFileTransfer.upload('https://whaleshares.io/api/v1/imageupload', imageURI, uploadOptions).then(function(result) {
+              var wif = $rootScope.user.password
+                    ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
+                    : $rootScope.user.privatePostingKey;
+const crypto = require('crypto')
+const imageHash = crypto.createHash('sha256')
+    .update('ImageSigningChallenge')
+    .update(data)
+    .digest()
+let signed = whaleshares.auth.signTransaction(imageHash, wif);
+
+                $cordovaFileTransfer.upload('http://35.204.237.32:4321/' + $rootScope.user.username  +'/' + signed, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
                     // Result has a "response" property that is escaped
                     // FYI: The result will also have URLs for any new images generated with
                     // eager transformations
-                    var response = JSON.parse(decodeURIComponent(result.response));
+                    var response = JSON.parse(decodeURIComponent(result.response)).url;
                     deferred.resolve(response);
                   }, function(err) {
                     // Uh oh!
