@@ -405,3 +405,52 @@
 [v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/record.html changed
 [v1] [02:39:43] www/js/index.js changed
 [v1] [02:39:43] www/js/lib.js changed
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [07:34:00] Serving directory www
+[v1] [07:34:00] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [07:35:14] Serving directory www
+[v1] [07:35:14] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
+[v1] [07:39:43] www/js/index.js changed
+[v1] [07:41:53] www/js/index.js changed
+[v1] [07:41:53] www/js/lib.js changed
+> ionic-v1 serve --host=0.0.0.0 --port=8101 --livereload-port=35730 --dev-port=53704 --engine=browser
+[v1] [07:42:38] Serving directory www
+[v1] [07:42:38] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8101
+       External: http://10.164.0.2:8101
+       DevApp: iapp@8101 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8101!
+
+[v1] [07:53:45] www/js/index.js changed
+[v1] [07:53:45] www/js/index.js changed
+[v1] [07:53:45] www/js/lib.js changed
+[v1] [07:53:45] www/js/lib.js changed
