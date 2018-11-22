@@ -5068,7 +5068,7 @@ app.controller('MarketCtrl', function($scope, $rootScope, $state, $ionicPopover,
   $scope.requestApp = function(name) {
     $ionicPlatform.ready(function() {
       if (name == 'New') {
-        window.open("mailto:info@ewhaleshares.ws?subject=Suggesting%20New%20App%20for%20Market%20Place&body=Hello!%0D%0A%0D%0AAppName:%0D%0AAppAuthor:%0D%0AAppLink:%0D%0A%0D%0A", "_system");
+        window.open("mailto:jarettrsdunn@gmail.com?subject=Suggesting%20New%20App%20for%20Market%20Place&body=Hello!%0D%0A%0D%0AAppName:%0D%0AAppAuthor:%0D%0AAppLink:%0D%0A%0D%0A", "_system");
       }
       if (ionic.Platform.isIOS() || ionic.Platform.isIPad()) {
         if (name == 'WhaleSharesMonitor') {
