@@ -276,3 +276,132 @@
 
 [INFO] Browser window opened to http://localhost:8100!
 
+> ionic-v1 serve --host=0.0.0.0 --port=8100 --livereload-port=35729 --dev-port=53703 --engine=browser
+[v1] [17:24:29] Serving directory www
+[v1] [17:24:29] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8100
+       External: http://10.164.0.2:8100
+       DevApp: iapp@8100 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8100!
+
+[v1] [22:51:08] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:08] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:08] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:08] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:09] www/img/nginx-1.9.2.tar.gz changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:10] www/img/master.zip changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:28] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:29] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:29] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:29] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:29] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:29] www/img/nginx-1.9.2.tar.gz.1 changed
+[v1] [22:51:30] www/img/master.zip.1 changed
+[v1] [22:51:30] www/img/master.zip.1 changed
+[v1] [22:51:30] www/img/master.zip.1 changed
+[v1] [22:51:30] www/img/master.zip.1 changed
+[v1] [22:51:30] www/img/master.zip.1 changed
+[v1] [22:51:38] www/img/nginx-rtmp-module-master/AUTHORS changed
+[v1] [22:51:38] www/img/nginx-rtmp-module-master/LICENSE changed
+[v1] [22:51:38] www/img/nginx-rtmp-module-master/README.md changed
+[v1] [22:51:38] www/img/nginx-rtmp-module-master/config changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/dash/ngx_rtmp_dash_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/dash/ngx_rtmp_mp4.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/dash/ngx_rtmp_mp4.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/doc/README.md changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/hls/ngx_rtmp_hls_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/hls/ngx_rtmp_mpegts.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/hls/ngx_rtmp_mpegts.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_access_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_amf.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_amf.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_auto_push_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_bandwidth.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_bandwidth.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_bitop.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_bitop.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_cmd_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_cmd_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_codec_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_codec_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_control_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_core_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_eval.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_eval.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_exec_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_flv_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_handler.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_handshake.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_init.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_limit_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_live_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_live_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_log_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_mp4_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_netcall_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_netcall_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_notify_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_play_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_play_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_proxy_protocol.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_proxy_protocol.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_receive.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_record_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_record_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_relay_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_relay_module.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_send.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_shared.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_stat_module.c changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_streams.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/ngx_rtmp_version.h changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/stat.xsl changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/README.md changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/dump.sh changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/ffstream.sh changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/nginx.conf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/play.sh changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/README.md changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPlayer.mxml changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPlayer.swf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPlayerLight.mxml changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPlayerLight.swf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPublisher.mxml changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/RtmpPublisher.swf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/player.html changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/publisher.html changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/rtmp-publisher/swfobject.js changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/bg.jpg changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/index.html changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/jwplayer/jwplayer.flash.swf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/jwplayer/jwplayer.js changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/jwplayer_old/player.swf changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/jwplayer_old/swfobject.js changed
+[v1] [22:51:39] www/img/nginx-rtmp-module-master/test/www/record.html changed
+[v1] [02:39:43] www/js/index.js changed
+[v1] [02:39:43] www/js/lib.js changed
