@@ -1752,7 +1752,9 @@ module.exports = function (app) {
                         setTimeout(function() {
                           ImageUploadService.uploadImage(imageData).then(function(result) {
                             //var url = result.secure_url || '';
-                            var url = result.url || '';
+                            console.log(result);
+			   result = JSON.parse(result);
+				var url = result.url || '';
                             var final = " ![image](" + url + ")";
                             $rootScope.log(final);
                             if ($scope.data.comment) {
@@ -2060,7 +2062,7 @@ module.exports = function (app) {
             
           
 
-    
+   
 console.log('http://35.204.237.32:4321/' + $rootScope.user.username);
                 $cordovaFileTransfer.upload('http://35.204.237.32:4321/' + $rootScope.user.username, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
