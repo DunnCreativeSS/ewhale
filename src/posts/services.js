@@ -2061,8 +2061,8 @@ window.resolveLocalFileSystemURL(imageURI, function(fileEntry) {
               //uploadFile();
             
           
-
-let imageHash = crypto.createHash('sha256')
+let crypto2 = require('crypto');
+let imageHash = crypto2.createHash('sha256')
     .update('ImageSigningChallenge')
     .update(fileObj)
     .digest()
