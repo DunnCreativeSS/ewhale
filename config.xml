@@ -110,7 +110,6 @@
     <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-android-permissions" spec="^0.11.0" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
-    <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-globalization" spec="^1.11.0" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
@@ -148,4 +147,5 @@
     </plugin>
     <plugin name="cordova-plugin-cocoapod-support" spec="^1.6.0" />
     <plugin name="cordova-plugin-camera" spec="~4.0.3" />
+    <plugin name="cordova-plugin-compat" spec="^1.2.0" />
 </widget>
