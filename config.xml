@@ -107,7 +107,6 @@
     </platform>
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.88.254:8101" />
-    <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-plugin-android-permissions" spec="^0.11.0" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
@@ -148,5 +147,7 @@
     </plugin>
     <plugin name="cordova-plugin-cocoapod-support" spec="^1.6.0" />
     <plugin name="cordova-plugin-camera" spec="~4.0.3" />
-    <engine name="android" spec="~7.0.0" />
+    <engine name="ios" spec="^4.4.0" />
+    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
 </widget>

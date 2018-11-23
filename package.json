@@ -30,6 +30,7 @@
     "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-customurlscheme": "^4.3.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-firebase-analytics": "^0.10.2",
@@ -175,7 +176,8 @@
         "ANDROID_SUPPORT_VERSION": "27.+"
       },
       "cordova-plugin-cocoapod-support": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-fcm": {}
     },
     "platforms": [
       "ios",

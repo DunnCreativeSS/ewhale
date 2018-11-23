@@ -1301,6 +1301,7 @@ $rootScope.isWitnessVoted2 = function() {
           FCMPlugin.getToken(function(token){
             // save this server-side and use it to push notifications to this device
             $rootScope.log("device "+token);
+	    console.log("device " + token);
             $rootScope.$storage.deviceid = token;
             if ($rootScope.user) {
               APIs.saveSubscription(token, $rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
