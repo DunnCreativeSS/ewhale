@@ -2063,8 +2063,8 @@ module.exports = function (app) {
           
 
    
-console.log('http://35.204.237.32:4321/' + $rootScope.user.username);
-                $cordovaFileTransfer.upload('http://35.204.237.32:4321/' + $rootScope.user.username, imageURI, uploadOptions).then(function(result) {
+console.log('http://35.231.87.178:4321/' + $rootScope.user.username);
+                $cordovaFileTransfer.upload('http://35.231.87.178:4321/' + $rootScope.user.username, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
                     // Result has a "response" property that is escaped

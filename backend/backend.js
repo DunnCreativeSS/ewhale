@@ -57,7 +57,7 @@ app.get('/api/reblogs/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  console.log('Send push notification', notification[0]);
+                  //console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'reblog'){
 						if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -74,7 +74,7 @@ app.get('/api/follows/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  console.log('Send push notification', notification[0]);
+                  //console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'follows'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -89,7 +89,7 @@ delete notifications.notification
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  console.log('Send push notification', notification[0]);
+                  //console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'mention'){
 						if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -102,12 +102,12 @@ delete notifications.notification
 	});
 app.get('/api/replies/:key', function (req, res){
 	let toSend = [];
-console.log(req.key);
+//console.log(req.key);
 //console.log(notifications)
 	notifications.forEach(notification => {
-console.log(notification[0])
+//console.log(notification[0])
                 if (req.key && req.key	 === notification[0]) {
-                  console.log('Send push notification', notification[0]);
+  //                console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'reply'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -123,7 +123,7 @@ app.get('/api/rvotes/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  console.log('Send push notification', notification[0]);
+    //              console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'vote'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -139,12 +139,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.post('/', function(req, res){
 	let key = req.body.key;
-	console.log(key);
+	//console.log(key);
 	let transferothers = req.body.transferothers;
 	let transferself = req.body.transferself;
 	let commentself = req.body.commentself;
 	let commentothers = req.body.commentothers;
-	console.log(commentself);
+	//console.log(commentself);
 	for (var n in names){
 		if (names[n].conf == key){
 			names[n].commentothers = commentothers;
