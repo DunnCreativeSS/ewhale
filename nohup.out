@@ -474,3 +474,17 @@
 [v1] [01:14:20] www/js/lib.js changed
 [v1] [01:16:16] www/js/index.js changed
 [v1] [01:16:16] www/js/lib.js changed
+> ionic-v1 serve --host=0.0.0.0 --port=8101 --livereload-port=35730 --dev-port=53704 --engine=browser
+[v1] [01:26:16] Serving directory www
+[v1] [01:26:17] Proxy created /nodes => https://storage.googleapis.com/ewhaleshares/nodes.json
+
+[INFO] Development server running!
+       
+       Local: http://localhost:8101
+       External: http://10.164.0.2:8101
+       DevApp: iapp@8101 on instance-3
+       
+       Use Ctrl+C to quit this process
+
+[INFO] Browser window opened to http://localhost:8101!
+
