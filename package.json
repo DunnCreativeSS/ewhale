@@ -76,7 +76,7 @@
     "marked": "^0.3.19",
     "node-google-translate-skidz": "^1.1.1",
     "node-gyp": "^0.9.3",
-    "node-sass": "^4.10.0",
+    "node-sass": "^3.13.1",
     "object-assign": "^4.1.0",
     "path": "^0.12.7",
     "phonegap-plugin-barcodescanner": "git+https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
