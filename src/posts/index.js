@@ -468,7 +468,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     $rootScope.$storage.platformsunit = "WhaleShares";
     $rootScope.$storage.platformdollar = "WhaleShares Dollar";
     $rootScope.$storage.platformdunit = "WLS";
-    $rootScope.$storage.platformpunit = "SP";
+    $rootScope.$storage.platformpunit = "WS";
     $rootScope.$storage.platformlunit = "WLS";
     $rootScope.$storage.chain = "whaleshares";
     $rootScope.$storage.currency = "usd";

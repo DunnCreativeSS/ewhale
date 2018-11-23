@@ -292,7 +292,7 @@
 	"FEEDBACK": "Feedback",
 	"PROMOTE": "Marknadsför",
 	"POWER_DOWN": "Gör om till Steem",
-	"POWER_UP": "Gör om till Steem Power",
+	"POWER_UP": "Gör om till WhaleStakes",
 	"FAQ": "Vanliga Frågor (FAQ)",
 	"TRANSFER_TO_SAVINGS": "För över till Sparkonto",
 	"CONVERT_TO_STEEM": "Konvertera till {{platformname}}",

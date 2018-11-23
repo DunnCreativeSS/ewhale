@@ -55,7 +55,7 @@
 	"NOTHING_HERE": "Nothing here, yet...",
 	"BALANCES": "Balances",
 	"PROFILE_1": "{{platformname}} are tradeable tokens, which may be transferred anytime. {{platformname}} can be converted to {{platformpower}} in a process called powering up.",
-	"PROFILE_2": "{{platformpower}} are influence tokens that earn more power for holding long term and voting on posts. The more Steem Power one holds, the more one can influence other’s rewards and earn rewards for accurate voting.",
+	"PROFILE_2": "{{platformpower}} are influence tokens that earn more power for holding long term and voting on posts. The more WhaleStakes one holds, the more one can influence other’s rewards and earn rewards for accurate voting.",
 	"PROFILE_3": "Tokens worth about {{platformsunit}} of {{platformname}}.",
 	"ESTIMATED_VALUE": "Estimated Value",
 	"PROFILE_4": "The estimated value is based on a 7-day average value of {{platformname}}.",

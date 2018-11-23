@@ -197,7 +197,7 @@
             <div class="col col-33" ng-if="accounts.sbd_balance">
             {{::accounts.sbd_balance | sbd | number}} {{::$root.$storage.platformdunit}}
             </div>
-          </div> --!>
+          </div> 
           <div class="row">
             <div class="col col-67">
             {{::'ESTIMATED_VALUE'|translate}} <br><span class="gray wrap">{{::'PROFILE_4'|translate:translationData}}</span>
@@ -205,7 +205,7 @@
             <div class="col col-33" ng-if="accounts.balance">
             {{::$root.$storage.currency|getCurrencySymbol}} {{::accounts.vesting_shares | sd:accounts.balance:accounts.sbd_balance | number}}
             </div>
-          </div>
+          </div> -->
           <p ng-if="accounts.next_vesting_withdrawal !== '1969-12-31T23:59:59'">{{::'POWER_DOWN_SCHEDULE'|translate}} {{accounts.next_vesting_withdrawal|timeago:true}}</p>
           </div>
           <p class="bold">{{::'TRANSACTION_HISTORY'|translate}}</p>

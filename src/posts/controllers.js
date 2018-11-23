@@ -5349,7 +5349,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
       $rootScope.$storage.platformsunit = "WhaleShares";
       $rootScope.$storage.platformdollar = "WhaleShares Dollar";
       $rootScope.$storage.platformdunit = "WLS";
-      $rootScope.$storage.platformpunit = "SP";
+      $rootScope.$storage.platformpunit = "WS";
       $rootScope.$storage.platformlunit = "WLS";
       $rootScope.$storage.socketwhaleshares = "ws://188.166.99.136:8090";
       $scope.socket = "ws://188.166.99.136:8090";
