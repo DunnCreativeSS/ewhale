@@ -439,7 +439,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     if ($rootScope.$storage.chain == 'golos') {
       window.whaleshares.config.set('address_prefix','GLS');  
     } else {
-      window.whaleshares.config.set('address_prefix','STM');  
+      window.whaleshares.config.set('address_prefix','WLS');  
     }
     
     //window.ejs.ChainConfig.setChainId(localStorage[$rootScope.$storage.chain+"Id"]);
@@ -705,7 +705,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       if ($rootScope.$storage.chain == 'golos') {
         window.whaleshares.config.set('address_prefix','GLS');  
       } else {
-        window.whaleshares.config.set('address_prefix','STM');  
+        window.whaleshares.config.set('address_prefix','WLS');  
       }
 
       if (window.cordova) {
@@ -1188,7 +1188,7 @@ $rootScope.isWitnessVoted2 = function() {
       if ($rootScope.$storage.chain == 'golos') {
         window.whaleshares.config.set('address_prefix','GLS');  
       } else {
-        window.whaleshares.config.set('address_prefix','STM');  
+        window.whaleshares.config.set('address_prefix','WLS');  
       }
       window.whaleshares.api.stop();
 

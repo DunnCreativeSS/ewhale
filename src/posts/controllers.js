@@ -238,7 +238,7 @@ app.controller('AppCtrl', function($scope, $ionicModal, $timeout, $rootScope, $s
     if ($scope.loginData.chain == 'golos') {
       window.whaleshares.config.set('address_prefix','GLS');  
     } else {
-      window.whaleshares.config.set('address_prefix','STM');  
+      window.whaleshares.config.set('address_prefix','WLS');  
     }
     window.whaleshares.api.stop();
     $rootScope.$emit('changedCurrency',{currency: $rootScope.$storage.currency, enforce: true});
@@ -5369,7 +5369,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
     if ($rootScope.$storage.chain == 'golos') {
       window.whaleshares.config.set('address_prefix','GLS');  
     } else {
-      window.whaleshares.config.set('address_prefix','STM');  
+      window.whaleshares.config.set('address_prefix','WLS');  
     }
     window.whaleshares.api.stop();
 
@@ -5383,7 +5383,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
   $scope.$on('socketCheck', function(){
     window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090/" });
     window.whaleshares.config.set('chain_id',localStorage.whalesharesId);
-    window.whaleshares.config.set('address_prefix','STM');  
+    window.whaleshares.config.set('address_prefix','WLS');  
 
     window.whaleshares.api.getDynamicGlobalProperties(function(err, r) {
       if (r){
@@ -5563,7 +5563,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
         window.whaleshares.config.set('websocket',socketUrl); 
         window.whaleshares.api.setOptions({ url: 'ws://188.166.99.136:8090/' });
         
-        window.whaleshares.config.set('address_prefix','STM');  
+        window.whaleshares.config.set('address_prefix','WLS');  
         if ($rootScope.user.chain != $rootScope.$storage.chain) {
           for (var i = 0, len = $rootScope.$storage.users.length; i < len; i++) {
             var v = $rootScope.$storage.users[i];
@@ -5596,7 +5596,7 @@ app.controller('SettingsCtrl', function($scope, $stateParams, $rootScope, $ionic
             window.whaleshares.config.set('websocket',socketUrl); 
             window.whaleshares.api.setOptions({ url: 'ws://188.166.99.136:8090/' });
             
-            window.whaleshares.config.set('address_prefix','STM');  
+            window.whaleshares.config.set('address_prefix','WLS');  
             if ($rootScope.user.chain != $rootScope.$storage.chain) {
               for (var i = 0, len = $rootScope.$storage.users.length; i < len; i++) {
                 var v = $rootScope.$storage.users[i];
