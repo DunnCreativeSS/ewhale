@@ -1262,13 +1262,15 @@ $rootScope.isWitnessVoted2 = function() {
         $rootScope.$apply();
       }
     });
+    console.log('cordova cordova ' + window.cordova);
     if (window.cordova) {
+	console.log('ionic ionic ' + ionic.Platform.isWindowsPhone());
       if (!ionic.Platform.isWindowsPhone()) {
         if (ionic.Platform.isIOS() || ionic.Platform.isIPad()) {
           //window.FirebasePlugin.grantPermission();
         }
 
-        window.cordova.plugins.firebase.dynamiclinks.onDynamicLink(function(data) {
+        /* window.cordova.plugins.firebase.dynamiclinks.onDynamicLink(function(data) {
 
           console.log("Dynamic link click with data: "+ angular.toJson(data));
           
@@ -1295,9 +1297,13 @@ $rootScope.isWitnessVoted2 = function() {
             });
           }
           //$rootScope.showMessage("title", angular.toJson(data));
-        });  
-
-        if (FCMPlugin) {
+        }); */ 
+	var fcmya = 0; 
+	fcmya = setInterval(function(){
+        console.log('fcm...');
+	if (FCMPlugin) {
+	  
+	  clearInterval(fcmya);
           FCMPlugin.getToken(function(token){
             // save this server-side and use it to push notifications to this device
             $rootScope.log("device "+token);
@@ -1372,7 +1378,10 @@ $rootScope.isWitnessVoted2 = function() {
               }
             }
           });
+
         }
+
+}, 1000);
       }
 
     }
