@@ -140,7 +140,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.post('/api/devices', function (req, res){
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
-	let subscription = req.sbody.ubscription;
+	let subscription = req.body.subscription;
 	let chain = req.body.chain;
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
@@ -149,7 +149,7 @@ app.post('/api/devices', function (req, res){
 app.put('/api/devices', function (req, res){
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
-	let subscription = req.sbody.ubscription;
+	let subscription = req.body.subscription;
 	let chain = req.body.chain;
 	
 Object.keys(devices).forEach(function(key){
