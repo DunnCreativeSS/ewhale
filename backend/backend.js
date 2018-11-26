@@ -618,7 +618,8 @@ console.log(notifications);
 				  headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'key=AAAAi121lso:APA91bG9gjPRwLojLW2hme7chPQNuTUV6x4-2xE09lp2jrd5ErGqSNXyegOhVqoSoRqAGNLQ62qvZlLLBCfBJh-N3OYKRApienxokqQskXx9bA4VFz33FwNWvk9Ylvy4J5jGObsWgL-_',
-				  }
+				  },
+				  body:JSON.stringify({notification[1]})
 				};
 
 request.post('https://fcm.googleapis.com/fcm/send', options, function (error, response, body) {
