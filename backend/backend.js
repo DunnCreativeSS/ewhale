@@ -361,6 +361,7 @@ const getNotifications = (ops,thetimestamp, blockNum) => {
 	op.timestamp = thetimestamp;
 	op.block=blockNum;
 	console.log(op);
+	console.log(type);
     switch (type) {
       case 'comment': {
         const isRootPost = !params.parent_author;
@@ -384,8 +385,9 @@ let ts = Date.parse(op.timestamp) / 1000
 			  gkf: true,
               block: op.block,
           };
+		  console.log(notification);
 	if (!perms.includes(params.permlink)){
-perms.push(params.permlink)
+//perms.push(params.permlink)
           notifications.push([params.parent_author, notification]);
 //console.log(notifications); 
 }       
@@ -431,7 +433,7 @@ let ts = Date.parse(op.timestamp) / 1000
               block: op.block,
             };
         if (!perms.includes(params.permlink)){
-perms.push(params.permlink);        
+//perms.push(params.permlink);        
     notifications.push([mention, notification]);
 }
           });
@@ -476,7 +478,7 @@ let ts= Date.parse(op.timestamp) / 1000
               block: op.block,
               };
         if (!perms.includes(params.permlink)){
-perms.push(params.permlink);        
+//perms.push(params.permlink);        
       notifications.push([json[1].following, notification]);
             }
 }
@@ -500,7 +502,7 @@ const notification = {
                 block: op.block,
               };
         if (!perms.includes(params.permlink)){
-perms.push(params.permlink);        
+//perms.push(params.permlink);        
       // console.log('Reblog', [json[1].author, JSON.stringify(notification)]);
               notifications.push([json[1].author, notification]);
             }
@@ -522,7 +524,7 @@ let ts=Date.parse(op.timestamp) / 1000
         };
         // console.log('Witness vote', [params.witness, notification]);
         if (!perms.includes(params.permlink)){
-perms.push(params.permlink);        
+//perms.push(params.permlink);        
 notifications.push([params.witness, notification]);
 }
         break;
