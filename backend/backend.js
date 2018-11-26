@@ -621,7 +621,7 @@ console.log(notifications);
 				  }
 				};
 
-request.post('https://fcm.googleapis.com/fcm/send', {to:device['deviceid'], notification:notification[1]}, function (error, response, body) {
+request.post('https://fcm.googleapis.com/fcm/send', options, function (error, response, body) {
   console.log('error:', error); // Print the error if one occurred
   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   console.log('body:', body); // Print the HTML for the Google homepage.
