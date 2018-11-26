@@ -4,6 +4,8 @@ const _ = require('lodash');
 // This bot upvotes whover the target account upvotes
 
 // We import the whaleshares js for now because smoke is not on npm
+const admin = require("firebase-admin");
+const serviceAccount = require("../google-services.json");
 
 const express = require('express')
 var cors = require('cors')
@@ -613,20 +615,22 @@ console.log(notifications);
 					}
 					if (doPost && !postedIds.includes(notification[1].id)){
 						postedIds.push(notification[1].id);
-						const options = {
-				  url: 'https://fcm.googleapis.com/fcm/send',
-				  headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'key=AAAAi121lso:APA91bG9gjPRwLojLW2hme7chPQNuTUV6x4-2xE09lp2jrd5ErGqSNXyegOhVqoSoRqAGNLQ62qvZlLLBCfBJh-N3OYKRApienxokqQskXx9bA4VFz33FwNWvk9Ylvy4J5jGObsWgL-_',
-				  },
-				  body:JSON.stringify(notification[1])
-				};
-
-request.post('https://fcm.googleapis.com/fcm/send', options, function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
-});
+						    var message = {
+						data: {
+							body: notification[1].body,
+							title: notification[1].title,
+							chain: notification[1].chain,
+							author: notification[1].author,
+							permlink: notification[1].permlink
+						},
+						token: device.deviceid
+					};
+					admin.messaging().send(message)
+						.then((response) => {
+							console.log("Successfully sent message: ", response);
+						}).catch((err) => {
+							console.log("Error sending message: ", err);
+						})
 					}
                 }
               });
