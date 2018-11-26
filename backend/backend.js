@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 // We import the whaleshares js for now because smoke is not on npm
 const admin = require("firebase-admin");
-const serviceAccount = require("../google-services.json");
+const serviceAccount = require("../firebase.json");
 console.log(serviceAccount);
 const express = require('express')
 var cors = require('cors')
