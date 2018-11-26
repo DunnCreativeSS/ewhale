@@ -223,7 +223,7 @@ app.post('/', function(req, res){
 // Create constant variables
 
 var port = 8081;
-app.listen(port, () => //console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 //const Discord = require("discord.js");
 
 // This is your client. Some people call it `bot`, some people call it `self`, 
