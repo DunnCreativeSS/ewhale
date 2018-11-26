@@ -144,6 +144,7 @@ app.post('/api/devices', function (req, res){
 	let chain = req.body.chain;
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
+res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 	});
 	let devices = [];
 app.put('/api/devices', function (req, res){
@@ -157,6 +158,7 @@ Object.keys(devices).forEach(function(key){
     delete devices[key];
 devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
+res.json(devices[key]);
 
               });
 	});
@@ -165,6 +167,7 @@ app.put('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==req.deviceid)
     devices[key].deviceid = req.body.newdev;
+res.json(devices[key]);
 });
 
               });
@@ -173,6 +176,7 @@ app.get('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==req.deviceid)
 	  res.json(devices[key]);
+res.json(devices[key]);
 });
 })
 app.post('/', function(req, res){
