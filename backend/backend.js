@@ -143,7 +143,7 @@ app.post('/api/devices', function (req, res){
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
-
+console.log({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 	});
 	let devices = [];
@@ -157,8 +157,8 @@ Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==deviceid)
     delete devices[key];
 devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
-
-res.json(devices[key]);
+console.log({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
               });
 	});
@@ -167,6 +167,7 @@ app.put('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==req.deviceid)
     devices[key].deviceid = req.body.newdev;
+console.log(devices[key]);
 res.json(devices[key]);
 });
 
@@ -175,7 +176,7 @@ res.json(devices[key]);
 app.get('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==req.deviceid)
-	  res.json(devices[key]);
+	  console.log(devices[key]);
 res.json(devices[key]);
 });
 })
