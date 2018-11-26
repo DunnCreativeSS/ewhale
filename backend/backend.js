@@ -293,6 +293,47 @@ steem.api.getBlock(blockNum, function(err, result) {
 
 });
 }
+
+app.post('/api/devices', function (req, res){
+	let deviceid = req.body.deviceid;
+	let username = req.body.username;
+	let subscription = req.sbody.ubscription;
+	let chain = req.body.chain;
+	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
+	});
+	
+app.put('/api/devices', function (req, res){
+	let deviceid = req.body.deviceid;
+	let username = req.body.username;
+	let subscription = req.sbody.ubscription;
+	let chain = req.body.chain;
+	
+Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==deviceid)
+    delete devices[key];
+});
+devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
+
+              });
+delete notifications.notification
+			  res.json(toSend);
+	});
+	
+app.put('/api/devices/:deviceid', function (req, res){
+	Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==req.deviceid)
+    devices[key].deviceid = req.body.newdev;
+});
+
+              });
+			  
+app.get('/api/devices/:deviceid', function (req, res){
+	Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==req.deviceid)
+	  res.json(devices[key]);
+});
 let perms = [];
 const getNotifications = (ops,thetimestamp, blockNum) => {
   //const notifications = [];
