@@ -339,7 +339,7 @@ console.log(result);
  }, 2.0 * 1000);
 const loadBlock = blockNum => {
 steem.api.getBlock(blockNum, function(err, result) {
-  //console.log(err, result);
+ console.log(err, result);
 
 
   const operations = [];
