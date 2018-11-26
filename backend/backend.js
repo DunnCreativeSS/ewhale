@@ -144,9 +144,9 @@ app.post('/api/devices', function (req, res){
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
 	console.log(deviceid);
-	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 console.log(devices);
-res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+res.json({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 	});
 	let devices = [];
 app.put('/api/devices', function (req, res){
@@ -162,10 +162,10 @@ Object.keys(devices).forEach(function(key){
     delete devices[key];
 
               });
-			  devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+			  devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 
 console.log(devices);
-res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+res.json({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 
 	});
 	
