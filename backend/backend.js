@@ -159,8 +159,6 @@ devices.push({deviceid: deviceid, username: username, subscription: subscription
 
 
               });
-delete notifications.notification
-			  res.json(toSend);
 	});
 	
 app.put('/api/devices/:deviceid', function (req, res){
