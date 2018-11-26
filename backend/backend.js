@@ -32,7 +32,7 @@ let txData = result.operations[0][1]
 			  console.log(names[name].name);
 			  console.log(names[name].commentothers);
 			  if (names[name].name == txData.parent_author){
-				  if (names[name].commentothers == 'true'){
+				  if (names[name].commentothers == true){
 					  client.users.get(names[name].id.toString()).send("New comment on your post! https://smoke.io/" + txData.parent_permlink + '/' + txData.permlink + " from " + txData.author);
 
 				  }
@@ -586,27 +586,27 @@ console.log(notifications);
                 if (device['username']	 === notification[0]) {
                   //console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
 				  let doPost = false;
-					if (notification[1].type == 'reblog' && device['subscription']['rewhaleshares'] == 'true'){
+					if (notification[1].type == 'reblog' && device['subscription']['rewhaleshares'] == true){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'reply' && device['subscription']['mention']== 'true'){
+					else if (notification[1].type == 'reply' && device['subscription']['mention']== true){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'mention' && device['subscription']['mention']== 'true'){
+					else if (notification[1].type == 'mention' && device['subscription']['mention']== true){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'vote' && device['subscription']['vote']== 'true'){
+					else if (notification[1].type == 'vote' && device['subscription']['vote']== true){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'comment' && device['subscription']['comment']== 'true'){
+					else if (notification[1].type == 'comment' && device['subscription']['comment']== true){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'follow' && device['subscription']['follow']== 'true'){
+					else if (notification[1].type == 'follow' && device['subscription']['follow']== true){
 						
 						doPost = true;
 					}
