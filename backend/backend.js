@@ -326,10 +326,14 @@ doCheckWallet();
 let notifications = []
 */
 let notifications = []
-
+let results = []
 setInterval(function(){ 
 var release = steem.api.streamBlockNumber('head', function(err, result) {
-	loadBlock(result);
+if (!results.includes(result)){ 
+results.push(result);
+loadBlock(result);
+console.log(result);
+}
 });
 
  }, 2.0 * 1000);
