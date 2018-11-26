@@ -6,7 +6,7 @@ const _ = require('lodash');
 // We import the whaleshares js for now because smoke is not on npm
 const admin = require("firebase-admin");
 const serviceAccount = require("../firebase.json");
-console.log(serviceAccount);
+//console.log(serviceAccount);
 const express = require('express')
 var cors = require('cors')
 var app = express()
@@ -31,8 +31,8 @@ let txData = result.operations[0][1]
   if(txType === 'comment') {
       if (!permlinks.includes(txData.permlink)){
 		  for (var name in names){
-			  console.log(names[name].name);
-			  console.log(names[name].commentothers);
+			  //console.log(names[name].name);
+			  //console.log(names[name].commentothers);
 			  if (names[name].name == txData.parent_author){
 				  if (names[name].commentothers == true){
 					  client.users.get(names[name].id.toString()).send("New comment on your post! https://smoke.io/" + txData.parent_permlink + '/' + txData.permlink + " from " + txData.author);
@@ -59,7 +59,7 @@ app.get('/api/reblogs/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  //console.log('Send push notification', notification[0]);
+                  ////console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'reblog'){
 						if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -76,7 +76,7 @@ app.get('/api/follows/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  //console.log('Send push notification', notification[0]);
+                  ////console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'follows'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -91,7 +91,7 @@ delete notifications.notification
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-                  //console.log('Send push notification', notification[0]);
+                  ////console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'mention'){
 						if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -104,12 +104,12 @@ delete notifications.notification
 	});
 app.get('/api/replies/:key', function (req, res){
 	let toSend = [];
-//console.log(req.key);
-//console.log(notifications)
+////console.log(req.key);
+////console.log(notifications)
 	notifications.forEach(notification => {
-//console.log(notification[0])
+////console.log(notification[0])
                 if (req.key && req.key	 === notification[0]) {
-  //                console.log('Send push notification', notification[0]);
+  //                //console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'reply'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -125,7 +125,7 @@ app.get('/api/rvotes/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
                 if (req.key && req.key	 === notification[0]) {
-    //              console.log('Send push notification', notification[0]);
+    //              //console.log('Send push notification', notification[0]);
 					if (notification[1].type == 'vote'){
 if (notification[1].read == 0){
 							notification[1].read = 1;
@@ -140,24 +140,24 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.post('/api/devices', function (req, res){
-	console.log('devices post');
+	//console.log('devices post');
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
-	console.log(deviceid);
+	//console.log(deviceid);
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
-console.log(devices);
+//console.log(devices);
 res.json({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 	});
 	let devices = [];
 app.put('/api/devices', function (req, res){
-	console.log('devices put');
+	//console.log('devices put');
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
-	console.log(deviceid);
+	//console.log(deviceid);
 	
 Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==deviceid)
@@ -166,7 +166,7 @@ Object.keys(devices).forEach(function(key){
               });
 			  devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 
-console.log(devices);
+//console.log(devices);
 res.json({deviceid: deviceid, username: username, subscription: subscription, chain: 'whaleshares'});
 
 	});
@@ -175,7 +175,7 @@ app.put('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==req.deviceid)
     devices[key].deviceid = req.body.newdev;
-console.log(devices[key]);
+//console.log(devices[key]);
 res.json(devices[key]);
 });
 
@@ -184,26 +184,26 @@ res.json(devices[key]);
 app.get('/api/devices/:deviceid', function (req, res){
 	let devs = []
 	Object.keys(devices).forEach(function(key){
-		console.log(devices[key].deviceid);
-		console.log(req.params.deviceid);
+		//console.log(devices[key].deviceid);
+		//console.log(req.params.deviceid);
   if(devices[key].deviceid==req.params.deviceid) {
 	  devs.push(devices[key]);
-	  console.log(devices[key]);
+	  //console.log(devices[key]);
   }
 });
-console.log('devs');
-console.log(devs);
-console.log('enddevs');
+//console.log('devs');
+//console.log(devs);
+//console.log('enddevs');
 res.json(devs);
 })
 app.post('/', function(req, res){
 	let key = req.body.key;
-	//console.log(key);
+	////console.log(key);
 	let transferothers = req.body.transferothers;
 	let transferself = req.body.transferself;
 	let commentself = req.body.commentself;
 	let commentothers = req.body.commentothers;
-	//console.log(commentself);
+	////console.log(commentself);
 	for (var n in names){
 		if (names[n].conf == key){
 			names[n].commentothers = commentothers;
@@ -223,7 +223,7 @@ app.post('/', function(req, res){
 // Create constant variables
 
 var port = 8081;
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => //console.log(`Example app listening on port ${port}!`))
 //const Discord = require("discord.js");
 
 // This is your client. Some people call it `bot`, some people call it `self`, 
@@ -239,22 +239,22 @@ const config = {
 var channel;
 client.on("ready", () => {
 channel = client.channels.get("510190777096208394");
-//console.log(channel)
+////console.log(channel)
 //channel.send('test')
 
 })
 let names = {}
 client.on("message", (messageContents) => {
-console.log(messageContents.author.id);
-console.log(messageContents.author.username);
-console.log(messageContents.content);
+//console.log(messageContents.author.id);
+//console.log(messageContents.author.username);
+//console.log(messageContents.content);
 if (messageContents.content.includes('..reg')){
 let smokeName = messageContents.content.split(' ')[1];
-console.log(smokeName);
+//console.log(smokeName);
 let conf =  doConfs();
 	names[smokeName] = {conf: conf, name: smokeName, id: messageContents.author.id, authed: false}
 
-console.log(conf);
+//console.log(conf);
 messageContents.channel.send("OK, to verify that @" + smokeName+ " account belongs to you, 0.001 SMOKE to @tradeitforweed Use this token as memo: "+ conf) 
 }
 
@@ -290,10 +290,10 @@ steem.api.setOptions({ url: 'ws://104.248.168.86:8090/' });
 steem.config.set('address_prefix','SMK');
 steem.config.set('chain_id','1ce08345e61cd3bf91673a47fc507e7ed01550dab841fd9cdb0ab66ef576aaf0');
 steem.api.getAccounts(['powerpics'], function(err, result) {
-                    console.log(result[0].id);
+                    //console.log(result[0].id);
                     
 steem.api.getAccounts(['gyani'], function(err, result) {
-                    console.log(err, result);
+                    //console.log(err, result);
 					var good = false;
                     for (var r in result[0].witness_votes){
                       if(result[0].witness_votes[r] == 'swapbit'){
@@ -334,24 +334,24 @@ var release = steem.api.streamBlockNumber('head', function(err, result) {
 if (!results.includes(result)){ 
 results.push(result);
 loadBlock(result);
-console.log(result);
+//console.log(result);
 }
 });
 
  }, 2.0 * 1000);
 const loadBlock = blockNum => {
 steem.api.getBlock(blockNum, function(err, result) {
- console.log(err, result);
+ //console.log(err, result);
 
 
   const operations = [];
-//  console.log(result.timestamp);
+//  //console.log(result.timestamp);
 // operations.timestamp= result.timestamp;
   result.transactions.forEach(transaction => {
 //    transaction.operations.timestamp =result.timestamp;
     operations.push(...transaction.operations);
 });
-//console.log(operations);  
+////console.log(operations);  
        const notifications = getNotifications(operations,result.timestamp, blockNum);
 
 });
@@ -366,8 +366,8 @@ const getNotifications = (ops,thetimestamp, blockNum) => {
     const params = op[1];
 	op.timestamp = thetimestamp;
 	op.block=blockNum;
-	console.log(op);
-	console.log(type);
+	//console.log(op);
+	//console.log(type);
     switch (type) {
       case 'comment': {
         const isRootPost = !params.parent_author;
@@ -391,11 +391,11 @@ let ts = Date.parse(op.timestamp) / 1000
 			  gkf: true,
               block: op.block,
           };
-		  console.log(notification);
+		  //console.log(notification);
 	if (!perms.includes(params.permlink)){
 //perms.push(params.permlink)
           notifications.push([params.parent_author, notification]);
-//console.log(notifications); 
+////console.log(notifications); 
 }       
 }
 
@@ -451,7 +451,7 @@ let ts = Date.parse(op.timestamp) / 1000
         try {
           json = JSON.parse(params.json);
         } catch (err) {
-          console.log('Wrong json format on custom_json', err);
+          //console.log('Wrong json format on custom_json', err);
         }
         switch (params.id) {
           case 'follow': {
@@ -509,7 +509,7 @@ const notification = {
               };
         if (!perms.includes(params.permlink)){
 //perms.push(params.permlink);        
-      // console.log('Reblog', [json[1].author, JSON.stringify(notification)]);
+      // //console.log('Reblog', [json[1].author, JSON.stringify(notification)]);
               notifications.push([json[1].author, notification]);
             }
 }
@@ -528,7 +528,7 @@ let ts=Date.parse(op.timestamp) / 1000
           timestamp: Date.parse(op.timestamp) / 1000,
           block: op.block,
         };
-        // console.log('Witness vote', [params.witness, notification]);
+        // //console.log('Witness vote', [params.witness, notification]);
         if (!perms.includes(params.permlink)){
 //perms.push(params.permlink);        
 notifications.push([params.witness, notification]);
@@ -556,7 +556,7 @@ notifications.push([params.witness, notification]);
 			gkf: true,
             block: op.block,
           };
-          // console.log('Downvote', JSON.stringify([params.author, notification]));
+          // //console.log('Downvote', JSON.stringify([params.author, notification]));
           notifications.push([params.author, notification]);
         
         break;
@@ -575,19 +575,19 @@ let ts= Date.parse(op.timestamp) / 1000
           timestamp: Date.parse(op.timestamp) / 1000,
           block: op.block,
         };
-        // console.log('Transfer', JSON.stringify([params.to, notification]));
+        // //console.log('Transfer', JSON.stringify([params.to, notification]));
         notifications.push([params.to, notification]);
         break;
       }
     }
   });
-console.log(notifications);
+//console.log(notifications);
 
 	notifications.forEach(notification => {
 	devices.forEach(device => {
-		console.log(device);
+		//console.log(device);
                 if (device['username']	 === notification[0]) {
-                  //console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
+                  ////console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
 				  let doPost = false;
 					if (notification[1].type == 'reblog' && device['subscription']['rewhaleshares'] == true){
 						
