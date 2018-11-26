@@ -213,8 +213,8 @@ app.get('/api/devices/:deviceid', function (req, res){
 	let devs = []
 	Object.keys(devices).forEach(function(key){
 		console.log(devices[key].deviceid);
-		console.log(req.deviceid);
-  if(devices[key].deviceid==req.deviceid) {
+		console.log(req.body.deviceid);
+  if(devices[key].deviceid==req.body.deviceid) {
 	  devs.push(devices[key]);
 	  console.log(devices[key]);
   }
