@@ -145,7 +145,7 @@ app.post('/api/devices', function (req, res){
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
 	});
-	
+	let devices = [];
 app.put('/api/devices', function (req, res){
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
