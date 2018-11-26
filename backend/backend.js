@@ -138,29 +138,35 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.post('/api/devices', function (req, res){
+	console.log('devices post');
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
+	console.log(deviceid);
 	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
-console.log({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+console.log(devices);
 res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 	});
 	let devices = [];
 app.put('/api/devices', function (req, res){
+	console.log('devices put');
 	let deviceid = req.body.deviceid;
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
+	console.log(deviceid);
 	
 Object.keys(devices).forEach(function(key){
   if(devices[key].deviceid==deviceid)
     delete devices[key];
-devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
-console.log({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
-res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
 
               });
+			  devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
+console.log(devices);
+res.json({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
 	});
 	
 app.put('/api/devices/:deviceid', function (req, res){
