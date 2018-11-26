@@ -155,36 +155,6 @@ app.put('/api/devices', function (req, res){
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
-	if (subscription.vote == true){
-		subscription.vote = 'true';
-	}
-	if (subscription.comment == true){
-		subscription.comment = 'true';
-	}
-	if (subscription.follow == true){
-		subscription.follow = 'true';
-	}
-	if (subscription.rewhaleshares == true){
-		subscription.rewhaleshares = 'true';
-	}
-	if (subscription.mention == true){
-		subscription.mention = 'true';
-	}
-	if (subscription.vote == false){
-		subscription.vote = 'false';
-	}
-	if (subscription.comment == false){
-		subscription.comment = 'false';
-	}
-	if (subscription.follow == false){
-		subscription.follow = 'false';
-	}
-	if (subscription.rewhaleshares == false){
-		subscription.rewhaleshares = 'false';
-	}
-	if (subscription.mention == false){
-		subscription.mention = 'false';
-	}
 	console.log(deviceid);
 	
 Object.keys(devices).forEach(function(key){
