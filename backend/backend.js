@@ -20,7 +20,7 @@ const steem = require("@whaleshares/wlsjs");
 steem.config.set('address_prefix','WLS');
 //steem.config.set('chain_id','1ce08345e61cd3bf91673a47fc507e7ed01550dab841fd9cdb0ab66ef576aaf0');
 
-steem.api.setOptions({url: 'https://rpc.kennybll.com:8090'});
+steem.api.setOptions({url: 'http://rpc.kennybll.com:8090'});
 /*
 setInterval(function(){
 	steem.api.streamTransactions("head",(error, result) => {
