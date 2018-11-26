@@ -155,6 +155,30 @@ app.put('/api/devices', function (req, res){
 	let username = req.body.username;
 	let subscription = req.body.subscription;
 	let chain = req.body.chain;
+	if (subscription.vote == true){
+		subscription.vote = 'true';
+	}
+	if (subscription.comment == true){
+		subscription.comment = 'true';
+	}
+	if (subscription.follow == true){
+		subscription.follow = 'true';
+	}
+	if (subscription.rewhaleshares == true){
+		subscription.rewhaleshares = 'true';
+	}
+	if (subscription.vote == false){
+		subscription.vote = 'false';
+	}
+	if (subscription.comment == false){
+		subscription.comment = 'false';
+	}
+	if (subscription.follow == false){
+		subscription.follow = 'false';
+	}
+	if (subscription.rewhaleshares == false){
+		subscription.rewhaleshares = 'false';
+	}
 	console.log(deviceid);
 	
 Object.keys(devices).forEach(function(key){
@@ -574,27 +598,27 @@ console.log(notifications);
                 if (device['username']	 === notification[0]) {
                   //console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
 				  let doPost = false;
-					if (notification[1].type == 'reblog' && device['subscription']['resteem']){
+					if (notification[1].type == 'reblog' && device['subscription']['rewhaleshares'] == 'true'){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'reply' && device['subscription']['mention']){
+					else if (notification[1].type == 'reply' && device['subscription']['mention']== 'true'){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'mention' && device['subscription']['mention']){
+					else if (notification[1].type == 'mention' && device['subscription']['mention']== 'true'){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'vote' && device['subscription']['vote']){
+					else if (notification[1].type == 'vote' && device['subscription']['vote']== 'true'){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'comment' && device['subscription']['comment']){
+					else if (notification[1].type == 'comment' && device['subscription']['comment']== 'true'){
 						
 						doPost = true;
 					}
-					else if (notification[1].type == 'follow' && device['subscription']['follow']){
+					else if (notification[1].type == 'follow' && device['subscription']['follow']== 'true'){
 						
 						doPost = true;
 					}
