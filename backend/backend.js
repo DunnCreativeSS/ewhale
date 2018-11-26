@@ -643,4 +643,7 @@ let postedIds = []
 //setInterval(function(){ 
 //getHead() }, 2.0 * 1000);
 
-admin.initializeApp();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://ewhale-a4430.firebaseio.com'
+});
