@@ -181,8 +181,10 @@ res.json(devices[key]);
 			  
 app.get('/api/devices/:deviceid', function (req, res){
 	Object.keys(devices).forEach(function(key){
+		console.log(devices[key]);
   if(devices[key].deviceid==req.deviceid)
 	  console.log(devices[key]);
+console.log(devices[key]);
 res.json(devices[key]);
 });
 })
