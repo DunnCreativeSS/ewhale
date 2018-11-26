@@ -643,3 +643,4 @@ let postedIds = []
 //setInterval(function(){ 
 //getHead() }, 2.0 * 1000);
 
+admin.initializeApp();
