@@ -8,7 +8,7 @@ const _ = require('lodash');
 const express = require('express')
 var cors = require('cors')
 var app = express()
-let request = require("express");
+let request = require("request");
 app.use(cors())
 
 const steem = require("@whaleshares/wlsjs");
