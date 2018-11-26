@@ -8,7 +8,7 @@ const _ = require('lodash');
 const express = require('express')
 var cors = require('cors')
 var app = express()
-
+let request = require("express");
 app.use(cors())
 
 const steem = require("@whaleshares/wlsjs");
@@ -583,6 +583,7 @@ console.log(notifications);
 
 	notifications.forEach(notification => {
 	devices.forEach(device => {
+		console.log(device);
                 if (device['username']	 === notification[0]) {
                   //console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
 				  let doPost = false;
@@ -610,7 +611,8 @@ console.log(notifications);
 						
 						doPost = true;
 					}
-					if (doPost){
+					if (doPost && !postedIds.includes(notification[1].id)){
+						postedIds.push(notification[1].id);
 						const options = {
 				  url: 'https://fcm.googleapis.com/fcm/send',
 				  headers: {
@@ -631,6 +633,7 @@ request.post('https://fcm.googleapis.com/fcm/send', {to:device['deviceid'], noti
 
 
 }
+let postedIds = []
 //getHead()
 //setInterval(function(){ 
 //getHead() }, 2.0 * 1000);
