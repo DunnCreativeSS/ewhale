@@ -167,6 +167,9 @@ app.put('/api/devices', function (req, res){
 	if (subscription.rewhaleshares == true){
 		subscription.rewhaleshares = 'true';
 	}
+	if (subscription.mention == true){
+		subscription.mention = 'true';
+	}
 	if (subscription.vote == false){
 		subscription.vote = 'false';
 	}
@@ -178,6 +181,9 @@ app.put('/api/devices', function (req, res){
 	}
 	if (subscription.rewhaleshares == false){
 		subscription.rewhaleshares = 'false';
+	}
+	if (subscription.mention == false){
+		subscription.mention = 'false';
 	}
 	console.log(deviceid);
 	
