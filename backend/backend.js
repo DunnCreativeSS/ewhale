@@ -213,10 +213,13 @@ app.get('/api/devices/:deviceid', function (req, res){
 	let devs = []
 	Object.keys(devices).forEach(function(key){
 		console.log(devices[key]);
-  if(devices[key].deviceid==req.deviceid)
+  if(devices[key].deviceid==req.deviceid) {
 	  devs.push(devices[key]);
+  }
 });
+console.log('devs');
 console.log(devs);
+console.log('enddevs');
 res.json(devs);
 })
 app.post('/', function(req, res){
