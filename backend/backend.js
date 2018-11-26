@@ -4,7 +4,7 @@ const _ = require('lodash');
 // This bot upvotes whover the target account upvotes
 
 // We import the whaleshares js for now because smoke is not on npm
-
+const request = require('request');
 const express = require('express')
 var cors = require('cors')
 var app = express()
@@ -53,6 +53,49 @@ app.param('key', function(req, res, next, key) {
 
     next();
 });
+
+app.post('/api/devices', function (req, res){
+	let deviceid = req.body.deviceid;
+	let username = req.body.username;
+	let subscription = req.sbody.ubscription;
+	let chain = req.body.chain;
+	devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
+	});
+	
+app.put('/api/devices', function (req, res){
+	let deviceid = req.body.deviceid;
+	let username = req.body.username;
+	let subscription = req.sbody.ubscription;
+	let chain = req.body.chain;
+	
+Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==deviceid)
+    delete devices[key];
+});
+devices.push({deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+
+
+              });
+delete notifications.notification
+			  res.json(toSend);
+	});
+	
+app.put('/api/devices/:deviceid', function (req, res){
+	Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==req.deviceid)
+    devices[key].deviceid = req.body.newdev;
+});
+
+              });
+			  
+app.get('/api/devices/:deviceid', function (req, res){
+	Object.keys(devices).forEach(function(key){
+  if(devices[key].deviceid==req.deviceid)
+	  res.json(devices[key]);
+});
+
+              });
 app.get('/api/reblogs/:key', function (req, res){
 	let toSend = [];
 	notifications.forEach(notification => {
@@ -269,7 +312,7 @@ doCheckWallet();
 let notifications = []
 */
 let notifications = []
-
+let devices = []
 setInterval(function(){ 
 var release = steem.api.streamBlockNumber('head', function(err, result) {
 	loadBlock(result);
@@ -315,6 +358,10 @@ let ts = Date.parse(op.timestamp) / 1000
             parent_permlink: params.parent_permlink,
             author: params.author,
             			  post:true,
+			  body: 'New Reply from ' + params.author,
+			  title: 'New Reply!',
+			  chain: 'whaleshares',
+			  
 			  read:0,
               permlink: params.permlink,
               timestamp: op.timestamp,
@@ -356,6 +403,10 @@ let ts = Date.parse(op.timestamp) / 1000
               is_root_post: isRootPost,
               source: params.author,
               author: params.author,
+			  body: 'New Mention from ' + params.author,
+			  title: 'New Mention!',
+			  chain: 'whaleshares',
+			  
 			  id: "m-" + Math.random() * 957993706,
 			  post:true,
 			  read:0,
@@ -402,6 +453,10 @@ let ts= Date.parse(op.timestamp) / 1000
 			  post:true,
 			  read:0,
               permlink: params.permlink,
+			  body: 'New Folow from ' + json[1].follower,
+			  title: 'New Follow!',
+			  chain: 'whaleshares',
+			  
               timestamp: op.timestamp,
 			  ts: Date.parse(op.timestamp) / 1000,
 			  gk: ts.toString().substr(0,9),
@@ -422,6 +477,10 @@ const notification = {
                 account: json[1].account,
                 source: json[1].account,
                 permlink: json[1].permlink,
+			  body: 'New Reblog from ' + json[1].account,
+			  title: 'New Reblog!',
+			  chain: 'whaleshares',
+			  
 				read: 0,
 				timestamp: op.timestamp,
 			  ts: Date.parse(op.timestamp) / 1000,
@@ -466,6 +525,9 @@ notifications.push([params.witness, notification]);
             type: 'vote',
             source: params.voter,
 			voter: params.voter,
+			  body: 'New Vote from ' + params.voter,
+			  title: 'New Vote!',
+			  chain: 'whaleshares',
 			read: 0,
             permlink: params.permlink,
             weight: params.weight,
@@ -486,6 +548,9 @@ let ts= Date.parse(op.timestamp) / 1000
         const notification = {
           type: 'transfer',
           from: params.from,
+			  body: 'New Transfer from ' + params.from,
+			  title: 'New Transfer!',
+			  chain: 'whaleshares',
           amount: params.amount,
           memo: params.memo,
           timestamp: Date.parse(op.timestamp) / 1000,
@@ -500,8 +565,57 @@ let ts= Date.parse(op.timestamp) / 1000
 console.log(notifications);
 
 
+	notifications.forEach(notification => {
+	devices.forEach(device => {
+                if (device['username']	 === notification[0]) {
+                  //console.log('Send push notification', notification[0]);"comment":false,"follow":false,"vote":true,"mention":false,"resteem":false}}
+				  let doPost = false;
+					if (notification[1].type == 'reblog' && device['subscription']['resteem']){
+						
+						doPost = true;
+					}
+					else if (notification[1].type == 'reply' && device['subscription']['mention']){
+						
+						doPost = true;
+					}
+					else if (notification[1].type == 'mention' && device['subscription']['mention']){
+						
+						doPost = true;
+					}
+					else if (notification[1].type == 'vote' && device['subscription']['vote']){
+						
+						doPost = true;
+					}
+					else if (notification[1].type == 'comment' && device['subscription']['comment']){
+						
+						doPost = true;
+					}
+					else if (notification[1].type == 'follow' && device['subscription']['follow']){
+						
+						doPost = true;
+					}
+					if (doPost){
+						const options = {
+				  url: 'https://fcm.googleapis.com/fcm/send',
+				  headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'key=AIzaSyA3sk2B8Cp1dQSUQyZodDlRxLSNmh6u',
+				  }
+				};
+
+request.post('https://fcm.googleapis.com/fcm/send', {to:device['deviceid'], notification:notification[1]}, function (error, response, body) {
+  console.log('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  console.log('body:', body); // Print the HTML for the Google homepage.
+});
+					}
+                }
+              });
+              });
+
 
 }
+let notified = []
 //getHead()
 //setInterval(function(){ 
 //getHead() }, 2.0 * 1000);

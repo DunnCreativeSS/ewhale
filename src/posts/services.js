@@ -11,19 +11,25 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/currencyRate/"+code_to.toUpperCase()+"/"+chain);
       },
       saveSubscription: function(deviceid, username, subscription) {
-        return $http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+        $http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+      
+		return $http.post(API_END_POINT2+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
       },
       updateSubscription: function(deviceid, username, subscription) {
-        return $http.put(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+$http.put(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+            
+	   return $http.put(API_END_POINT2+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
       },
       updateToken: function(deviceid, newdev) {
-        return $http.put(API_END_POINT+"/api/device/"+deviceid, {newdev: newdev, chain: $rootScope.$storage.chain});
+       $http.put(API_END_POINT+"/api/device/"+deviceid, {newdev: newdev, chain: $rootScope.$storage.chain});
+     
+	   return $http.put(API_END_POINT2+"/api/device/"+deviceid, {newdev: newdev, chain: $rootScope.$storage.chain});
       },
       deleteSubscription: function(deviceid) {
         return $http.delete(API_END_POINT+"/api/devices/"+deviceid);
       },
       getSubscriptions: function(deviceid) {
-        return $http.get(API_END_POINT+"/api/devices/"+deviceid);
+        return $http.get(API_END_POINT2+"/api/devices/"+deviceid);
       },
 			addBookmark: function(user, bookmark) {
         return $http.post(API_END_POINT+"/api/bookmark", {username: user, author: bookmark.author, permlink: bookmark.permlink, chain: $rootScope.$storage.chain});
