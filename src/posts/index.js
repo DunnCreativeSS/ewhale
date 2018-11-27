@@ -1316,15 +1316,72 @@ $rootScope.isWitnessVoted2 = function() {
 
  app.push.on('registration', function(data) {
      console.log("registration event: " + data.registrationId);
-     document.getElementById("regId").innerHTML = data.registrationId;
+     //document.getElementById("regId").innerHTML = data.registrationId;
      var oldRegId = localStorage.getItem('registrationId');
      if (oldRegId !== data.registrationId) {
          // Save new registration ID
          localStorage.setItem('registrationId', data.registrationId);
          // Post registrationId to your app server as the value has changed
      }
- });
+let token = data.registrationId;
+$rootScope.log("device "+token);
+	    console.log("device " + token);
+            $rootScope.$storage.deviceid = token;
+            if ($rootScope.user) {
+              APIs.saveSubscription(token, $rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
+                $rootScope.log(angular.toJson(res));
+              });
+            } else {
+              APIs.saveSubscription(token, "", { device: ionic.Platform.platform() }).then(function(res){
+                $rootScope.log(angular.toJson(res));
+              });
+            }
 
+ });
+ app.push.on('notification', function(data) {
+$rootScope.log(angular.toJson(data));
+
+            if(data.wasTapped){
+              //Notification was received on device tray and tapped by the user.
+              if (data.author && data.permlink) {
+                if (!$rootScope.$storage.pincode) {
+
+                  var alertPopup = $ionicPopup.confirm({
+                    title: data.title,
+                    template: data.body +" "+ $filter('translate')('OPENING_POST') + " ?! "
+                  });
+
+                  alertPopup.then(function(res) {
+                    $rootScope.log('Thank you for seeing alert from tray');
+                    if (res) {
+                      if (data.chain !== $rootScope.$storage.chain) {
+                        $rootScope.$storage.chain = data.chain;
+                        $rootScope.$broadcast('changedChain');
+                        $rootScope.$emit('changedCurrency', {currency: $rootScope.$storage.currency, enforce: true});
+                      }
+                      setTimeout(function() {
+                        $rootScope.getContentAndOpen({author:data.author, permlink:data.permlink});
+                      }, 300);
+                    } else {
+                      $rootScope.log("not sure to open alert");
+                    }
+                  });
+
+                } else {
+                  $rootScope.$storage.notifData = {title:data.title, body: data.body, author: data.author, permlink: data.permlink};
+                  $rootScope.pinenabled = true;
+                }
+              }
+            } else{
+              //Notification was received in foreground. Maybe the user needs to be notified.
+              //alert( JSON.stringify(data) );
+              if (data.author && data.permlink) {
+                $rootScope.showMessage(data.title, data.body+" "+data.permlink);
+              } else {
+                $rootScope.showMessage(data.title, data.body);
+              }
+            }
+});
  app.push.on('error', function(e) {
      console.log("push error = " + e.message);
  });
