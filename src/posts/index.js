@@ -1340,6 +1340,17 @@ $rootScope.log("device "+token);
  });
  app.push.on('notification', function(data) {
 $rootScope.log(angular.toJson(data));
+     var push = '<div class="row">' +
+       '<div class="col s12 m6">' +
+       '  <div class="card darken-1">' +
+       '    <div class="card-content black-text">' +
+       '      <span class="card-title black-text">' + data.title + '</span>' +
+       '      <p>' + data.message + '</p>' +
+       '      <p>' + data.additionalData.foreground + '</p>' +
+       '    </div>' +
+       '  </div>' +
+       ' </div>' +
+       '</div>';
 
             if(data.wasTapped){
               //Notification was received on device tray and tapped by the user.
@@ -1381,6 +1392,7 @@ $rootScope.log(angular.toJson(data));
                 $rootScope.showMessage(data.title, data.body);
               }
             }
+
 });
  app.push.on('error', function(e) {
      console.log("push error = " + e.message);
@@ -1389,7 +1401,7 @@ $rootScope.log(angular.toJson(data));
 	}, 1000);
 	var fcmya = 0; 
 	fcmya = setInterval(function(){
-        console.log('fcm...');
+        //console.log('fcm...');
 	/*
 	if (FCMPlugin) {
 	  

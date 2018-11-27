@@ -623,6 +623,7 @@ let ts= Date.parse(op.timestamp) / 1000
 							author: notification[1].author,
 							permlink: notification[1].permlink
 						},
+						"notification": { "title":notification[1].title, "body":notification[1].body },
 						token: device.deviceid
 					};
 					admin.messaging().send(message)
@@ -647,3 +648,4 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://ewhale-a4430.firebaseio.com'
 });
+
