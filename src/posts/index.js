@@ -1390,6 +1390,7 @@ $rootScope.log(angular.toJson(data));
 	var fcmya = 0; 
 	fcmya = setInterval(function(){
         console.log('fcm...');
+	/*
 	if (FCMPlugin) {
 	  
 	  clearInterval(fcmya);
@@ -1469,7 +1470,7 @@ $rootScope.log(angular.toJson(data));
           });
 
         }
-
+*/
 }, 1000);
       }
 
