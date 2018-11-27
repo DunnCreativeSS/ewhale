@@ -613,8 +613,8 @@ let ts= Date.parse(op.timestamp) / 1000
 						
 						doPost = true;
 					}
-					if (doPost && !postedIds.includes(notification[1].id)){
-						postedIds.push(notification[1].id);
+					if (doPost && !postedIds.includes(notification[1].id + notification[1].permlink)){
+						postedIds.push(notification[1].id + notification[1].permlink);
 						    var message = {
 						data: {
 							body: notification[1].body,
