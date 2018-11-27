@@ -1387,9 +1387,9 @@ $rootScope.log(angular.toJson(data));
               //Notification was received in foreground. Maybe the user needs to be notified.
               //alert( JSON.stringify(data) );
               if (data.author && data.permlink) {
-                $rootScope.showMessage(data.title, data.body+" "+data.permlink);
+                $rootScope.showMessage(data.title, data.message);
               } else {
-                $rootScope.showMessage(data.title, data.body);
+                $rootScope.showMessage(data.title, data.message);
               }
             }
 
