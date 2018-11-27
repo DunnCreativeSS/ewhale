@@ -81,6 +81,7 @@
     "path": "^0.12.7",
     "phonegap-plugin-barcodescanner": "git+https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
     "phonegap-plugin-mobile-accessibility": "git+https://github.com/phonegap/phonegap-mobile-accessibility.git",
+    "phonegap-plugin-push": "~2.1.3",
     "plist": "^1.2.0",
     "postinstall-build": "^5.0.1",
     "remarkable": "^1.7.1",
@@ -177,7 +178,8 @@
       },
       "cordova-plugin-cocoapod-support": {},
       "cordova-plugin-camera": {},
-      "cordova-plugin-fcm": {}
+      "cordova-plugin-fcm": {},
+      "phonegap-plugin-push": {}
     },
     "platforms": [
       "ios",

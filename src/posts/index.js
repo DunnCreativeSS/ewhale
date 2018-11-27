@@ -1298,6 +1298,38 @@ $rootScope.isWitnessVoted2 = function() {
           }
           //$rootScope.showMessage("title", angular.toJson(data));
         }); */ 
+	var pushya = 0;
+	pushya = setInterval(function(){
+	if(PushNotification){
+	clearInterval(pushya);
+ app.push = PushNotification.init({
+     "android": {
+         "senderID": "ewhale-a4430"
+     },
+     "ios": {
+       "sound": true,
+       "vibration": true,
+       "badge": true
+     },
+     "windows": {}
+ });
+
+ app.push.on('registration', function(data) {
+     console.log("registration event: " + data.registrationId);
+     document.getElementById("regId").innerHTML = data.registrationId;
+     var oldRegId = localStorage.getItem('registrationId');
+     if (oldRegId !== data.registrationId) {
+         // Save new registration ID
+         localStorage.setItem('registrationId', data.registrationId);
+         // Post registrationId to your app server as the value has changed
+     }
+ });
+
+ app.push.on('error', function(e) {
+     console.log("push error = " + e.message);
+ });
+}
+	}, 1000);
 	var fcmya = 0; 
 	fcmya = setInterval(function(){
         console.log('fcm...');
