@@ -26,7 +26,7 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="23" />
+    <preference name="android-targetSdkVersion" value="26" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="AutoHideSplashScreen" value="true" />
@@ -134,7 +134,7 @@
         <variable name="ANDROID_PATHPREFIX" value="/" />
     </plugin>
     <plugin name="cordova-plugin-crosswalk-webview" spec="^2.4.0">
-        <variable name="XWALK_VERSION" value="23+" />
+        <variable name="XWALK_VERSION" value="26+" />
         <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
         <variable name="XWALK_COMMANDLINE" value="--disable-pull-to-refresh-effect" />
         <variable name="XWALK_MODE" value="embedded" />
