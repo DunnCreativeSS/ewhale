@@ -1303,7 +1303,7 @@ $rootScope.isWitnessVoted2 = function() {
 	if(PushNotification){
 AppRate.preferences = {
   displayAppName: 'WhalesApp',
-  usesUntilPrompt: 6,
+  usesUntilPrompt: 3,
   promptAgainForEachNewVersion: true,
   inAppReview: true,
   storeAppURL: {
@@ -1337,7 +1337,7 @@ AppRate.preferences = {
   }
 };
 
-AppRate.promptForRating();
+AppRate.promptForRating(false);
 
 	clearInterval(pushya);
  app.push = PushNotification.init({
