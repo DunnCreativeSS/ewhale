@@ -1301,6 +1301,44 @@ $rootScope.isWitnessVoted2 = function() {
 	var pushya = 0;
 	pushya = setInterval(function(){
 	if(PushNotification){
+AppRate.preferences = {
+  displayAppName: 'WhalesApp',
+  usesUntilPrompt: 3,
+  promptAgainForEachNewVersion: true,
+  inAppReview: true,
+  storeAppURL: {
+    ios: '<my_app_id>',
+    android: 'market://details?id=com.whaleshares.whalesapp',
+    windows: 'ms-windows-store://pdp/?ProductId=<the apps Store ID>',
+    blackberry: 'appworld://content/[App Id]/',
+    windows8: 'ms-windows-store:Review?name=<the Package Family Name of the application>'
+  },
+  customLocale: {
+    title: "Would you mind rating %@?",
+    message: "It won’t take more than a minute and helps to promote our app. Thanks for your support!",
+    cancelButtonLabel: "No, Thanks",
+    laterButtonLabel: "Remind Me Later",
+    rateButtonLabel: "Rate It Now",
+    yesButtonLabel: "Yes!",
+    noButtonLabel: "Not really",
+    appRatePromptTitle: 'Do you like using %@',
+    feedbackPromptTitle: 'Mind giving us some feedback?',
+  },
+  callbacks: {
+    handleNegativeFeedback: function(){
+      window.open('mailto:jarettrsdunn1999@gmail.com','_system');
+    },
+    onRateDialogShow: function(callback){
+      callback(1) // cause immediate click on 'Rate Now' button
+    },
+    onButtonClicked: function(buttonIndex){
+      console.log("onButtonClicked -> " + buttonIndex);
+    }
+  }
+};
+
+AppRate.promptForRating();
+
 	clearInterval(pushya);
  app.push = PushNotification.init({
      "android": {
