@@ -1308,7 +1308,7 @@ AppRate.preferences = {
   inAppReview: true,
   storeAppURL: {
     ios: '<my_app_id>',
-    android: 'market://details?id=com.whaleshares.whalesapp',
+    android: 'market://details?id=com.whaleshares.ewhale',
     windows: 'ms-windows-store://pdp/?ProductId=<the apps Store ID>',
     blackberry: 'appworld://content/[App Id]/',
     windows8: 'ms-windows-store:Review?name=<the Package Family Name of the application>'
