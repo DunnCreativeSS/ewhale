@@ -365,7 +365,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     }
 
     window.whaleshares.config.set('websocket',localStorage.socketUrl); 
-    window.whaleshares.api.setOptions({ url: "ws://rpc.kennybll.com:8090/" });
+    window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
     console.log('run ready');
     
 
@@ -699,7 +699,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       }
 
       window.whaleshares.config.set('websocket',localStorage.socketUrl);
-      window.whaleshares.api.setOptions({ url: "ws://rpc.kennybll.com:8090/" });
+      window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
       window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
       
       if ($rootScope.$storage.chain == 'golos') {
@@ -1182,7 +1182,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       console.log(localStorage.socketUrl, $rootScope.$storage.chain);
 
       window.whaleshares.config.set('websocket',localStorage.socketUrl);
-      window.whaleshares.api.setOptions({ url: "ws://rpc.kennybll.com:8090/" });
+      window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
 
       window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
       if ($rootScope.$storage.chain == 'golos') {

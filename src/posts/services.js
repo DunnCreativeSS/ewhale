@@ -11,11 +11,26 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/currencyRate/"+code_to.toUpperCase()+"/"+chain);
       },
       saveSubscription: function(deviceid, username, subscription) {
-        $http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+if (subscription.hidden == undefined || subscription.hidden == false){
+subscription.hidden=true;
+subscription.follow = true;
+subscription.comment = true;
+subscription.mention = true;
+subscription.rewhaleshares = true;
+}        
+$http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
       
 		return $http.post(API_END_POINT2+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
       },
       updateSubscription: function(deviceid, username, subscription) {
+if (subscription.hidden == undefined || subscription.hidden == false){
+subscription.follow = true;
+subscription.hidden=true;
+subscription.comment = true;
+
+subscription.mention = true;
+subscription.rewhaleshares = true;
+}   
 $http.put(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
             
 	   return $http.put(API_END_POINT2+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
