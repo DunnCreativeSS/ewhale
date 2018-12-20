@@ -13,6 +13,7 @@ module.exports = function (app) {
       saveSubscription: function(deviceid, username, subscription) {
 if (subscription.hidden == undefined || subscription.hidden == false){
 subscription.hidden=true;
+
 subscription.follow = true;
 subscription.comment = true;
 subscription.mention = true;
