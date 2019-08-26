@@ -2,7 +2,7 @@ console.log('index.js');
 
 var fs = require('fs');
 
-var app = angular.module('ewhaleshares', [
+var app = angular.module('evisionindustry', [
 	'ionic',
 	'ngStorage',
 	'ngCordova',
@@ -16,20 +16,20 @@ var app = angular.module('ewhaleshares', [
 ]);
 
 if (localStorage.getItem("socketUrl") === null) {
-  localStorage.setItem("socketUrl", "ws://rpc.kennybll.com:8090");
-} else if (localStorage.getItem("socketUrl") == "ws://rpc.kennybll.com:8090") {
-  localStorage.socketUrl="ws://rpc.kennybll.com:8090";
-} else if (localStorage.getItem("socketUrl") == "ws://rpc.kennybll.com:8090" || localStorage.getItem("socketUrl") == "https://whalesharesd.whalesharesit.com") {
-  localStorage.socketUrl="ws://rpc.kennybll.com:8090";
+  localStorage.setItem("socketUrl", "wss://peer.vit.tube");
+} else if (localStorage.getItem("socketUrl") == "wss://peer.vit.tube") {
+  localStorage.socketUrl="wss://peer.vit.tube";
+} else if (localStorage.getItem("socketUrl") == "wss://peer.vit.tube" || localStorage.getItem("socketUrl") == "https://visionindustryd.visionindustryit.com") {
+  localStorage.socketUrl="wss://peer.vit.tube";
 }
 
 localStorage.golosId = "782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12";
-localStorage.whalesharesId = "de999ada2ff7ed3d3d580381f229b40b5a0261aec48eb830e540080817b72866";
-//process.env.DEBUG = "whaleshares.ws*";
+localStorage.visionindustryId = "de999ada2ff7ed3d3d580381f229b40b5a0261aec48eb830e540080817b72866";
+//process.env.DEBUG = "visionindustry.ws*";
 
 Buffer = require('buffer').Buffer;
 
-window.whaleshares = require('@whaleshares/wlsjs');
+window.visionindustry = require('@visionindustry/wlsjs');
 window.remarkable = require('remarkable');
 window.diff_match_patch = require('diff-match-patch');
 window.getSymbol = require('currency-symbol-map');
@@ -253,7 +253,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $s
   ionicImgCacheProvider.quota(100);
 
   // Set folder for cached files.
-  ionicImgCacheProvider.folder('ewhaleshares-cache');
+  ionicImgCacheProvider.folder('evisionindustry-cache');
 
   // Set cache clear limit.
   ionicImgCacheProvider.cacheClearSize(100);
@@ -341,11 +341,11 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $s
 
 });
 
-app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPopup, $ionicLoading, $cordovaSplashscreen, $ionicModal, $timeout, $cordovaToast, APIs, $state, $log, $ionicScrollDelegate, $filter, $translate, $ionicHistory, $sessionStorage, $ionicBody) {
+app.run(function($ionicPlatform, rootScope, $localStorage, $interval, $ionicPopup, $ionicLoading, $cordovaSplashscreen, $ionicModal, $timeout, $cordovaToast, APIs, $state, $log, $ionicScrollDelegate, $filter, $translate, $ionicHistory, $sessionStorage, $ionicBody) {
   
-  $rootScope.$storage = $localStorage;
-  $rootScope.$sstorage = $sessionStorage;
-  $rootScope.log = function(message) {
+  rootScope.$storage = $localStorage;
+  rootScope.$sstorage = $sessionStorage;
+  rootScope.log = function(message) {
     $log.info(message);
   };
   console.log('starting ready');
@@ -364,8 +364,8 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       StatusBar.styleLightContent();
     }
 
-    window.whaleshares.config.set('websocket',localStorage.socketUrl); 
-    window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
+    window.visionindustry.config.set('websocket',localStorage.socketUrl); 
+    window.visionindustry.api.setOptions({ url: "ws://188.166.99.136:8090" });
     console.log('run ready');
     
 
@@ -376,18 +376,18 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       }, 3000 - 1000);
     }
 
-    $rootScope.$storage.chain = 'whaleshares';
+    rootScope.$storage.chain = 'visionindustry';
     
-    $rootScope.chain = $rootScope.$storage.chain;
+    rootScope.chain = rootScope.$storage.chain;
     
     $ionicPlatform.registerBackButtonAction(function(e){
-      if ($rootScope.backButtonPressedOnceToExit) {
+      if (rootScope.backButtonPressedOnceToExit) {
         ionic.Platform.exitApp();
       } else if ($ionicHistory.backView()) {
         $ionicHistory.goBack();
       }
       else {
-        $rootScope.backButtonPressedOnceToExit = true;
+        rootScope.backButtonPressedOnceToExit = true;
 
         $cordovaToast.showShortBottom("Press back button again to exit").then(function(success) {
           // success
@@ -397,7 +397,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
           console.log('err exit');
         });
         setTimeout(function(){
-          $rootScope.backButtonPressedOnceToExit = false;
+          rootScope.backButtonPressedOnceToExit = false;
         }, 2000);
       }
       e.preventDefault();
@@ -405,76 +405,76 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
     }, 101);
 
 
-    $rootScope.user = $rootScope.$storage.user || undefined;
+    rootScope.user = rootScope.$storage.user || undefined;
     
-    if ($rootScope.user) {
-      console.log('Account set: '+$rootScope.user.username);
+    if (rootScope.user) {
+      console.log('Account set: '+rootScope.user.username);
     } else {
       console.log('<===No Account is selected===>');
     }
 
 
-    if (!$rootScope.$storage.users) {
-      $rootScope.$storage.users = [];
+    if (!rootScope.$storage.users) {
+      rootScope.$storage.users = [];
     }
     
-    if (!$rootScope.$storage.theme) {
-      $rootScope.$storage.theme = 'day';
+    if (!rootScope.$storage.theme) {
+      rootScope.$storage.theme = 'day';
     }
 
-    if (!$rootScope.$storage.welcome) {
+    if (!rootScope.$storage.welcome) {
       $state.go('app.posts');
 	
    // $scope.fetchPosts();
     }
 
-    if (!$rootScope.$storage.socketgolos) {
-      $rootScope.$storage.socketgolos = "https://ws.golos.io/";
+    if (!rootScope.$storage.socketgolos) {
+      rootScope.$storage.socketgolos = "https://ws.golos.io/";
     }
-    if (!$rootScope.$storage.socketwhaleshares) {
-      $rootScope.$storage.socketwhaleshares = "ws://rpc.kennybll.com:8090";
+    if (!rootScope.$storage.socketvisionindustry) {
+      rootScope.$storage.socketvisionindustry = "wss://peer.vit.tube";
     }
     
-    window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
-    if ($rootScope.$storage.chain == 'golos') {
-      window.whaleshares.config.set('address_prefix','GLS');  
+    window.visionindustry.config.set('chain_id',localStorage[rootScope.$storage.chain+"Id"]);
+    if (rootScope.$storage.chain == 'golos') {
+      window.visionindustry.config.set('address_prefix','GLS');  
     } else {
-      window.whaleshares.config.set('address_prefix','WLS');  
+      window.visionindustry.config.set('address_prefix','VIT');  
     }
     
-    //window.ejs.ChainConfig.setChainId(localStorage[$rootScope.$storage.chain+"Id"]);
+    //window.ejs.ChainConfig.setChainId(localStorage[rootScope.$storage.chain+"Id"]);
 
-    if (!angular.isDefined($rootScope.$storage.language)) {
+    if (!angular.isDefined(rootScope.$storage.language)) {
       if(typeof navigator.globalization !== "undefined") {
           navigator.globalization.getPreferredLanguage(function(language) {
               $translate.use(language.value).then(function(data) {
                   console.log("SUCCESS -> " + data);
                   if (language.value.indexOf("en") == 0) {
-                    $rootScope.$storage.language = 'en-US';            
+                    rootScope.$storage.language = 'en-US';            
                   }
-                  $rootScope.$storage.language = language.value;
+                  rootScope.$storage.language = language.value;
               }, function(error) {
                   console.log("ERROR -> " + error);
               });
           }, null);
       } else {
-        $rootScope.$storage.language = 'en-US';
+        rootScope.$storage.language = 'en-US';
       }
     } else {
-      $translate.use($rootScope.$storage.language);
+      $translate.use(rootScope.$storage.language);
     }
-    $rootScope.$storage.platformname = "WhaleShares";
-    $rootScope.$storage.platformpower = "WhaleStake";
-    $rootScope.$storage.platformsunit = "WhaleShares";
-    $rootScope.$storage.platformdollar = "WhaleShares Dollar";
-    $rootScope.$storage.platformdunit = "WLS";
-    $rootScope.$storage.platformpunit = "WS";
-    $rootScope.$storage.platformlunit = "WLS";
-    $rootScope.$storage.chain = "whaleshares";
-    $rootScope.$storage.currency = "usd";
-    $rootScope.$storage.currencyRate = 1;
+    rootScope.$storage.platformname = "VisionIndustry";
+    rootScope.$storage.platformpower = "WhaleStake";
+    rootScope.$storage.platformsunit = "VisionIndustry";
+    rootScope.$storage.platformdollar = "VisionIndustry Dollar";
+    rootScope.$storage.platformdunit = "VIT";
+    rootScope.$storage.platformpunit = "WS";
+    rootScope.$storage.platformlunit = "VIT";
+    rootScope.$storage.chain = "visionindustry";
+    rootScope.$storage.currency = "usd";
+    rootScope.$storage.currencyRate = 1;
 
-    $rootScope.$storage.languages = [
+    rootScope.$storage.languages = [
       {id:'en', name: 'English'},
       {id:'en-US', name: 'English US'},
       {id:'en-GB', name: 'English GB'},
@@ -535,24 +535,24 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       {id:'as-IN', name: 'অসমীয়া'}, //Assamese
       {id:'tr-TR', name: 'Türkçe'} //Turkish
     ];
-    if (!$rootScope.$storage.dir) {
-      $rootScope.$storage.dir = 'ltr';
+    if (!rootScope.$storage.dir) {
+      rootScope.$storage.dir = 'ltr';
     }
-    if (!$rootScope.$storage.nsfw) {
-      $rootScope.$storage.nsfw = false;
+    if (!rootScope.$storage.nsfw) {
+      rootScope.$storage.nsfw = false;
     }
-    if (!angular.isDefined($rootScope.$storage.download)) {
-      $rootScope.$storage.download = true;
-    }
-
-    if (!$rootScope.$storage.voteWeight) {
-      $rootScope.$storage.voteWeight = 10000;
+    if (!angular.isDefined(rootScope.$storage.download)) {
+      rootScope.$storage.download = true;
     }
 
-    $rootScope.$storage.chains = [{id:'whaleshares', name: 'WhaleShares'}, {id:'golos', name: 'Golos'}];
+    if (!rootScope.$storage.voteWeight) {
+      rootScope.$storage.voteWeight = 10000;
+    }
 
-    if (!$rootScope.$storage.currencies) {
-      $rootScope.$storage.currencies = [
+    rootScope.$storage.chains = [{id:'visionindustry', name: 'VisionIndustry'}, {id:'golos', name: 'Golos'}];
+
+    if (!rootScope.$storage.currencies) {
+      rootScope.$storage.currencies = [
         {id:'btc', name: 'BTC', rate: 0, date: "1/1/2016"}, 
         {id:'usd', name: 'USD', rate: 0, date: "1/1/2016"}, 
         {id:'eur', name: 'EUR', rate: 0, date: "1/1/2016"}, 
@@ -573,7 +573,7 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
         {id:'php', name: 'PHP', rate: 0, date: "1/1/2016"}
       ];
     } else {
-      if (!$rootScope.$storage.addition) {
+      if (!rootScope.$storage.addition) {
         var x = [
           {id:'cad', name: 'CAD', rate: 0, date: "1/1/2016"},
           {id:'chf', name: 'CHF', rate: 0, date: "1/1/2016"},
@@ -581,10 +581,10 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
           {id:'nok', name: 'NOK', rate: 0, date: "1/1/2016"},
           {id:'pln', name: 'PLN', rate: 0, date: "1/1/2016"},
           {id:'php', name: 'PHP', rate: 0, date: "1/1/2016"}];
-        $rootScope.$storage.currencies = $rootScope.$storage.currencies.concat(x);
-        $rootScope.$storage.addition = true;
+        rootScope.$storage.currencies = rootScope.$storage.currencies.concat(x);
+        rootScope.$storage.addition = true;
       } else {
-        if (!$rootScope.$storage.addition1) {
+        if (!rootScope.$storage.addition1) {
           var x1 = [
           {id:'idr', name: 'IDR', rate: 0, date: "1/1/2016"}, //indonesian rupiah
           {id:'zar', name: 'ZAR', rate: 0, date: "1/1/2016"}, //south african rand
@@ -592,12 +592,12 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
           {id:'pkr', name: 'PKR', rate: 0, date: "1/1/2016"}, //pakistani rupi
           {id:'vnd', name: 'VND', rate: 0, date: "1/1/2016"}, //vietnamese Dong
           {id:'ngn', name: 'NGN', rate: 0, date: "1/1/2016"}];//nigerian Naira
-          $rootScope.$storage.currencies = $rootScope.$storage.currencies.concat(x1);
-          $rootScope.$storage.addition1 = true;
+          rootScope.$storage.currencies = rootScope.$storage.currencies.concat(x1);
+          rootScope.$storage.addition1 = true;
         } else {
-          $rootScope.$storage.addition1 = true;
+          rootScope.$storage.addition1 = true;
         }
-        $rootScope.$storage.addition = true;
+        rootScope.$storage.addition = true;
       }
     }
 
@@ -605,107 +605,107 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       if (ionic.Platform.isIPad() || ionic.Platform.isIOS()) {
         MobileAccessibility.isVoiceOverRunning(function(bool) {
           if (bool) {
-              $rootScope.log("Screen reader: ON");
-              $rootScope.voiceOver = bool;
+              rootScope.log("Screen reader: ON");
+              rootScope.voiceOver = bool;
               //$ionicConfigProvider.navBar.alignTitle('center');
           } else {
-              $rootScope.log("Screen reader: OFF");
-              $rootScope.voiceOver = bool;
+              rootScope.log("Screen reader: OFF");
+              rootScope.voiceOver = bool;
               //$ionicConfigProvider.navBar.alignTitle('left');
           }
         });
 
       } else {
-        $rootScope.voiceOver = false;
+        rootScope.voiceOver = false;
       }
     } else {
-      $rootScope.voiceOver = false;
+      rootScope.voiceOver = false;
     }
 
-    if (!$rootScope.$storage.view) {
-      $rootScope.$storage.view = 'compact';
+    if (!rootScope.$storage.view) {
+      rootScope.$storage.view = 'compact';
     }
-    if (!$rootScope.$storage.filter) {
-      $rootScope.$storage.filter = "trending";
+    if (!rootScope.$storage.filter) {
+      rootScope.$storage.filter = "trending";
     }
     
-    $rootScope.log("app start ready");
+    rootScope.log("app start ready");
 
     setTimeout(function() {
-      if ($rootScope.$storage.pincode) {
-        $rootScope.pincheck = true;
-        $rootScope.$broadcast("pin:check");
+      if (rootScope.$storage.pincode) {
+        rootScope.pincheck = true;
+        rootScope.$broadcast("pin:check");
       }
     }, 1000);
-    $rootScope.showAlert = function(title, msg) {
+    rootScope.showAlert = function(title, msg) {
       var alertPopup = $ionicPopup.alert({
         title: title,
         template: msg
       });
       if (msg.indexOf("error")>-1) {
         //window.Api.initPromise.then(function(response) {
-        $rootScope.log(msg);
+        rootScope.log(msg);
         //});
       }
       return alertPopup/*.then(function(res) {
-        $rootScope.log('Thank you ...');
+        rootScope.log('Thank you ...');
       });*/
     };
-    $rootScope.showMessage = function(title, msg) {
+    rootScope.showMessage = function(title, msg) {
       if (title) {
         if (window.cordova) {
           $cordovaToast.showLongBottom(title+": "+msg).then(function(success) {
             // success
-            $rootScope.log("toast"+success);
+            rootScope.log("toast"+success);
           }, function (error) {
             // error
-            $rootScope.log("toast"+error);
+            rootScope.log("toast"+error);
           });
         } else {
-          //$rootScope.showAlert(title, msg);
+          //rootScope.showAlert(title, msg);
           console.log(title, msg);
         }
       }
     };
 
-    $rootScope.$on('show:loading', function(event, args){
-      $rootScope.log('show:loading');
+    rootScope.$on('show:loading', function(event, args){
+      rootScope.log('show:loading');
       $ionicLoading.show({
         noBackdrop : true,
         template: '<ion-spinner icon="ripple" class="spinner-energized"></ion-spinner>'
       });
     });
-    $rootScope.$on('hide:loading', function(event, args){
-      //$rootScope.log('hide:loading');
+    rootScope.$on('hide:loading', function(event, args){
+      //rootScope.log('hide:loading');
       setTimeout(function() {
         $ionicLoading.hide();
       }, 100);
     });
 
    
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-      $rootScope.log("from "+fromState.name+" to "+toState.name);
+    rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+      rootScope.log("from "+fromState.name+" to "+toState.name);
     });
 
    
 
     $ionicPlatform.on('resume', function(){
-      $rootScope.log("app resume");
-      $rootScope.user = $rootScope.$storage.user || undefined;
+      rootScope.log("app resume");
+      rootScope.user = rootScope.$storage.user || undefined;
       
-      if ($rootScope.$storage.pincode) {
-        $rootScope.pincheck = true;
-        $rootScope.$broadcast("pin:check");
+      if (rootScope.$storage.pincode) {
+        rootScope.pincheck = true;
+        rootScope.$broadcast("pin:check");
       }
 
-      window.whaleshares.config.set('websocket',localStorage.socketUrl);
-      window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
-      window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
+      window.visionindustry.config.set('websocket',localStorage.socketUrl);
+      window.visionindustry.api.setOptions({ url: "ws://188.166.99.136:8090" });
+      window.visionindustry.config.set('chain_id',localStorage[rootScope.$storage.chain+"Id"]);
       
-      if ($rootScope.$storage.chain == 'golos') {
-        window.whaleshares.config.set('address_prefix','GLS');  
+      if (rootScope.$storage.chain == 'golos') {
+        window.visionindustry.config.set('address_prefix','GLS');  
       } else {
-        window.whaleshares.config.set('address_prefix','WLS');  
+        window.visionindustry.config.set('address_prefix','VIT');  
       }
 
       if (window.cordova) {
@@ -713,95 +713,95 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
 
           MobileAccessibility.isVoiceOverRunning(function(bool) {
             if (bool) {
-                $rootScope.log("Screen reader: ON");
-                $rootScope.voiceOver = bool;
+                rootScope.log("Screen reader: ON");
+                rootScope.voiceOver = bool;
                 //$ionicConfigProvider.navBar.alignTitle('center');
             } else {
-                $rootScope.log("Screen reader: OFF");
-                $rootScope.voiceOver = bool;
+                rootScope.log("Screen reader: OFF");
+                rootScope.voiceOver = bool;
                 //$ionicConfigProvider.navBar.alignTitle('left');
             }
           });
         } else {
-          $rootScope.voiceOver = false;
+          rootScope.voiceOver = false;
         }
       } else {
-        $rootScope.voiceOver = false;
+        rootScope.voiceOver = false;
       }
 
     });
     $ionicPlatform.on('pause', function(){
-      $rootScope.log("app pause");
+      rootScope.log("app pause");
       
-      if (angular.isDefined($rootScope.timeint)) {
-        $rootScope.log("cancel interval");
-        $interval.cancel($rootScope.timeint);
-        $rootScope.timeint = undefined;
+      if (angular.isDefined(rootScope.timeint)) {
+        rootScope.log("cancel interval");
+        $interval.cancel(rootScope.timeint);
+        rootScope.timeint = undefined;
         //window.Api.close();
       }
-      window.whaleshares.api.stop();
+      window.visionindustry.api.stop();
     });
 
     $ionicPlatform.on('offline', function(){
-      $rootScope.log("app offline");
-      window.whaleshares.api.stop();
+      rootScope.log("app offline");
+      window.visionindustry.api.stop();
     });
 
-    $rootScope.init = function() {
-      $rootScope.passcode = "";
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
+    rootScope.init = function() {
+      rootScope.passcode = "";
+      if (!rootScope.$$phase) {
+        rootScope.$apply();
       }
     };
 
-    $rootScope.add = function(value) {
-      $rootScope.pinerror = "";
-      if($rootScope.passcode.length < 4) {
-        $rootScope.passcode = $rootScope.passcode + value;
-        if($rootScope.passcode.length == 4) {
+    rootScope.add = function(value) {
+      rootScope.pinerror = "";
+      if(rootScope.passcode.length < 4) {
+        rootScope.passcode = rootScope.passcode + value;
+        if(rootScope.passcode.length == 4) {
           $timeout(function() {
-            $rootScope.log("PIN "+$rootScope.passcode);
-            if ($rootScope.pintype == 3) {
-              if ($rootScope.$storage.pincode == $rootScope.passcode) {
-                $rootScope.passcode = "";
-                $rootScope.closePin();
+            rootScope.log("PIN "+rootScope.passcode);
+            if (rootScope.pintype == 3) {
+              if (rootScope.$storage.pincode == rootScope.passcode) {
+                rootScope.passcode = "";
+                rootScope.closePin();
               } else {
-                $rootScope.pintry += 1;
-                $rootScope.pinerror = $filter('translate')('NOT_MATCH')+"("+$rootScope.pintry+")";
-                if ($rootScope.pintry>3) {
-                  $rootScope.$storage.pincode = undefined;
-                  $rootScope.pintry = 0;
-                  $rootScope.$broadcast("pin:failed");
-                  $rootScope.closePin();
+                rootScope.pintry += 1;
+                rootScope.pinerror = $filter('translate')('NOT_MATCH')+"("+rootScope.pintry+")";
+                if (rootScope.pintry>3) {
+                  rootScope.$storage.pincode = undefined;
+                  rootScope.pintry = 0;
+                  rootScope.$broadcast("pin:failed");
+                  rootScope.closePin();
                 }
               }
             }
-            if ($rootScope.pintype == 0) {
-              $rootScope.log("type 0: set pin");
-              if ($rootScope.$storage.pincode) {
-                $rootScope.pincheck = true;
-                $rootScope.$broadcast("pin:check");
-                $rootScope.closePin();
+            if (rootScope.pintype == 0) {
+              rootScope.log("type 0: set pin");
+              if (rootScope.$storage.pincode) {
+                rootScope.pincheck = true;
+                rootScope.$broadcast("pin:check");
+                rootScope.closePin();
               } else {
-                $rootScope.$storage.pincode = $rootScope.passcode;
-                $rootScope.pinsubtitle = $filter('translate')('CONFIRM_PIN');
-                $rootScope.passcode = "";
-                $rootScope.pintype = 3;
-                $rootScope.pintry = 0;
+                rootScope.$storage.pincode = rootScope.passcode;
+                rootScope.pinsubtitle = $filter('translate')('CONFIRM_PIN');
+                rootScope.passcode = "";
+                rootScope.pintype = 3;
+                rootScope.pintry = 0;
               }
             }
-            if ($rootScope.pintype == 1) {
-              $rootScope.log("type 1: check pin");
-              if ($rootScope.$storage.pincode == $rootScope.passcode){
-                $rootScope.$broadcast('pin:correct');
-                $rootScope.passcode = "";
-                $rootScope.closePin();
+            if (rootScope.pintype == 1) {
+              rootScope.log("type 1: check pin");
+              if (rootScope.$storage.pincode == rootScope.passcode){
+                rootScope.$broadcast('pin:correct');
+                rootScope.passcode = "";
+                rootScope.closePin();
               } else {
-                $rootScope.pintry += 1;
-                $rootScope.pinerror = $filter('translate')('INCORRECT')+"("+$rootScope.pintry+")";
-                if ($rootScope.pintry>3) {
-                  $rootScope.$storage.$reset();
-                  $rootScope.closePin();
+                rootScope.pintry += 1;
+                rootScope.pinerror = $filter('translate')('INCORRECT')+"("+rootScope.pintry+")";
+                if (rootScope.pintry>3) {
+                  rootScope.$storage.$reset();
+                  rootScope.closePin();
                 }
               }
             }
@@ -811,118 +811,118 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       }
     };
 
-    $rootScope.delete = function() {
-      $rootScope.pinerror = "";
-      if($rootScope.passcode.length > 0) {
-        $rootScope.passcode = $rootScope.passcode.substring(0, $rootScope.passcode.length - 1);
+    rootScope.delete = function() {
+      rootScope.pinerror = "";
+      if(rootScope.passcode.length > 0) {
+        rootScope.passcode = rootScope.passcode.substring(0, rootScope.passcode.length - 1);
       }
     }
 
     $ionicModal.fromTemplateUrl('templates/pincode.html', {
-      scope: $rootScope,
+      scope: rootScope,
       backdropClickToClose: false,
       hardwareBackButtonClose: false
     }).then(function(modal) {
-      $rootScope.pinmodal = modal;
+      rootScope.pinmodal = modal;
     });
-    $rootScope.closePin = function() {
-      $rootScope.pinmodal.hide();
-      if ($rootScope.pinenabled) {
-        if ($rootScope.$storage.notifData) {
+    rootScope.closePin = function() {
+      rootScope.pinmodal.hide();
+      if (rootScope.pinenabled) {
+        if (rootScope.$storage.notifData) {
           var alertPopup = $ionicPopup.confirm({
-            title: $rootScope.$storage.notifData.title,
-            template: $rootScope.$storage.notifData.body + $filter('translate')('OPENING_POST')
+            title: rootScope.$storage.notifData.title,
+            template: rootScope.$storage.notifData.body + $filter('translate')('OPENING_POST')
           });
           alertPopup.then(function(res) {
-            $rootScope.log('Thank you for seeing alert from tray');
+            rootScope.log('Thank you for seeing alert from tray');
             if (res) {
-              $rootScope.getContentAndOpen({author:$rootScope.$storage.notifData.author, permlink:$rootScope.$storage.notifData.permlink});
-              $rootScope.$storage.notifData = undefined;
+              rootScope.getContentAndOpen({author:rootScope.$storage.notifData.author, permlink:rootScope.$storage.notifData.permlink});
+              rootScope.$storage.notifData = undefined;
             } else {
-              $rootScope.log("not sure to open alert");
-              $rootScope.$storage.notifData = undefined;
+              rootScope.log("not sure to open alert");
+              rootScope.$storage.notifData = undefined;
             }
-            $rootScope.pinenabled = false;
+            rootScope.pinenabled = false;
           });
         }
       }
     };
-    $rootScope.openPin = function(type) {
-      $rootScope.passcode = "";
+    rootScope.openPin = function(type) {
+      rootScope.passcode = "";
       if (type == 0) {
-        $rootScope.pintype = 0;
-        $rootScope.pintitle = $filter('translate')('SET_PIN');
-        $rootScope.pinsubtitle = $filter('translate')('SET_PIN');
+        rootScope.pintype = 0;
+        rootScope.pintitle = $filter('translate')('SET_PIN');
+        rootScope.pinsubtitle = $filter('translate')('SET_PIN');
       }
       if (type == 1) {
-        $rootScope.pintype = 1;
-        $rootScope.pintry = 0;
-        $rootScope.pintitle = $filter('translate')('ENTER_PIN');
-        $rootScope.pinsubtitle = $filter('translate')('ENTER_PIN');
+        rootScope.pintype = 1;
+        rootScope.pintry = 0;
+        rootScope.pintitle = $filter('translate')('ENTER_PIN');
+        rootScope.pinsubtitle = $filter('translate')('ENTER_PIN');
       }
-      $rootScope.pinmodal.show();
+      rootScope.pinmodal.show();
     };
-    $rootScope.$on("pin:new", function(){
-      $rootScope.pincheck = false;
-      $rootScope.openPin(0);
+    rootScope.$on("pin:new", function(){
+      rootScope.pincheck = false;
+      rootScope.openPin(0);
     });
-    $rootScope.$on("pin:check", function(){
-      $rootScope.pincheck = true;
-      $rootScope.openPin(1);
+    rootScope.$on("pin:check", function(){
+      rootScope.pincheck = true;
+      rootScope.openPin(1);
     });
 
 
     $ionicModal.fromTemplateUrl('templates/info.html', {
-      scope: $rootScope
+      scope: rootScope
       //animation: "null"
     }).then(function(modal) {
-      $rootScope.infomodal = modal;
+      rootScope.infomodal = modal;
     });
 
-    $rootScope.openInfo = function(xx) {
+    rootScope.openInfo = function(xx) {
       //console.log(xx);
       if (xx && xx.active_votes.length==0) {
-        window.whaleshares.api.getActiveVotesAsync(xx.author, xx.permlink, function(err, dd) {
+        window.visionindustry.api.getActiveVotesAsync(xx.author, xx.permlink, function(err, dd) {
           //console.log(err, dd);
           xx.active_votes = dd;    
         }); 
       }
-      $rootScope.voters = xx;
-      $rootScope.infomodal.show(); 
-      //$rootScope.$evalAsync(function($rootScope) {
+      rootScope.voters = xx;
+      rootScope.infomodal.show(); 
+      //rootScope.$evalAsync(function(rootScope) {
         
       //});
     };
 
-    $rootScope.closeInfo = function() {
+    rootScope.closeInfo = function() {
       
-      $rootScope.infomodal.hide();  
+      rootScope.infomodal.hide();  
       $ionicBody.removeClass('modal-open');
-      //$rootScope.infomodal.remove();
+      //rootScope.infomodal.remove();
     };
 
-    $rootScope.openAccount = function(account) {
-      $rootScope.infomodal.hide();
+    rootScope.openAccount = function(account) {
+      rootScope.infomodal.hide();
       $state.go("app.profile", {username: account});
     };
 
     String.prototype.replaceAt=function(index, character) {
         return this.substr(0, index) + character + this.substr(index+character.length);
     }
-		$rootScope.openDraft = function(item){
+		rootScope.openDraft = function(item){
 			item.operation_type = item.post_type;
-			$rootScope.$storage.spost = item;
+			rootScope.$storage.spost = item;
 			$state.go('app.posts');
-			$rootScope.$broadcast('openPostModal');
+			rootScope.$broadcast('openPostModal');
 		}
-    $rootScope.getContentAndOpen = function(item) {
+    rootScope.getContentAndOpen = function(item) {
       if (item) {
-        window.whaleshares.api.getContentAsync(item.author, item.permlink, function(err, result) {
+        window.visionindustry.api.getContentAsync(item.author, item.permlink, function(err, result) {
           //console.log(err, result);
           var _len = result.active_votes.length;
-          if ($rootScope.user) {
+          if (rootScope.user) {
             for (var j = _len - 1; j >= 0; j--) {
-              if (result.active_votes[j].voter === $rootScope.user.username) {
+              if (result.active_votes[j].voter === rootScope.user.username) {
                 if (result.active_votes[j].percent > 0) {
                   result.upvoted = true;
                 } else if (result.active_votes[j].percent < 0) {
@@ -936,61 +936,61 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
           }
             result.json_metadata = angular.fromJson(result.json_metadata);
             var item = result;
-            $rootScope.sitem = item;
+            rootScope.sitem = item;
             setTimeout(function() {
               //$state.go('app.post');
               $state.go('app.post', {category: item.category, author: item.author, permlink: item.permlink});
 
             }, 5);
 
-            if (!$rootScope.$$phase) {
-              $rootScope.$apply();
+            if (!rootScope.$$phase) {
+              rootScope.$apply();
             }
         });
       }
-      $rootScope.$broadcast('hide:loading');
+      rootScope.$broadcast('hide:loading');
     };
 
-    $rootScope.reBlog = function(author, permlink) {
+    rootScope.reBlog = function(author, permlink) {
       var confirmPopup = $ionicPopup.confirm({
         title: $filter('translate')('ARE_YOU_SURE'),
         template: $filter('translate')('REBLOG_TEXT')
       });
       confirmPopup.then(function(res) {
         if(res) {
-          $rootScope.log('You are sure');
-          $rootScope.$broadcast('show:loading');
-          if ($rootScope.user) {
-            var json = ["reblog",{account:$rootScope.user.username, author:author, permlink:permlink}];
+          rootScope.log('You are sure');
+          rootScope.$broadcast('show:loading');
+          if (rootScope.user) {
+            var json = ["reblog",{account:rootScope.user.username, author:author, permlink:permlink}];
 
-            var wif = $rootScope.user.password
-                  ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                  : $rootScope.user.privatePostingKey;
+            var wif = rootScope.user.password
+                  ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                  : rootScope.user.privatePostingKey;
 
-            window.whaleshares.broadcast.customJsonAsync(wif, [], [$rootScope.user.username], "follow", angular.toJson(json), function(err, result) {
+            window.visionindustry.broadcast.customJsonAsync(wif, [], [rootScope.user.username], "follow", angular.toJson(json), function(err, result) {
               //console.log(err, result);
               if (err) {
                 var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-                $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('REBLOG_TEXT')+" "+message)
+                rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('REBLOG_TEXT')+" "+message)
               } else {
                 //$scope.refreshFollowers();
-                $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('REBLOGGED_POST'));
+                rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('REBLOGGED_POST'));
               }
-              $rootScope.$broadcast('hide:loading');
+              rootScope.$broadcast('hide:loading');
             });
-            //$rootScope.showMessage($filter('translate')('ERROR'), $filter('translate')('LOGIN_FAIL'));
-            $rootScope.$broadcast('hide:loading');
+            //rootScope.showMessage($filter('translate')('ERROR'), $filter('translate')('LOGIN_FAIL'));
+            rootScope.$broadcast('hide:loading');
           } else {
-            $rootScope.$broadcast('hide:loading');
-            $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+            rootScope.$broadcast('hide:loading');
+            rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
           }
         } else {
-          $rootScope.log('You are not sure');
+          rootScope.log('You are not sure');
         }
       });
     };
 
-    $rootScope.votePost = function(post, type, afterward) {
+    rootScope.votePost = function(post, type, afterward) {
       post.invoting = true;
       var tt = 1;
       if (type === "upvote") {
@@ -1002,25 +1002,25 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
       if (type === "unvote") {
         tt = 0;
       }
-      $rootScope.log('voting '+tt);
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
+      rootScope.log('voting '+tt);
+      if (!rootScope.$$phase) {
+        rootScope.$apply();
       }
-      if ($rootScope.user && $rootScope.user.username) {
-        var wif = $rootScope.user.password
-                  ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                  : $rootScope.user.privatePostingKey;
+      if (rootScope.user && rootScope.user.username) {
+        var wif = rootScope.user.password
+                  ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                  : rootScope.user.privatePostingKey;
 
-        //console.log(wif+$rootScope.user.username+post.author+post.permlink);
+        //console.log(wif+rootScope.user.username+post.author+post.permlink);
 
-        window.whaleshares.broadcast.voteAsync(wif, $rootScope.user.username, post.author, post.permlink, $rootScope.$storage.voteWeight*tt || 10000*tt, function(err, result) {
+        window.visionindustry.broadcast.voteAsync(wif, rootScope.user.username, post.author, post.permlink, rootScope.$storage.voteWeight*tt || 10000*tt, function(err, result) {
           //console.log(err, result);
           post.invoting = false;
 
           if (err) {
             //console.log(angular.toJson(err));
             var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-            $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message);
+            rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message);
           } else {
             if (tt>0){
               post.upvoted = true;
@@ -1032,185 +1032,185 @@ app.run(function($ionicPlatform, $rootScope, $localStorage, $interval, $ionicPop
             }
             setTimeout(function() {
               if (afterward === 'fetchContent') {
-                $rootScope.$broadcast(afterward, { any: {author: post.author, permlink: post.permlink} });
+                rootScope.$broadcast(afterward, { any: {author: post.author, permlink: post.permlink} });
               } else {
-                $rootScope.$broadcast(afterward);
+                rootScope.$broadcast(afterward);
               }  
             }, 1);
           }
-          if (!$rootScope.$$phase) {
-            $rootScope.$apply();
+          if (!rootScope.$$phase) {
+            rootScope.$apply();
           }
-          $rootScope.$broadcast('hide:loading');
+          rootScope.$broadcast('hide:loading');
         });
       } else {
-        $rootScope.$broadcast('hide:loading');
+        rootScope.$broadcast('hide:loading');
         post.invoting = false;
-        $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+        rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
       }
     };
-$rootScope.isWitnessVoted2 = function() {
-      if ($rootScope.user && $rootScope.user.witness_votes.indexOf("dcrazy")>-1) {
+rootScope.isWitnessVoted2 = function() {
+      if (rootScope.user && rootScope.user.witness_votes.indexOf("dcrazy")>-1) {
         return true;
       } else {
         return false;
       }
     };
-    $rootScope.isWitnessVoted = function() {
-      if ($rootScope.user && $rootScope.user.witness_votes.indexOf("swapbit")>-1) {
+    rootScope.isWitnessVoted = function() {
+      if (rootScope.user && rootScope.user.witness_votes.indexOf("swapbit")>-1) {
         return true;
       } else {
         return false;
       }
     };
-    $rootScope.voteWitness = function(witness) {
+    rootScope.voteWitness = function(witness) {
         var confirmPopup = $ionicPopup.confirm({
           title: $filter('translate')('ARE_YOU_SURE'),
           template: $filter('translate')('VOTE_FOR_WITNESS')+" @" + witness
         });
         confirmPopup.then(function(res) {
           if(res) {
-            $rootScope.log('You are sure');
-            $rootScope.$broadcast('show:loading');
-            if ($rootScope.user) {
-              if ($rootScope.user.password || $rootScope.user.privateActiveKey) {
+            rootScope.log('You are sure');
+            rootScope.$broadcast('show:loading');
+            if (rootScope.user) {
+              if (rootScope.user.password || rootScope.user.privateActiveKey) {
                 
-                var wif = $rootScope.user.password
-                  ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'active')
-                  : $rootScope.user.privateActiveKey;
+                var wif = rootScope.user.password
+                  ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'active')
+                  : rootScope.user.privateActiveKey;
 
-                window.whaleshares.broadcast.accountWitnessVote(wif, $rootScope.user.username, witness, true, function(err, result) {
+                window.visionindustry.broadcast.accountWitnessVote(wif, rootScope.user.username, witness, true, function(err, result) {
                   //console.log(err, result);
                   if (err) {
                     var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-                    $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
+                    rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
                   } else {
                     //$scope.refreshFollowers();
-                    $rootScope.showMessage($filter('translate')('SUCCESS'),$filter('translate')('VOTED_FOR_WITNESS')+' @'+ witness);
-                    $rootScope.$broadcast('refreshLocalUserData');
+                    rootScope.showMessage($filter('translate')('SUCCESS'),$filter('translate')('VOTED_FOR_WITNESS')+' @'+ witness);
+                    rootScope.$broadcast('refreshLocalUserData');
                   }
                 });
               } else {
-                $rootScope.showMessage($filter('translate')('ERROR'), $filter('translate')('LOGIN_FAIL'));
+                rootScope.showMessage($filter('translate')('ERROR'), $filter('translate')('LOGIN_FAIL'));
               }
-              $rootScope.$broadcast('hide:loading');
+              rootScope.$broadcast('hide:loading');
             } else {
-              $rootScope.$broadcast('hide:loading');
-              $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+              rootScope.$broadcast('hide:loading');
+              rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
             }
           } else {
-            $rootScope.log('You are not sure');
+            rootScope.log('You are not sure');
           }
         });
     };
-    $rootScope.favor = function(user) {
-      APIs.addFavorite($rootScope.user.username, user).then(function(res){
-        $rootScope.isfavor(user);
-        $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('FAVORITE_ADDED'));
+    rootScope.favor = function(user) {
+      APIs.addFavorite(rootScope.user.username, user).then(function(res){
+        rootScope.isfavor(user);
+        rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('FAVORITE_ADDED'));
       });
     }
-    $rootScope.unfavor = function(user) {
-      APIs.removeFavoriteUser($rootScope.user.username, user).then(function(res){
-        $rootScope.isfavor(user);
-        $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('FAVORITE_REMOVED'));
+    rootScope.unfavor = function(user) {
+      APIs.removeFavoriteUser(rootScope.user.username, user).then(function(res){
+        rootScope.isfavor(user);
+        rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('FAVORITE_REMOVED'));
       });
     }
-    $rootScope.isfavor = function(account) {
-      APIs.isFavorite($rootScope.user.username, account).then(function(res){
+    rootScope.isfavor = function(account) {
+      APIs.isFavorite(rootScope.user.username, account).then(function(res){
         console.log(res);
-        $rootScope.isfavorite = res.data;
+        rootScope.isfavorite = res.data;
       });
     }
-    $rootScope.following = function(xx, mtype) {
-      $rootScope.$broadcast('show:loading');
-      $rootScope.log(xx);
-      if ($rootScope.user) {
+    rootScope.following = function(xx, mtype) {
+      rootScope.$broadcast('show:loading');
+      rootScope.log(xx);
+      if (rootScope.user) {
           var json;
           if (mtype === "follow") {
-            json = ['follow',{follower:$rootScope.user.username, following:xx, what: ["blog"]}];
+            json = ['follow',{follower:rootScope.user.username, following:xx, what: ["blog"]}];
           } else if (mtype==="mute"){
-            json = ['follow',{follower:$rootScope.user.username, following:xx, what: ["ignore"]}];
+            json = ['follow',{follower:rootScope.user.username, following:xx, what: ["ignore"]}];
           } else {
-            json = ['follow',{follower:$rootScope.user.username, following:xx, what: []}];
+            json = ['follow',{follower:rootScope.user.username, following:xx, what: []}];
           }
-          var wif = $rootScope.user.password
-                ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                : $rootScope.user.privatePostingKey;
+          var wif = rootScope.user.password
+                ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                : rootScope.user.privatePostingKey;
 
-          window.whaleshares.broadcast.customJsonAsync(wif, [], [$rootScope.user.username], "follow", angular.toJson(json), function(err, result) {
+          window.visionindustry.broadcast.customJsonAsync(wif, [], [rootScope.user.username], "follow", angular.toJson(json), function(err, result) {
             //console.log(err, result);
             if (err) {
               var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-              $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
+              rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
             } else {
-              $rootScope.$broadcast('current:reload');
+              rootScope.$broadcast('current:reload');
             }
-            $rootScope.$broadcast('hide:loading');
+            rootScope.$broadcast('hide:loading');
           });
-        $rootScope.$broadcast('hide:loading');
+        rootScope.$broadcast('hide:loading');
       } else {
-        $rootScope.$broadcast('hide:loading');
-        $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+        rootScope.$broadcast('hide:loading');
+        rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
       }
     };
 
     setTimeout(function() {
-    //$rootScope.$evalAsync(function( $rootScope ) {
-      window.whaleshares.api.getFeed('dcrazy', 0, 100, function(err, rr) {
+    //rootScope.$evalAsync(function( rootScope ) {
+      window.visionindustry.api.getFeed('dcrazy', 0, 100, function(err, rr) {
         console.log(err, rr);
         if (rr) {
-          $rootScope.$storage.base = rr[0];  
+          rootScope.$storage.base = rr[0];  
         }
         
-        window.whaleshares.api.getDynamicGlobalPropertiesAsync(function(err, r) {
+        window.visionindustry.api.getDynamicGlobalPropertiesAsync(function(err, r) {
           //console.log(err, r);
-          $rootScope.log(r);
+          rootScope.log(r);
           if (r) {
-            $rootScope.$storage.whaleshares_per_mvests = (Number(r.total_vesting_fund_steem.substring(0, r.total_vesting_fund_steem.length - 6)) / Number(r.total_vesting_shares.substring(0, r.total_vesting_shares.length - 6))) * 1e6;  
+            rootScope.$storage.visionindustry_per_mvests = (Number(r.total_vesting_fund_steem.substring(0, r.total_vesting_fund_steem.length - 6)) / Number(r.total_vesting_shares.substring(0, r.total_vesting_shares.length - 6))) * 1e6;  
           }
         });
       });
     //});
     }, 1);
-    if (!angular.isDefined($rootScope.$storage.notifications)) {
-      $rootScope.$storage.notifications = [];
+    if (!angular.isDefined(rootScope.$storage.notifications)) {
+      rootScope.$storage.notifications = [];
     }
-    $rootScope.$on('changedChain', function(){
+    rootScope.$on('changedChain', function(){
       console.log('chain differs');
-      localStorage.socketUrl = $rootScope.$storage["socketwhaleshares"];
+      localStorage.socketUrl = rootScope.$storage["socketvisionindustry"];
       
-      console.log(localStorage.socketUrl, $rootScope.$storage.chain);
+      console.log(localStorage.socketUrl, rootScope.$storage.chain);
 
-      window.whaleshares.config.set('websocket',localStorage.socketUrl);
-      window.whaleshares.api.setOptions({ url: "ws://188.166.99.136:8090" });
+      window.visionindustry.config.set('websocket',localStorage.socketUrl);
+      window.visionindustry.api.setOptions({ url: "ws://188.166.99.136:8090" });
 
-      window.whaleshares.config.set('chain_id',localStorage[$rootScope.$storage.chain+"Id"]);
-      if ($rootScope.$storage.chain == 'golos') {
-        window.whaleshares.config.set('address_prefix','GLS');  
+      window.visionindustry.config.set('chain_id',localStorage[rootScope.$storage.chain+"Id"]);
+      if (rootScope.$storage.chain == 'golos') {
+        window.visionindustry.config.set('address_prefix','GLS');  
       } else {
-        window.whaleshares.config.set('address_prefix','WLS');  
+        window.visionindustry.config.set('address_prefix','VIT');  
       }
-      window.whaleshares.api.stop();
+      window.visionindustry.api.stop();
 
-      angular.forEach($rootScope.$storage.users, function(v,k){
-        if (v.chain == $rootScope.$storage.chain){
-          $rootScope.$storage.user = v;
-          $rootScope.user = $rootScope.$storage.user;
+      angular.forEach(rootScope.$storage.users, function(v,k){
+        if (v.chain == rootScope.$storage.chain){
+          rootScope.$storage.user = v;
+          rootScope.user = rootScope.$storage.user;
         }
       });
 
-      $rootScope.$storage.platformname = "WhaleShares";
-      $rootScope.$storage.platformpower = "WhaleStake";
-      $rootScope.$storage.platformsunit = "WhaleShares";
-      $rootScope.$storage.platformdollar = "WhaleShares Dollar";
-      $rootScope.$storage.platformdunit = "WLS";
-      $rootScope.$storage.platformpunit = "SP";
-      $rootScope.$storage.platformlunit = "WLS";
-      $rootScope.$storage.socketwhaleshares = "ws://rpc.kennybll.com:8090";
-      $rootScope.chain = $rootScope.$storage.chain;
+      rootScope.$storage.platformname = "VisionIndustry";
+      rootScope.$storage.platformpower = "WhaleStake";
+      rootScope.$storage.platformsunit = "VisionIndustry";
+      rootScope.$storage.platformdollar = "VisionIndustry Dollar";
+      rootScope.$storage.platformdunit = "VIT";
+      rootScope.$storage.platformpunit = "SP";
+      rootScope.$storage.platformlunit = "VIT";
+      rootScope.$storage.socketvisionindustry = "wss://peer.vit.tube";
+      rootScope.chain = rootScope.$storage.chain;
 
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
+      if (!rootScope.$$phase) {
+        rootScope.$apply();
       }
     });
     function checkDate(date, ignore) {
@@ -1219,23 +1219,23 @@ $rootScope.isWitnessVoted2 = function() {
       var old = new Date(date).getTime();
       return ignore||now-old>=eold;
     }
-    $rootScope.$on('changedCurrency', function(event, args){
+    rootScope.$on('changedCurrency', function(event, args){
       var xx = args.currency;
       var ignore = args.enforce;
       //console.log(xx);
-      var resultObject = $rootScope.$storage.currencies.filter(function ( obj ) {
+      var resultObject = rootScope.$storage.currencies.filter(function ( obj ) {
           return obj.id === xx;
       })[0];
-      //searchObj(xx, $rootScope.$storage.currencies);
+      //searchObj(xx, rootScope.$storage.currencies);
       if (checkDate(resultObject.date, ignore)) {
-        if ($rootScope.$storage.chain == 'whaleshares'){
-          APIs.getCurrencyRate( xx,'whaleshares' ).then(function(res){
+        if (rootScope.$storage.chain == 'visionindustry'){
+          APIs.getCurrencyRate( xx,'visionindustry' ).then(function(res){
             console.log(res);
 
-            $rootScope.$storage.currencyRate = (res.data)?Number(res.data):1;
-            $rootScope.$storage.currencies.filter(function(obj){
+            rootScope.$storage.currencyRate = (res.data)?Number(res.data):1;
+            rootScope.$storage.currencies.filter(function(obj){
               if (obj.id == xx) {
-                obj.rate = $rootScope.$storage.currencyRate;
+                obj.rate = rootScope.$storage.currencyRate;
                 obj.date = new Date();
               }
             });
@@ -1245,21 +1245,21 @@ $rootScope.isWitnessVoted2 = function() {
             console.log(res);
             //XAU - 31.1034768g
             //GBG rate in mg. so exchangeRate/31103.4768
-            $rootScope.$storage.currencyRate = Number(res.data)/31103.4768;
-            $rootScope.$storage.currencies.filter(function(obj){
+            rootScope.$storage.currencyRate = Number(res.data)/31103.4768;
+            rootScope.$storage.currencies.filter(function(obj){
               if (obj.id == xx) {
-                obj.rate = $rootScope.$storage.currencyRate;
+                obj.rate = rootScope.$storage.currencyRate;
                 obj.date = new Date();
               }
             });
-            //console.log($rootScope.$storage.currencyRate);
+            //console.log(rootScope.$storage.currencyRate);
           });
         }
       } else {
-        $rootScope.$storage.currencyRate = resultObject.rate;
+        rootScope.$storage.currencyRate = resultObject.rate;
       }
-      if (!$rootScope.$$phase) {
-        $rootScope.$apply();
+      if (!rootScope.$$phase) {
+        rootScope.$apply();
       }
     });
     console.log('cordova cordova ' + window.cordova);
@@ -1286,17 +1286,17 @@ $rootScope.isWitnessVoted2 = function() {
             });
 
             alertPopup.then(function(res) {
-              $rootScope.log('Thank you for seeing alert from tray');
+              rootScope.log('Thank you for seeing alert from tray');
               if (res) {
                 setTimeout(function() {
-                  $rootScope.getContentAndOpen({author:author, permlink:permlink});
+                  rootScope.getContentAndOpen({author:author, permlink:permlink});
                 }, 10);
               } else {
-                $rootScope.log("not sure to open alert");
+                rootScope.log("not sure to open alert");
               }
             });
           }
-          //$rootScope.showMessage("title", angular.toJson(data));
+          //rootScope.showMessage("title", angular.toJson(data));
         }); */ 
 	var pushya = 0;
 	pushya = setInterval(function(){
@@ -1362,22 +1362,22 @@ AppRate.promptForRating(false);
          // Post registrationId to your app server as the value has changed
      }
 let token = data.registrationId;
-$rootScope.log("device "+token);
+rootScope.log("device "+token);
 	    console.log("device " + token);
-            $rootScope.$storage.deviceid = token;
-            if ($rootScope.user) {
-              APIs.saveSubscription(token, $rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
-                $rootScope.log(angular.toJson(res));
+            rootScope.$storage.deviceid = token;
+            if (rootScope.user) {
+              APIs.saveSubscription(token, rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
+                rootScope.log(angular.toJson(res));
               });
             } else {
               APIs.saveSubscription(token, "", { device: ionic.Platform.platform() }).then(function(res){
-                $rootScope.log(angular.toJson(res));
+                rootScope.log(angular.toJson(res));
               });
             }
 
  });
  app.push.on('notification', function(data) {
-$rootScope.log(angular.toJson(data));
+rootScope.log(angular.toJson(data));
      var push = '<div class="row">' +
        '<div class="col s12 m6">' +
        '  <div class="card darken-1">' +
@@ -1393,7 +1393,7 @@ $rootScope.log(angular.toJson(data));
             if(data.wasTapped){
               //Notification was received on device tray and tapped by the user.
               if (data.author && data.permlink) {
-                if (!$rootScope.$storage.pincode) {
+                if (!rootScope.$storage.pincode) {
 
                   var alertPopup = $ionicPopup.confirm({
                     title: data.title,
@@ -1401,33 +1401,33 @@ $rootScope.log(angular.toJson(data));
                   });
 
                   alertPopup.then(function(res) {
-                    $rootScope.log('Thank you for seeing alert from tray');
+                    rootScope.log('Thank you for seeing alert from tray');
                     if (res) {
-                      if (data.chain !== $rootScope.$storage.chain) {
-                        $rootScope.$storage.chain = data.chain;
-                        $rootScope.$broadcast('changedChain');
-                        $rootScope.$emit('changedCurrency', {currency: $rootScope.$storage.currency, enforce: true});
+                      if (data.chain !== rootScope.$storage.chain) {
+                        rootScope.$storage.chain = data.chain;
+                        rootScope.$broadcast('changedChain');
+                        rootScope.$emit('changedCurrency', {currency: rootScope.$storage.currency, enforce: true});
                       }
                       setTimeout(function() {
-                        $rootScope.getContentAndOpen({author:data.author, permlink:data.permlink});
+                        rootScope.getContentAndOpen({author:data.author, permlink:data.permlink});
                       }, 300);
                     } else {
-                      $rootScope.log("not sure to open alert");
+                      rootScope.log("not sure to open alert");
                     }
                   });
 
                 } else {
-                  $rootScope.$storage.notifData = {title:data.title, body: data.body, author: data.author, permlink: data.permlink};
-                  $rootScope.pinenabled = true;
+                  rootScope.$storage.notifData = {title:data.title, body: data.body, author: data.author, permlink: data.permlink};
+                  rootScope.pinenabled = true;
                 }
               }
             } else{
               //Notification was received in foreground. Maybe the user needs to be notified.
               //alert( JSON.stringify(data) );
               if (data.author && data.permlink) {
-                $rootScope.showMessage(data.title, data.message);
+                rootScope.showMessage(data.title, data.message);
               } else {
-                $rootScope.showMessage(data.title, data.message);
+                rootScope.showMessage(data.title, data.message);
               }
             }
 
@@ -1446,41 +1446,41 @@ $rootScope.log(angular.toJson(data));
 	  clearInterval(fcmya);
           FCMPlugin.getToken(function(token){
             // save this server-side and use it to push notifications to this device
-            $rootScope.log("device "+token);
+            rootScope.log("device "+token);
 	    console.log("device " + token);
-            $rootScope.$storage.deviceid = token;
-            if ($rootScope.user) {
-              APIs.saveSubscription(token, $rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
-                $rootScope.log(angular.toJson(res));
+            rootScope.$storage.deviceid = token;
+            if (rootScope.user) {
+              APIs.saveSubscription(token, rootScope.user.username, { device: ionic.Platform.platform() }).then(function(res){
+                rootScope.log(angular.toJson(res));
               });
             } else {
               APIs.saveSubscription(token, "", { device: ionic.Platform.platform() }).then(function(res){
-                $rootScope.log(angular.toJson(res));
+                rootScope.log(angular.toJson(res));
               });
             }
           });
 
           FCMPlugin.onTokenRefresh(function(token){
             console.log('token refreshing....')
-            APIs.updateToken($rootScope.$storage.deviceid, token).then(function(res){
+            APIs.updateToken(rootScope.$storage.deviceid, token).then(function(res){
               console.log(angular.toJson(res));
               if (res.status) {
-                $rootScope.$storage.deviceid = token  
+                rootScope.$storage.deviceid = token  
               }
             });
-            if (!$rootScope.$$phase){
-              $rootScope.$apply();
+            if (!rootScope.$$phase){
+              rootScope.$apply();
             }
           });
           //FCMPlugin.onNotification( onNotificationCallback(data), successCallback(msg), errorCallback(err) )
           //Here you define your application behaviour based on the notification data.
           FCMPlugin.onNotification(function(data){
-            $rootScope.log(angular.toJson(data));
+            rootScope.log(angular.toJson(data));
 
             if(data.wasTapped){
               //Notification was received on device tray and tapped by the user.
               if (data.author && data.permlink) {
-                if (!$rootScope.$storage.pincode) {
+                if (!rootScope.$storage.pincode) {
 
                   var alertPopup = $ionicPopup.confirm({
                     title: data.title,
@@ -1488,33 +1488,33 @@ $rootScope.log(angular.toJson(data));
                   });
 
                   alertPopup.then(function(res) {
-                    $rootScope.log('Thank you for seeing alert from tray');
+                    rootScope.log('Thank you for seeing alert from tray');
                     if (res) {
-                      if (data.chain !== $rootScope.$storage.chain) {
-                        $rootScope.$storage.chain = data.chain;
-                        $rootScope.$broadcast('changedChain');
-                        $rootScope.$emit('changedCurrency', {currency: $rootScope.$storage.currency, enforce: true});
+                      if (data.chain !== rootScope.$storage.chain) {
+                        rootScope.$storage.chain = data.chain;
+                        rootScope.$broadcast('changedChain');
+                        rootScope.$emit('changedCurrency', {currency: rootScope.$storage.currency, enforce: true});
                       }
                       setTimeout(function() {
-                        $rootScope.getContentAndOpen({author:data.author, permlink:data.permlink});
+                        rootScope.getContentAndOpen({author:data.author, permlink:data.permlink});
                       }, 300);
                     } else {
-                      $rootScope.log("not sure to open alert");
+                      rootScope.log("not sure to open alert");
                     }
                   });
 
                 } else {
-                  $rootScope.$storage.notifData = {title:data.title, body: data.body, author: data.author, permlink: data.permlink};
-                  $rootScope.pinenabled = true;
+                  rootScope.$storage.notifData = {title:data.title, body: data.body, author: data.author, permlink: data.permlink};
+                  rootScope.pinenabled = true;
                 }
               }
             } else{
               //Notification was received in foreground. Maybe the user needs to be notified.
               //alert( JSON.stringify(data) );
               if (data.author && data.permlink) {
-                $rootScope.showMessage(data.title, data.body+" "+data.permlink);
+                rootScope.showMessage(data.title, data.body+" "+data.permlink);
               } else {
-                $rootScope.showMessage(data.title, data.body);
+                rootScope.showMessage(data.title, data.body);
               }
             }
           });

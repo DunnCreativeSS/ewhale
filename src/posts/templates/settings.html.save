@@ -4,8 +4,8 @@
       </ion-nav-back-button>
       <ion-nav-buttons side='left'>
         <button class="button button-icon button-clear" ng-if="!$root.voiceOver" menu-toggle="left">
-         <img ng-if="$root.user" src="https://imgp.whaleshares.io/profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/ewhaleshares_white.png\'" onabort="this.src=\'img/ewhaleshares_white.png\'"/>
-          <i ng-if="!$root.user" class="icon ion-navicon"></i> 
+         <img ng-if="$$root.user" src="https://media.vit.tube/view//profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/evisionindustry_white.png\'" onabort="this.src=\'img/evisionindustry_white.png\'"/>
+          <i ng-if="!$$root.user" class="icon ion-navicon"></i> 
         </button>
         <a href class="button button-icon ion-more" ng-if="$root.voiceOver" menu-toggle="left">{{::translations.menu}}</a>
       </ion-nav-buttons>
@@ -32,7 +32,7 @@
         </label>
       </div>
     </div>
-    <div ng-if="$root.user">
+    <div ng-if="$$root.user">
     <div class="item item-divider">
       {{'NOTIFICATIONS'|translate}}
     </div>
@@ -90,11 +90,11 @@
     </div>
     <div class="row">
       <div class="col col-50">
-      <span class="slabel" ng-click='openTooltip($event,"{{"REWLS_TEXT"|translate}}")'><i class="icon ion-ios-information-outline gray"></i>&nbsp;{{'REWLS'|translate}}</span>
+      <span class="slabel" ng-click='openTooltip($event,"{{"REVIT_TEXT"|translate}}")'><i class="icon ion-ios-information-outline gray"></i>&nbsp;{{'REVIT'|translate}}</span>
       </div>
       <div class="col pull-right tright">
         <label class="toggle toggle-positive">
-         <input type="checkbox" ng-model="data.rewhaleshares" ng-change="notificationChange()">
+         <input type="checkbox" ng-model="data.revisionindustry" ng-change="notificationChange()">
          <div class="track">
            <div class="handle"></div>
          </div>
@@ -185,7 +185,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <span class="slabel" ng-click='openTooltip($event,"<span class=\"bold\">{{"SERVER_TEXT"|translate}}:</span><br><span class=\"wrap\">[whalesharesit] ws://rpc.kennybll.com:8090</span><br/><br/>")'><i class="icon ion-ios-information-outline gray"></i>&nbsp;{{'SERVER'|translate}}</span>&nbsp;<i class="icon ion-checkmark-circled balanced" ng-if="alive"></i><i class="icon ion-close-circled assertive" ng-if="!alive"></i>
+        <span class="slabel" ng-click='openTooltip($event,"<span class=\"bold\">{{"SERVER_TEXT"|translate}}:</span><br><span class=\"wrap\">[visionindustryit] wss://peer.vit.tube</span><br/><br/>")'><i class="icon ion-ios-information-outline gray"></i>&nbsp;{{'SERVER'|translate}}</span>&nbsp;<i class="icon ion-checkmark-circled balanced" ng-if="alive"></i><i class="icon ion-close-circled assertive" ng-if="!alive"></i>
       </div>
       <div class="col col-66">
         <select-input ng-model="socket" select-options="options"></select-input>

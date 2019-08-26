@@ -4,8 +4,8 @@
       </ion-nav-back-button>
       <ion-nav-buttons side='left'>
         <button class="button button-icon button-clear" ng-if="!$root.voiceOver" menu-toggle="left">
-         <img ng-if="$root.user" src="https://imgp.whaleshares.io/profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/ewhaleshares_white.png\'" onabort="this.src=\'img/ewhaleshares_white.png\'"/>
-          <i ng-if="!$root.user" class="icon ion-navicon"></i> 
+         <img ng-if="$$root.user" src="https://media.vit.tube/view//profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/evisionindustry_white.png\'" onabort="this.src=\'img/evisionindustry_white.png\'"/>
+          <i ng-if="!$$root.user" class="icon ion-navicon"></i> 
         </button>
         <a href class="button button-icon ion-more" ng-if="$root.voiceOver" menu-toggle="left">{{::translations.menu}}</a>
       </ion-nav-buttons>
@@ -17,17 +17,17 @@
   <ion-content class="padding" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
     <h4>{{'EXTERNAL_APPS'|translate}}</h4>
     <div class="row">
-      <div class="col" ng-click="requestApp('WhaleSharesMonitor')">
+      <div class="col" ng-click="requestApp('VisionIndustryMonitor')">
         <center>
-          <img src="img/logo_whalesharesmonitor.png" alt="WhaleShares Monitor" style="width: 100%;">
-          <b>WhaleShares Monitor</b>
+          <img src="img/logo_visionindustrymonitor.png" alt="VisionIndustry Monitor" style="width: 100%;">
+          <b>VisionIndustry Monitor</b>
           <p class="gray">{{'BY'|translate}} <a href="#app/profile/swapbit">Feruz</a></p>
         </center>
       </div>
-      <div class="col" ng-click="requestApp('WhaleSharesFest')">
+      <div class="col" ng-click="requestApp('VisionIndustryFest')">
         <center>
-          <img src="img/logo_whalesharesfest.png" alt="WhaleShares Fest" style="width: 100%;">
-          <b>WhaleShares Fest</b>
+          <img src="img/logo_visionindustryfest.png" alt="VisionIndustry Fest" style="width: 100%;">
+          <b>VisionIndustry Fest</b>
           <p class="gray">{{'BY'|translate}} <a href="#app/profile/swapbit">Feruz</a>, <a href="#app/profile/roelandp">Roeland</a> &amp; <a href="#app/profile/cass">Cass</a></p>
         </center>
       </div>

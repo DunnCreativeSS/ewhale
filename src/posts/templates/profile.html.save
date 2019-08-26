@@ -2,40 +2,40 @@
   <ion-content class="has-footer profilepage" overflow-scroll="true">
     <div class="bar bar-subheader mysubheader bar-positive" ng-style="$root.user.username != user.username?css:mcss">
       <button class="button button-icon button-clear ion-ios-arrow-back profilebtn" on-tap="goBack()"></button>
-      <button class="button button-outline button-light profilebtn_favorite" on-tap="$root.favor(user.username)" ng-if="$root.user && $root.user.username != user.username && !$root.isfavorite"><i class="icon ion-ios-heart-outline assertive"></i></button>
-      <button class="button button-outline button-light profilebtn_follow" on-tap="followUser(user.username)" ng-if="$root.user && $root.user.username != user.username && !isAmFollowing(user.username)"><!--<i class="fa fa-user-plus fa-lg"></i>-->{{::'FOLLOW'|translate}}</button>
-      <button class="button button-outline button-light profilebtn_mute" on-tap="muteUser(user.username)" ng-if="$root.user && $root.user.username != user.username && !isAmMuting(user.username)"><!--<i class="fa fa-user-plus fa-lg"></i>-->{{::'MUTE'|translate}}</button>
-      <button class="button button-clear profilebtn_edit button-icon ion-ios-compose-outline" on-tap="showEdits()" ng-if="$root.user && $root.user.username === user.username"></button>
-      <button class="button button-clear profilebtn_favorite button-icon ion-camera" on-tap="showCover()" ng-if="$root.user && $root.user.username === user.username"></button>
-      <button class="button button-outline button-light profilebtn_favorite" on-tap="unfavor(user.username)" ng-if="$root.user && $root.user.username != user.username && $root.isfavorite"><i class="icon ion-ios-heart assertive"></i></button>
-      <button class="button button-outline button-light profilebtn_follow" on-tap="unfollowUser(user.username)" ng-if="$root.user && $root.user.username != user.username && isAmFollowing(user.username)"><!--button-icon button-clear<i class="fa fa-user-times fa-lg"></i>-->{{::'UNFOLLOW'|translate}}</button><button class="button button-outline button-light profilebtn_mute" on-tap="unmuteUser(user.username)" ng-if="$root.user && $root.user.username != user.username && isAmMuting(user.username)"><!--button-icon button-clear<i class="fa fa-user-times fa-lg"></i>-->{{::'UNMUTE'|translate}}</button>&nbsp;
+      <button class="button button-outline button-light profilebtn_favorite" on-tap="$root.favor(user.username)" ng-if="$$root.user && $root.user.username != user.username && !$root.isfavorite"><i class="icon ion-ios-heart-outline assertive"></i></button>
+      <button class="button button-outline button-light profilebtn_follow" on-tap="followUser(user.username)" ng-if="$$root.user && $root.user.username != user.username && !isAmFollowing(user.username)"><!--<i class="fa fa-user-plus fa-lg"></i>-->{{::'FOLLOW'|translate}}</button>
+      <button class="button button-outline button-light profilebtn_mute" on-tap="muteUser(user.username)" ng-if="$$root.user && $root.user.username != user.username && !isAmMuting(user.username)"><!--<i class="fa fa-user-plus fa-lg"></i>-->{{::'MUTE'|translate}}</button>
+      <button class="button button-clear profilebtn_edit button-icon ion-ios-compose-outline" on-tap="showEdits()" ng-if="$$root.user && $root.user.username === user.username"></button>
+      <button class="button button-clear profilebtn_favorite button-icon ion-camera" on-tap="showCover()" ng-if="$$root.user && $root.user.username === user.username"></button>
+      <button class="button button-outline button-light profilebtn_favorite" on-tap="unfavor(user.username)" ng-if="$$root.user && $root.user.username != user.username && $root.isfavorite"><i class="icon ion-ios-heart assertive"></i></button>
+      <button class="button button-outline button-light profilebtn_follow" on-tap="unfollowUser(user.username)" ng-if="$$root.user && $root.user.username != user.username && isAmFollowing(user.username)"><!--button-icon button-clear<i class="fa fa-user-times fa-lg"></i>-->{{::'UNFOLLOW'|translate}}</button><button class="button button-outline button-light profilebtn_mute" on-tap="unmuteUser(user.username)" ng-if="$$root.user && $root.user.username != user.username && isAmMuting(user.username)"><!--button-icon button-clear<i class="fa fa-user-times fa-lg"></i>-->{{::'UNMUTE'|translate}}</button>&nbsp;
       <div class="center">
-          <div class="item-myavatar" ng-if="$root.user && $root.user.username == user.username">
-            <span class="item-myavatar" ng-if="!($root.$storage.user.json_metadata.profile.profile_image||$root.user.json_metadata.user_image)"><img src="img/user_profile.png" on-tap="showProfile()"></span>
-            <img ion-img-cache check-image ng-src="{{$root.user.json_metadata.profile.profile_image || $root.user.json_metadata.user_image}}" ng-if="$root.user.json_metadata.user_image || $root.user.json_metadata.profile.profile_image" on-tap="showProfile()" />
+          <div class="item-myavatar" ng-if="$$root.user && $root.user.username == user.username">
+            <span class="item-myavatar" ng-if="!($root.$storage.user.json_metadata.profile.profile_image||$$root.user.json_metadata.user_image)"><img src="img/user_profile.png" on-tap="showProfile()"></span>
+            <img ion-img-cache check-image ng-src="{{$$root.user.json_metadata.profile.profile_image || $$root.user.json_metadata.user_image}}" ng-if="$$root.user.json_metadata.user_image || $$root.user.json_metadata.profile.profile_image" on-tap="showProfile()" />
             <div class="footprofileinfo">
               <h4 class="center">
                 <span class="light">@{{::$root.user.username}}</span>
                 &nbsp;
                            </div>
               </h4>
-              <div class="about">{{$root.user.json_metadata.profile.about}}</div>
+              <div class="about">{{$$root.user.json_metadata.profile.about}}</div>
               <div class="padding profile_stats">
-                <i class="icon ion-android-list"></i>&nbsp;{{::$root.user.post_count}}&nbsp;| <i class="icon ion-ios-people"></i>&nbsp;{{::followdetails.follower_count}}&nbsp;| <i class="icon ion-person-add"></i>&nbsp;{{::followdetails.following_count}}&nbsp;| <i class="icon ion-arrow-graph-up-right"></i>&nbsp;{{$root.user.voting_power/100|number:2}}&nbsp;<span ng-if="votecount>0">| <i class="fa fa-chevron-circle-up"></i>&nbsp;{{votecount}}</span>
+                <i class="icon ion-android-list"></i>&nbsp;{{::$$root.user.post_count}}&nbsp;| <i class="icon ion-ios-people"></i>&nbsp;{{::followdetails.follower_count}}&nbsp;| <i class="icon ion-person-add"></i>&nbsp;{{::followdetails.following_count}}&nbsp;| <i class="icon ion-arrow-graph-up-right"></i>&nbsp;{{$$root.user.voting_power/100|number:2}}&nbsp;<span ng-if="votecount>0">| <i class="fa fa-chevron-circle-up"></i>&nbsp;{{votecount}}</span>
               </div>
-              <p><span ng-if="$root.user.json_metadata.profile && $root.user.json_metadata.profile.location">
+              <p><span ng-if="$$root.user.json_metadata.profile && $$root.user.json_metadata.profile.location">
                 <i class="icon ion-location"></i>&nbsp;
-                {{::$root.user.json_metadata.profile.location}}
+                {{::$$root.user.json_metadata.profile.location}}
                 &nbsp;
               </span>&nbsp;
-              <span ng-if="$root.user.json_metadata.profile && $root.user.json_metadata.profile.website">
+              <span ng-if="$$root.user.json_metadata.profile && $$root.user.json_metadata.profile.website">
                 <i class="icon ion-link"></i>&nbsp;
-                <span on-tap="window.open('{{$root.user.json_metadata.profile.website}}', '_system');" style="color:white!important;text-decoration: underline;">WebSite</span>
+                <span on-tap="window.open('{{$$root.user.json_metadata.profile.website}}', '_system');" style="color:white!important;text-decoration: underline;">WebSite</span>
                 &nbsp;
               </span>
-              <span ng-if="$root.user.created">
+              <span ng-if="$$root.user.created">
                 <i class="icon ion-calendar"></i>&nbsp;
-                {{::$root.user.created|date}}
+                {{::$$root.user.created|date}}
                 &nbsp;
               </span></p>
             </div>
@@ -75,11 +75,11 @@
             <div ng-repeat="d in data.profile | orderBy:'-created' track by d.id">
                <div class="list" >
             <div class="item item-avatar postList" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
-                <img class="round-avatar-title" ng-src="https://imgp.whaleshares.io/profileimage/{{d.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" />
+                <img class="round-avatar-title" ng-src="https://newmedia.vit.tube/resize/128x128/https://media.vit.tube/view/{{$d.author}}/avatar" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" />
                   <div class="row postdetails">
-                    <div class="col"><b><a href="#/app/profile/{{d.author}}">{{d.author}}</a></b>&nbsp;<div class="reputation">{{::d.author_reputation|reputation|number:0}}</div><span ng-if="d.author!==user.username && active!=='recent-replies'">&nbsp; 
+                    <div class="col"><b><a href="#/app/profile/{{$d.author}}">{{$d.author}}</a></b>&nbsp;<div class="reputation">{{::$d.author_reputation|reputation|number:0}}</div><span ng-if="$d.author!==user.username && active!=='recent-replies'">&nbsp; 
                     <i class="icon ion-arrow-return-right"></i>
-                  </span><span ng-if="d.author!==user.username && active!=='recent-replies'" class="reBlogged">
+                  </span><span ng-if="$d.author!==user.username && active!=='recent-replies'" class="reBlogged">
                 {{'REBLOG'|translate}}
               </span><p>{{d.created|timeago}}&nbsp;&middot;&nbsp;<a href on-tap="openTag(d.category, 5)">#{{::d.category|detransliterate:false}}</a></p>
                     </div>
@@ -87,7 +87,7 @@
             </div>
               <div class="item-body ibody">
                 <h2 class="postTitle" on-tap="open(d)">
-                  <i class="fa fa-money positive" ng-if="d.promoted.split(' ')[0] !== '0.000'"></i> <i class="fa fa-fire positive" ng-if="d.percent_whaleshares_dollars === 0"></i> {{::d.title}}
+                  <i class="fa fa-money positive" ng-if="d.promoted.split(' ')[0] !== '0.000'"></i> <i class="fa fa-fire positive" ng-if="d.percent_visionindustry_dollars === 0"></i> {{::d.title}}
                 </h2>
                 <div class="postSummary" on-tap="open(d)">{{d.body | postSummary}}</div>
                 <div class="row">
@@ -114,11 +114,11 @@
                <div class="list card" ng-if="ds" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
 
             <div class="item item-avatar postList" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
-              <img class="round-avatar-title" ng-src="https://imgp.whaleshares.io/profileimage/{{ds.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'"  />
+              <img class="round-avatar-title" ng-src="https://media.vit.tube/view//profileimage/{{$ds.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'"  />
                 <div class="row postdetails">
-                  <div class="col"><b><a href="#/app/profile/{{ds.author}}">{{ds.author}}</a></b>&nbsp;<div class="reputation">{{::ds.author_reputation|reputation|number:0}}</div><span ng-if="ds.author!==user.username && active!=='recent-replies'">&nbsp; 
+                  <div class="col"><b><a href="#/app/profile/{{$ds.author}}">{{$ds.author}}</a></b>&nbsp;<div class="reputation">{{::$ds.author_reputation|reputation|number:0}}</div><span ng-if="$ds.author!==user.username && active!=='recent-replies'">&nbsp; 
                     <i class="icon ion-arrow-return-right"></i>
-                  </span><span ng-if="ds.author!==user.username && active!=='recent-replies'" class="reBlogged">
+                  </span><span ng-if="$ds.author!==user.username && active!=='recent-replies'" class="reBlogged">
                 {{'REBLOG'|translate}}
               </span><p class="postNumbers">{{ds.created|timeago}}&nbsp;&middot;&nbsp;<a href on-tap="openTag(ds.category, 5)">#{{::ds.category|detransliterate:false}}</a></p></div></div>
                   
@@ -127,7 +127,7 @@
                 <center><img class="full-image" check-image ng-src="{{ds|catchimage}}" ng-if="ds.json_metadata.indexOf('nsfw')==-1 && active=='blog'" on-tap="open(ds)" />
                 <img class="full-image" ng-src="img/nsfwimage.png" on-tap="open(ds)" ng-if="$root.$storage.nsfw && ds.json_metadata.indexOf('nsfw')>-1 && active=='blog'" /></center>
                 <h2 class="postTitle" on-tap="open(ds)">
-                <i class="fa fa-money positive" ng-if="ds.promoted.split(' ')[0] !== '0.000'"></i> <i class="fa fa-fire positive" ng-if="ds.percent_whaleshares_dollars === 0"></i> {{::ds.title}}</h2>
+                <i class="fa fa-money positive" ng-if="ds.promoted.split(' ')[0] !== '0.000'"></i> <i class="fa fa-fire positive" ng-if="ds.percent_visionindustry_dollars === 0"></i> {{::ds.title}}</h2>
                 <div class="postSummary" on-tap="open(ds)">{{ds.body | postSummary}}</div>
                 <div class="row">
                   <div class="col">
@@ -147,7 +147,7 @@
                     <div class="postNumbers" on-tap="open(ds)"><i class="icon ion-chatbubbles"></i>&nbsp;{{::ds.children}}</div>
                     </div>
                     <!--<div class="col col-10 tright">
-                    <a href="#" class="subdued" on-tap="$root.reBlog(ds.author, ds.permlink)"><i class="icon ion-arrow-return-right"></i>&nbsp;</a>
+                    <a href="#" class="subdued" on-tap="$root.reBlog($ds.author, ds.permlink)"><i class="icon ion-arrow-return-right"></i>&nbsp;</a>
                     </div>-->
                   </div>
               </div>
@@ -157,10 +157,10 @@
         <ion-infinite-scroll on-infinite="loadmore()" ng-if="moreDataCanBeLoaded()" distance="1%"></ion-infinite-scroll>
         </div>
         <div class="padding" ng-if="active=='transfers'">
-          <p class="tcenter" ng-if="accounts.reward_whaleshares_balance.split(' ')[0]>0 || accounts.reward_sbd_balance.split(' ')[0]>0 || accounts.reward_vesting_whaleshares.split(' ')[0]>0"> {{::'UNCLAIMED_REWARDS'|translate}}: 
-          <span ng-if="accounts.reward_whaleshares_balance.split(' ')[0]>0">{{::accounts.reward_whaleshares_balance.split(' ')[0]}} {{::$root.$storage.platformlunit}}</span>
+          <p class="tcenter" ng-if="accounts.reward_visionindustry_balance.split(' ')[0]>0 || accounts.reward_sbd_balance.split(' ')[0]>0 || accounts.reward_vesting_visionindustry.split(' ')[0]>0"> {{::'UNCLAIMED_REWARDS'|translate}}: 
+          <span ng-if="accounts.reward_visionindustry_balance.split(' ')[0]>0">{{::accounts.reward_visionindustry_balance.split(' ')[0]}} {{::$root.$storage.platformlunit}}</span>
           <span ng-if="accounts.reward_sbd_balance.split(' ')[0]>0">{{::accounts.reward_sbd_balance.split(' ')[0]}} {{::$root.$storage.platformdunit}}</span>
-          <span ng-if="accounts.reward_vesting_whaleshares.split(' ')[0]>0">{{::accounts.reward_vesting_whaleshares.split(' ')[0]}} {{::$root.$storage.platformpunit}}</span>
+          <span ng-if="accounts.reward_vesting_visionindustry.split(' ')[0]>0">{{::accounts.reward_vesting_visionindustry.split(' ')[0]}} {{::$root.$storage.platformpunit}}</span>
           <br>
           <button class="button button-positive" ng-if='$root.user.username === user.username' on-tap="claim_rewards()">{{::'CLAIM_REWARDS'|translate}}</button>
           </p>
@@ -214,7 +214,7 @@
             <div class="item" ng-repeat="tr in transfers | orderBy:'-[0]' | limitTo:50 track by $index">
               <span>{{::tr[1].timestamp | timeago}} - {{::tr[1].op[0]}}</span>
               <div ng-if="tr[1].op[0]=='comment_reward'">{{::tr[1].op[1].sbd_payout}} | {{::tr[1].op[1].vesting_payout}}</div>
-              <div ng-if="tr[1].op[0]=='author_reward'" class="wrap">{{::tr[1].op[1].sbd_payout}} | {{::tr[1].op[1].whaleshares_payout}} | {{::tr[1].op[1].vesting_payout}}</div>
+              <div ng-if="tr[1].op[0]=='author_reward'" class="wrap">{{::tr[1].op[1].sbd_payout}} | {{::tr[1].op[1].visionindustry_payout}} | {{::tr[1].op[1].vesting_payout}}</div>
               <div ng-if="tr[1].op[0]=='curation_reward'">{{tr[1].op[1].reward}} | {{::tr[1].op[1].vesting_payout}}</div>
               <div class="wrap" ng-if="tr[1].op[0]=='transfer'">{{::tr[1].op[1].amount}} | {{::tr[1].op[1].memo}}</div>
               <div ng-if="tr[1].op[0]=='interest'">{{::tr[1].op[1].interest}}</div>
@@ -227,58 +227,58 @@
               <p ng-if="tr[1].op[0]=='transfer'">{{::tr[1].op[1].from|uppercase}} {{::'TO'|translate}}  {{::tr[1].op[1].to|uppercase}}</p>
               <p ng-if="tr[1].op[0]=='transfer_to_vesting'"> {{::tr[1].op[1].from|uppercase}} {{::'TO'|translate}}  {{::tr[1].op[1].to|uppercase}}</p>
               <p ng-if="tr[1].op[0]=='withdraw_vesting'">{{::tr[1].op[1].account|uppercase}}</p>
-              <p ng-if="tr[1].op[0]=='claim_reward_balance'">{{::tr[1].op[1].reward_whaleshares}} | {{::tr[1].op[1].reward_sbd}} | {{::tr[1].op[1].reward_vests}}</p>
+              <p ng-if="tr[1].op[0]=='claim_reward_balance'">{{::tr[1].op[1].reward_visionindustry}} | {{::tr[1].op[1].reward_sbd}} | {{::tr[1].op[1].reward_vests}}</p>
               <p ng-if="tr[1].op[0]=='comment_benefactor_reward'">{{::tr[1].op[1].benefactor|uppercase}} | {{::tr[1].op[1].permlink}}</p>
             </div>
           </div>
         </div>
 
-        <div class="box pink" ng-if="active=='permissions' && $root.user && $root.user.username === user.username">
+        <div class="box pink" ng-if="active=='permissions' && $$root.user && $root.user.username === user.username">
           <div class="list card">
             <div class="item">
               <h2><div class="bold"></div></h2>
-              <p class="wrap">{{::$root.user.password}}</p>
+              <p class="wrap">{{::$$root.user.password}}</p>
             </div>
             <div class="item">
               <h2><div class="bold">{{::'POSTING'|translate}}</div></h2>
-              <p class="wrap">{{::$root.user.posting.key_auths[0][0]}}</p>
-              <p class="wrap">{{$root.user|pkeys:'posting'}}</p>
+              <p class="wrap">{{::$$root.user.posting.key_auths[0][0]}}</p>
+              <p class="wrap">{{$$root.user|pkeys:'posting'}}</p>
             </div>
             <div class="item item-body">
-              <center><qr class="full-image" text="$root.user.posting.key_auths[0][0]"></qr></center>
+              <center><qr class="full-image" text="$$root.user.posting.key_auths[0][0]"></qr></center>
               <p>
                 {{::'PROFILE_5'|translate}}
               </p>
             </div>
             <div class="item">
               <h2><div class="bold">{{::'OWNER'|translate}}</div></h2>
-              <p class="wrap">{{::$root.user.owner.key_auths[0][0]}}</p>
-              <p class="wrap">{{$root.user|pkeys:'owner'}}</p>
+              <p class="wrap">{{::$$root.user.owner.key_auths[0][0]}}</p>
+              <p class="wrap">{{$$root.user|pkeys:'owner'}}</p>
             </div>
             <div class="item item-body">
-              <center><qr class="full-image" text="$root.user.owner.key_auths[0][0]"></qr></center>
+              <center><qr class="full-image" text="$$root.user.owner.key_auths[0][0]"></qr></center>
               <p>
                 {{::'PROFILE_6'|translate}}
               </p>
             </div>
             <div class="item">
               <h2><div class="bold">{{::'ACTIVE'|translate}}</div></h2>
-              <p class="wrap">{{::$root.user.active.key_auths[0][0]}}</p>
-              <p class="wrap">{{$root.user|pkeys:'active'}}</p>
+              <p class="wrap">{{::$$root.user.active.key_auths[0][0]}}</p>
+              <p class="wrap">{{$$root.user|pkeys:'active'}}</p>
             </div>
             <div class="item item-body">
-              <center><qr class="full-image" text="$root.user.active.key_auths[0][0]"></qr></center>
+              <center><qr class="full-image" text="$$root.user.active.key_auths[0][0]"></qr></center>
               <p>
                 {{::'PROFILE_7'|translate}}
               </p>
             </div>
             <div class="item">
               <h2><div class="bold">{{::'MEMO'|translate}}</div></h2>
-              <p class="wrap">{{::$root.user.memo_key}}</p>
-              <p class="wrap">{{$root.user|pkeys:'memo'}}</p>
+              <p class="wrap">{{::$$root.user.memo_key}}</p>
+              <p class="wrap">{{$$root.user|pkeys:'memo'}}</p>
             </div>
             <div class="item item-body">
-              <center><qr class="full-image" text="$root.user.memo_key"></qr></center>
+              <center><qr class="full-image" text="$$root.user.memo_key"></qr></center>
               <p>
                 {{::'PROFILE_8'|translate}}
               </p>
@@ -315,7 +315,7 @@
       <a class="button button-royal icon ion-document-text" ng-class="{'active':active=='posts'}" on-tap="change('posts')"></a>
       <a class="button button-royal icon ion-chatbubbles" ng-class="{'active':active=='recent-replies'}" on-tap="change('recent-replies')"></a>
       <a class="button button-royal icon ion-card" ng-class="{'active':active=='transfers'}"  on-tap="change('transfers')"></a>
-      <!--<a class="button button-royal icon ion-lock-combination" ng-class="{'active':active=='permissions'}" on-tap="change('permissions')" ng-if="$root.user && $root.user.username === user.username">Keys</a>-->
+      <!--<a class="button button-royal icon ion-lock-combination" ng-class="{'active':active=='permissions'}" on-tap="change('permissions')" ng-if="$$root.user && $root.user.username === user.username">Keys</a>-->
     </div>
   </div>
   <script id="my-edit.html" type="text/ng-template">

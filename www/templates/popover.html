@@ -1,4 +1,4 @@
-<ion-popover-view ng-class="{'menuPopover':$root.user,'menuPopoverLog':!$root.user}">
+<ion-popover-view ng-class="{'menuPopover':$$root.user,'menuPopoverLog':!$$root.user}">
 <ion-content ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
   <div class="list">
     <!--<a class="item" href="#"  ng-click="showFilter()">
@@ -13,7 +13,7 @@
       <i class="icon ion-android-search"></i>
       {{'SEARCH'|translate}}
     </a>
-    <a class="item" href="#" ng-if="$root.user" ng-click="openPostModal()">
+    <a class="item" href="#" ng-if="$$root.user" ng-click="openPostModal()">
       <i class="icon ion-android-create"></i>
       {{'SUBMIT_A_STORY'|translate}}
     </a>

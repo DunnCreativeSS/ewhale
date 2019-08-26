@@ -1,9 +1,9 @@
 //let fs = require('fs');
 
-//angular.module('window.whaleshares.services', [])
+//angular.module('window.visionindustry.services', [])
 module.exports = function (app) {
   console.log('services.js');
-	app.service('APIs', ['$http', '$rootScope', 'API_END_POINT','API_END_POINT2', function ($http, $rootScope, API_END_POINT, API_END_POINT2) {
+	app.service('APIs', ['$http', 'rootScope', 'API_END_POINT','API_END_POINT2', function ($http, rootScope, API_END_POINT, API_END_POINT2) {
 		'use strict';
 	API_END_POINT="http://api.esteem.ws:8080";
 		return {
@@ -11,13 +11,13 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/currencyRate/"+code_to.toUpperCase()+"/"+chain);
       },
       saveSubscription: function(deviceid, username, subscription) {
-        return $http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+        return $http.post(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: rootScope.$storage.chain});
       },
       updateSubscription: function(deviceid, username, subscription) {
-        return $http.put(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: $rootScope.$storage.chain});
+        return $http.put(API_END_POINT+"/api/devices", {deviceid: deviceid, username: username, subscription: subscription, chain: rootScope.$storage.chain});
       },
       updateToken: function(deviceid, newdev) {
-        return $http.put(API_END_POINT+"/api/device/"+deviceid, {newdev: newdev, chain: $rootScope.$storage.chain});
+        return $http.put(API_END_POINT+"/api/device/"+deviceid, {newdev: newdev, chain: rootScope.$storage.chain});
       },
       deleteSubscription: function(deviceid) {
         return $http.delete(API_END_POINT+"/api/devices/"+deviceid);
@@ -26,7 +26,7 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/devices/"+deviceid);
       },
 			addBookmark: function(user, bookmark) {
-        return $http.post(API_END_POINT+"/api/bookmark", {username: user, author: bookmark.author, permlink: bookmark.permlink, chain: $rootScope.$storage.chain});
+        return $http.post(API_END_POINT+"/api/bookmark", {username: user, author: bookmark.author, permlink: bookmark.permlink, chain: rootScope.$storage.chain});
       },
 			getBookmarks: function(user) {
         return $http.get(API_END_POINT+"/api/bookmarks/"+user);
@@ -50,7 +50,7 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/isfavorite/"+user+"/"+account);
       },
 			addDraft: function(user, draft) {
-        return $http.post(API_END_POINT+"/api/draft", {username: user, title: draft.title, body: draft.body, tags: draft.tags, post_type: draft.post_type, chain: $rootScope.$storage.chain});
+        return $http.post(API_END_POINT+"/api/draft", {username: user, title: draft.title, body: draft.body, tags: draft.tags, post_type: draft.post_type, chain: rootScope.$storage.chain});
       },
 			getDrafts: function(user) {
         return $http.get(API_END_POINT+"/api/drafts/"+user);
@@ -65,10 +65,10 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/images/"+user);
       },
       searchEscrow: function(id) {
-        return $http.get(API_END_POINT+"/api/escrow/"+$rootScope.$storage.chain+"/"+id);
+        return $http.get(API_END_POINT+"/api/escrow/"+rootScope.$storage.chain+"/"+id);
       },
       schedulePost: function(user, post) {
-        return $http.post(API_END_POINT+"/api/schedules", {username: user, category: post.category[0], title: post.title, permlink: post.permlink, json: post.json, tags: post.tags, body: post.body, post_type: post.post_type, upvote_this: post.upvote_this, schedule: post.schedule, chain: $rootScope.$storage.chain});
+        return $http.post(API_END_POINT+"/api/schedules", {username: user, category: post.category[0], title: post.title, permlink: post.permlink, json: post.json, tags: post.tags, body: post.body, post_type: post.post_type, upvote_this: post.upvote_this, schedule: post.schedule, chain: rootScope.$storage.chain});
       },
       getSchedules: function(user) {
         return $http.get(API_END_POINT+"/api/schedules/"+user);
@@ -101,13 +101,13 @@ module.exports = function (app) {
         return $http.get(API_END_POINT+"/api/leaderboard");
       },
       getMyAchievements: function(user) {
-        return $http.get(API_END_POINT+"/api/achievements/"+$rootScope.$storage.chain+"/"+user);
+        return $http.get(API_END_POINT+"/api/achievements/"+rootScope.$storage.chain+"/"+user);
       },
       search: function(text) {
-        return $http.get("https://api.askwhaleshares.com/search?q="+text+"&include=meta&sort_by=created&order=desc");
+        return $http.get("https://api.askvisionindustry.com/search?q="+text+"&include=meta&sort_by=created&order=desc");
       },
       sendMsg: function(user, msg, room) {
-        return $http.post(API_END_POINT+"/api/messages", {sender: user, content: msg, room: room, chain: $rootScope.$storage.chain});
+        return $http.post(API_END_POINT+"/api/messages", {sender: user, content: msg, room: room, chain: rootScope.$storage.chain});
       },
       getMsg: function(user, room) {
         return $http.get(API_END_POINT+"/api/messages/"+room+"/"+user);
@@ -141,13 +141,13 @@ module.exports = function (app) {
       link: function(scope, element, attrs) {
         element.bind('focus', function(e) {
           if (window.cordova && window.cordova.plugins.Keyboard) {
-            // $rootScope.log("show bar (hide = false)");
+            // rootScope.log("show bar (hide = false)");
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
           }
         });
         element.bind('blur', function(e) {
           if (window.cordova && window.cordova.plugins.Keyboard) {
-            // $rootScope.log("hide bar (hide = true)");
+            // rootScope.log("hide bar (hide = true)");
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
           }
         });
@@ -511,7 +511,7 @@ module.exports = function (app) {
       var x1 = inp.json_metadata.split('"image":');
       
       if (x1 && x1.length>1){
-        return "https://imgp.whaleshares.io/0x0/"+x1[1].split('"')[1];
+        return "https://newmedia.vit.tube/resize/640x480/"+x1[1].split('"')[1];
       } else {
         /*if (x1.length == 1) {
           var match = regg.exec(inp.body);
@@ -528,17 +528,17 @@ module.exports = function (app) {
       
     }
   });
-  app.filter('pkeys', function($rootScope){
+  app.filter('pkeys', function(rootScope){
     return function(inp,role){
       if (inp) {
         if (!inp.password) {
           return role=='active'?inp.privateActiveKey:(role=='posting')?inp.privatePostingKey:'';
         }
-        return window.whaleshares.auth.toWif(inp.name, inp.password, role);
+        return window.visionindustry.auth.toWif(inp.name, inp.password, role);
       }
     }
   });
-	app.filter('timeago', function($filter, $translate, $rootScope) {
+	app.filter('timeago', function($filter, $translate, rootScope) {
 
       function TimeAgo(input, p_allowFuture) {
         var substitute = function (stringOrFunction, number, strings) {
@@ -618,7 +618,7 @@ module.exports = function (app) {
           days < 365 && substitute(strings.months, Math.round(days / 30), strings) ||
           years < 1.5 && substitute(strings.year, 1, strings) ||
           substitute(strings.years, Math.round(years), strings);
-          //$rootScope.log(prefix+words+suffix+separator);
+          //rootScope.log(prefix+words+suffix+separator);
           prefix.replace(/ /g, '')
           words.replace(/ /g, '')
           suffix.replace(/ /g, '')
@@ -631,7 +631,7 @@ module.exports = function (app) {
       return TimeAgo;
     });
 
-    app.filter('parseUrl', function($sce, $rootScope) {
+    app.filter('parseUrl', function($sce, rootScope) {
 	    //var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	    //var emails = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
       //var imgs = /(https?:\/\/.*\.(?:tiff?|jpe?g|gif|png|svg|ico))(.*)/gim;
@@ -664,10 +664,10 @@ module.exports = function (app) {
           
           texts = marked(s, options);          
 
-          if (!$rootScope.$storage.download) {
+          if (!rootScope.$storage.download) {
             texts = texts.replace(imgd, 'src="img/isimage.png" onclick="this.src=\'$1\'"');  
           }
-          if (textu.json_metadata && textu.json_metadata.tags && textu.json_metadata.tags.indexOf('nsfw')>-1 && !$rootScope.$storage.nsfw) {
+          if (textu.json_metadata && textu.json_metadata.tags && textu.json_metadata.tags.indexOf('nsfw')>-1 && !rootScope.$storage.nsfw) {
             texts = texts.replace(img, 'img/nsfwimage.png');  
           }
           //console.log('after '+texts);
@@ -688,7 +688,7 @@ module.exports = function (app) {
 	    };
 	});
 
-    app.filter('downvote', function($sce, $rootScope) {
+    app.filter('downvote', function($sce, rootScope) {
       
       return function(content) {
         //console.log(content);
@@ -752,7 +752,7 @@ module.exports = function (app) {
             var out = {};
             var musers = textu.match(users);
 
-            $rootScope.log(angular.toJson(musers));
+            rootScope.log(angular.toJson(musers));
 
             return textu;
           }
@@ -767,9 +767,9 @@ module.exports = function (app) {
         };
     });
 
-    app.filter('regex', function($rootScope) {
+    app.filter('regex', function(rootScope) {
       return function(input, field, regex) {
-        if ($rootScope.$storage.chain == 'golos') {
+        if (rootScope.$storage.chain == 'golos') {
           return input;
         } else {
             var patt = new RegExp(regex);      
@@ -905,7 +905,7 @@ module.exports = function (app) {
     }
   }
 
-  app.filter('readingtime', function($sce, $rootScope) {
+  app.filter('readingtime', function($sce, rootScope) {
       return function(text) {
         if (text) {
           return readingTime(text).minutes;
@@ -913,31 +913,31 @@ module.exports = function (app) {
       };
   })
 
-	app.filter('sp', function($sce, $rootScope) {
+	app.filter('sp', function($sce, rootScope) {
 	    return function(text) {
 	    	if (text) {
 			console.log(text);
-	    		return (Number(text.split(" ")[0])/1e6*$rootScope.$storage.whaleshares_per_mvests).toFixed(3);
+	    		return (Number(text.split(" ")[0])/1e6*rootScope.$storage.visionindustry_per_mvests).toFixed(3);
 	    	}
 	    };
 	})
-	app.filter('sd', function($sce, $rootScope) {
+	app.filter('sd', function($sce, rootScope) {
 	    return function(text, balance, sbd) {
 	    	if (text) {
-			console.log($rootScope.$storage);
-			//console.log($rootScope.$storage);
-	    		//return ((Number(text.split(" ")[0])/1e6*$rootScope.$storage.whaleshares_per_mvests*$rootScope.$storage.base + Number(balance.split(" ")[0])*$rootScope.$storage.base + Number(sbd.split(" ")[0])).toFixed(3))*$rootScope.$storage.currencyRate;
+			console.log(rootScope.$storage);
+			//console.log(rootScope.$storage);
+	    		//return ((Number(text.split(" ")[0])/1e6*rootScope.$storage.visionindustry_per_mvests*rootScope.$storage.base + Number(balance.split(" ")[0])*rootScope.$storage.base + Number(sbd.split(" ")[0])).toFixed(3))*rootScope.$storage.currencyRate;
 	    	}
 	    };
 	})
-	app.filter('sbd', function($sce, $rootScope) {
+	app.filter('sbd', function($sce, rootScope) {
 	    return function(text) {
 	    	if (text) {
 	    		return (Number(text.split(" ")[0]).toFixed(3));
 	    	}
 	    };
 	})
-	app.filter('st', function($sce, $rootScope) {
+	app.filter('st', function($sce, rootScope) {
 	    return function(text) {
 	    	if (text) {
 	    		return (Number(text.split(" ")[0]).toFixed(3));
@@ -970,7 +970,7 @@ module.exports = function (app) {
 		}
 	})
 
-  app.filter("sumPostTotal", function($rootScope){
+  app.filter("sumPostTotal", function(rootScope){
     function SumPostTotal(value, rate) {
       //console.log(value, rate);
       if (value && value.pending_payout_value && value.last_payout=="1970-01-01T00:00:00") {
@@ -987,10 +987,10 @@ module.exports = function (app) {
     return SumPostTotal;
   });
 
-  app.filter("rate", function($rootScope){
+  app.filter("rate", function(rootScope){
     return function(value) {
       if (value) {
-        return (parseFloat(value)*$rootScope.$storage.currencyRate);
+        return (parseFloat(value)*rootScope.$storage.currencyRate);
       }
     }
   });  
@@ -1129,7 +1129,7 @@ module.exports = function (app) {
   //works with same height items/ just like collection-repeat
   app.value('quickRepeatList', {});
   app.directive('quickNgRepeat',
-  ['$parse', '$animate', '$rootScope', 'quickRepeatList', function($parse, $animate, $rootScope, quick_repeat_list) {
+  ['$parse', '$animate', 'rootScope', 'quickRepeatList', function($parse, $animate, rootScope, quick_repeat_list) {
     var NG_REMOVED = '$$NG_REMOVED';
     var ngRepeatMinErr = 'err';
     var uid = ['0', '0', '0'];
@@ -1372,7 +1372,7 @@ module.exports = function (app) {
                   nextBlockMap[block.id] = block;
                 });
 
-                if ($rootScope.$$phase !== '$digest' && childScope.$$phase !== '$digest'){
+                if (rootScope.$$phase !== '$digest' && childScope.$$phase !== '$digest'){
                   childScope.$digest();
                 }
               }
@@ -1383,7 +1383,7 @@ module.exports = function (app) {
       }
     };
   }]);
-  app.directive('selectInput', ['$ionicPopup', '$rootScope', '$timeout', function($ionicPopup, $rootScope, $timeout) {
+  app.directive('selectInput', ['$ionicPopup', 'rootScope', '$timeout', function($ionicPopup, rootScope, $timeout) {
     return {
       restric: 'E',
       scope: {
@@ -1398,9 +1398,9 @@ module.exports = function (app) {
         }
         scope.socketChange = function(xx){
           console.log(xx);
-          $rootScope.$storage["socket"+$rootScope.$storage.chain] = xx;
+          rootScope.$storage["socket"+rootScope.$storage.chain] = xx;
           localStorage.socketUrl = xx;
-          window.whaleshares.api.stop();
+          window.visionindustry.api.stop();
           scope.restart = true;
           scope.$applyAsync();
           $timeout(function(){
@@ -1428,7 +1428,7 @@ module.exports = function (app) {
       }
     }
   }])
-  app.directive('checkImage', function($http, $rootScope) {
+  app.directive('checkImage', function($http, rootScope) {
       return {
           restrict: 'A',
           link: function(scope, element, attrs) {
@@ -1438,9 +1438,9 @@ module.exports = function (app) {
                       //console.log('image exist');
                   }).error(function(){
                       //alert('image not exist');
-                      if (ngSrc && $rootScope.chain && $rootScope.chain == 'whaleshares') {
+                      if (ngSrc && rootScope.chain && rootScope.chain == 'visionindustry') {
                         element.attr('ng-src', ngSrc); // set default image  'img/noimage.png'
-                      } else if ($rootScope.chain && $rootScope.chain == 'golos') {
+                      } else if (rootScope.chain && rootScope.chain == 'golos') {
                         element.attr('ng-src', 'https://imgp.golos.io/0x0/'+ngSrc); // set default image  
                       } else {
                         element.attr('ng-src', 'img/noimage.png'); // set default image 
@@ -1488,13 +1488,13 @@ module.exports = function (app) {
                 comment: '='
             },
             template: '<ion-item ng-if="comment.author" class="ion-comment item">\
-                        <div class="ion-comment--author"><img class="round-avatar" image-lazy-src="https://imgp.whaleshares.io/profileimage/{{comment.author}}/128x128l" onerror="this.src=\'img/user_profile.png\'" onabort="this.src=\'img/user_profile.png\'" /><b><a href="#/app/profile/{{::comment.author}}">{{::comment.author}}</a></b>&nbsp;<div class="reputation">{{::comment.author_reputation|reputation|number:0}}</div><span>&middot;{{::comment.created|timeago}}</span></div>\
+                        <div class="ion-comment--author"><img class="round-avatar" image-lazy-src="https://media.vit.tube/view//profileimage/{{comment.author}}/128x128l" onerror="this.src=\'img/user_profile.png\'" onabort="this.src=\'img/user_profile.png\'" /><b><a href="#/app/profile/{{::comment.author}}">{{::comment.author}}</a></b>&nbsp;<div class="reputation">{{::comment.author_reputation|reputation|number:0}}</div><span>&middot;{{::comment.created|timeago}}</span></div>\
                         <div class="ion-comment--score"><span on-tap="openTooltip($event,comment)"><b>{{::$root.$storage.currency|getCurrencySymbol}}</b> <span ng-if="comment.max_accepted_payout.split(\' \')[0] === \'0.000\'"><del>{{::comment | sumPostTotal:$root.$storage.currencyRate | number}}</del></span><span ng-if="comment.max_accepted_payout.split(\' \')[0] !== \'0.000\'">{{::comment | sumPostTotal:$root.$storage.currencyRate | number}}</span> </span> | <span on-tap="downvotePost(comment)"><span class="fa fa-flag" ng-class="{\'assertive\':comment.downvoted}"></span></span></div>\
                         <div class="ion-comment--text bodytext selectable" ng-if="comment.net_rshares>-1" ng-bind-html="comment | parseUrl"></div>\
                         <div class="ion-comment--text bodytext selectable" ng-if="comment.net_rshares<0">{{"HIDDEN_TEXT"|translate}}</div>\
                         <div class="ion-comment--replies"><ion-spinner ng-if="comment.invoting"></ion-spinner><span ng-click="upvotePost(comment)" ng-if="!comment.upvoted" on-hold="openSliderr($event, comment)"><span class="fa fa-md fa-chevron-circle-up" ng-class="{\'positive\':comment.upvoted}"></span> {{::"UPVOTE"|translate}}</span><span ng-click="unvotePost(comment)" ng-if="comment.upvoted" on-hold="openSliderr($event, comment)"><span class="fa fa-md fa-chevron-circle-up" ng-class="{\'positive\':comment.upvoted}"></span> {{::"UNVOTE_UPVOTED"|translate}}</span> | <span on-tap="$root.openInfo(comment)">{{comment.net_votes || 0}} {{"VOTES"|translate}}</span> | <span on-tap="toggleComment(comment)">{{comment.children || 0}} {{::"REPLIES"|translate}}</span> | <span on-tap="replyToComment(comment)"><span class="fa fa-reply"></span> {{"REPLY"|translate}}</span> <span ng-if="comment.author == $root.user.username && comment.cashout_time !== \'1969-12-31T23:59:59\'" on-tap="editComment(comment)"> | <span class="ion-ios-compose-outline"></span> {{::\'EDIT\'|translate}}</span> <span ng-if="comment.author == $root.user.username && comment.abs_rshares == 0" on-tap="deleteComment(comment)"> | <span class="ion-ios-trash-outline"></span> {{::\'REMOVE\'|translate}}</span> <span on-tap="comment.net_rshares=0" ng-if="comment.net_rshares<0"> | <span class="ion-ios-eye-outline"></span> {{::\'SHOW\'|translate}}</span></div>\
                     </ion-item>',
-            controller: function($scope, $rootScope, $state, $ionicModal, $ionicPopover, $ionicPopup, $ionicActionSheet, $cordovaCamera, $filter, ImageUploadService, APIs) {
+            controller: function($scope, rootScope, $state, $ionicModal, $ionicPopover, $ionicPopup, $ionicActionSheet, $cordovaCamera, $filter, ImageUploadService, APIs) {
                   $ionicPopover.fromTemplateUrl('popoverTr.html', {
                       scope: $scope
                    }).then(function(popover) {
@@ -1509,7 +1509,7 @@ module.exports = function (app) {
 
                   $scope.openSliderr = function($event, d) {
                     $scope.votingPost = d;
-                    $scope.rangeValue = $rootScope.$storage.voteWeight/100;
+                    $scope.rangeValue = rootScope.$storage.voteWeight/100;
                     $scope.tooltipSliderr.show($event);
                   };
                   $scope.votePostS = function() {
@@ -1518,12 +1518,12 @@ module.exports = function (app) {
                   }
                   $scope.drag = function(v) {
                     //console.log(v);
-                    $rootScope.$storage.voteWeight = v*100;
+                    rootScope.$storage.voteWeight = v*100;
                     if (!$scope.$$phase) {
                       $scope.$apply();
                     }
-                    if (!$rootScope.$$phase) {
-                      $rootScope.$apply();
+                    if (!rootScope.$$phase) {
+                      rootScope.$apply();
                     }
                   };
 
@@ -1532,12 +1532,12 @@ module.exports = function (app) {
                   };
 
                   $scope.openTooltip = function($event, d) {
-                    var tppv = Number(d.pending_payout_value.split(' ')[0])*$rootScope.$storage.currencyRate;
-                    var p = Number(d.promoted.split(' ')[0])*$rootScope.$storage.currencyRate;
-                    var tpv = Number(d.total_payout_value.split(' ')[0])*$rootScope.$storage.currencyRate;
-                    var ar = Number(d.total_payout_value.split(' ')[0]-d.curator_payout_value.split(' ')[0])*$rootScope.$storage.currencyRate;
-                    var crp = Number(d.curator_payout_value.split(' ')[0])*$rootScope.$storage.currencyRate;
-                    var texth = "<div class='row'><div class='col'><b>"+$filter('translate')('POTENTIAL_PAYOUT')+"</b></div><div class='col'>"+$filter('getCurrencySymbol')($rootScope.$storage.currency)+$filter('number')(tppv, 3)+"</div></div><div class='row'><div class='col'><b>"+$filter('translate')('PAST_PAYOUT')+"</b></div><div class='col'>"+$filter('getCurrencySymbol')($rootScope.$storage.currency)+$filter('number')(tpv,3)+"</div></div><div class='row'><div class='col'><b>"+$filter('translate')('PAYOUT')+"</b></div><div class='col'>"+$filter('timeago')(d.cashout_time, true)+"</div></div>";
+                    var tppv = Number(d.pending_payout_value.split(' ')[0])*rootScope.$storage.currencyRate;
+                    var p = Number(d.promoted.split(' ')[0])*rootScope.$storage.currencyRate;
+                    var tpv = Number(d.total_payout_value.split(' ')[0])*rootScope.$storage.currencyRate;
+                    var ar = Number(d.total_payout_value.split(' ')[0]-d.curator_payout_value.split(' ')[0])*rootScope.$storage.currencyRate;
+                    var crp = Number(d.curator_payout_value.split(' ')[0])*rootScope.$storage.currencyRate;
+                    var texth = "<div class='row'><div class='col'><b>"+$filter('translate')('POTENTIAL_PAYOUT')+"</b></div><div class='col'>"+$filter('getCurrencySymbol')(rootScope.$storage.currency)+$filter('number')(tppv, 3)+"</div></div><div class='row'><div class='col'><b>"+$filter('translate')('PAST_PAYOUT')+"</b></div><div class='col'>"+$filter('getCurrencySymbol')(rootScope.$storage.currency)+$filter('number')(tpv,3)+"</div></div><div class='row'><div class='col'><b>"+$filter('translate')('PAYOUT')+"</b></div><div class='col'>"+$filter('timeago')(d.cashout_time, true)+"</div></div>";
                     $scope.tooltipText = texth;
                     $scope.tooltip.show($event);
                   };
@@ -1564,7 +1564,7 @@ module.exports = function (app) {
                     }
                   };
                   $scope.toggleComment = function(comment) {
-                      $rootScope.log('toggleComment '+comment.showChildren);
+                      rootScope.log('toggleComment '+comment.showChildren);
 
                       if (comment.showChildren) {
                         comment.showChildren = false;
@@ -1573,18 +1573,18 @@ module.exports = function (app) {
                         comment.showChildren = true;
                         if (comment.depth % 5 == 0) {
                           console.log('depth5');
-                          $rootScope.$broadcast('openComments', { data: comment });
+                          rootScope.$broadcast('openComments', { data: comment });
                         } else {
-                          window.whaleshares.api.getStateAsync('tag/@'+comment.author+'/'+comment.permlink, function(err, dd) {
+                          window.visionindustry.api.getStateAsync('tag/@'+comment.author+'/'+comment.permlink, function(err, dd) {
                             //console.log(dd);
                             var po = [];
 
                             angular.forEach(dd.content, function(v,k){
                               if (v.parent_author==comment.author && v.parent_permlink == comment.permlink) {
                                 var len = v.active_votes.length;
-                                if ($rootScope.user) {
+                                if (rootScope.user) {
                                   for (var j = len - 1; j >= 0; j--) {
-                                    if (v.active_votes[j].voter === $rootScope.user.username) {
+                                    if (v.active_votes[j].voter === rootScope.user.username) {
                                       if (v.active_votes[j].percent > 0) {
                                         v.upvoted = true;
                                       } else if (v.active_votes[j].percent < 0) {
@@ -1602,19 +1602,19 @@ module.exports = function (app) {
                             
                             comment.comments = po;
                             comment.showChildren = true;
-                            $rootScope.fetching = false;
+                            rootScope.fetching = false;
 
                             $scope.$applyAsync();
                           });
                          
                         }
                       }
-                        //$rootScope.$broadcast('update:content');
-                    //$rootScope.$broadcast('hide:loading');
+                        //rootScope.$broadcast('update:content');
+                    //rootScope.$broadcast('hide:loading');
                   };
                   
                   $scope.upvotePost = function(post) {
-                    $rootScope.votePost(post, 'upvote', 'update:content');
+                    rootScope.votePost(post, 'upvote', 'update:content');
                   };
 
                   $scope.downvotePost = function(post) {
@@ -1624,16 +1624,16 @@ module.exports = function (app) {
                     });
                     confirmPopup.then(function(res) {
                       if(res) {
-                        $rootScope.log('You are sure');
-                        $rootScope.votePost(post, 'downvote', 'update:content');
+                        rootScope.log('You are sure');
+                        rootScope.votePost(post, 'downvote', 'update:content');
                       } else {
-                        $rootScope.log('You are not sure');
+                        rootScope.log('You are not sure');
                       }
                     });
                   };
 
                   $scope.unvotePost = function(post) {
-                    $rootScope.votePost(post, 'unvote', 'update:content');
+                    rootScope.votePost(post, 'unvote', 'update:content');
                   };
                   $scope.data={};
                   $ionicModal.fromTemplateUrl('templates/reply.html', {
@@ -1754,7 +1754,7 @@ module.exports = function (app) {
                             //var url = result.secure_url || '';
                             var url = result.url || '';
                             var final = " ![image](" + url + ")";
-                            $rootScope.log(final);
+                            rootScope.log(final);
                             if ($scope.data.comment) {
                               $scope.data.comment += final;
                             } else {
@@ -1764,21 +1764,21 @@ module.exports = function (app) {
                               $cordovaCamera.cleanup();
                             }
                             if (url) {
-                              APIs.addMyImage($rootScope.user.username, url).then(function(res){
+                              APIs.addMyImage(rootScope.user.username, url).then(function(res){
                                 if (res)
                                   console.log('saved image to db');
                               });
                             }
                           },
                           function(err) {
-                            $rootScope.showAlert($filter('translate')('ERROR'), err);
+                            rootScope.showAlert($filter('translate')('ERROR'), err);
                             if (!ionic.Platform.isAndroid() || !ionic.Platform.isWindowsPhone()) {
                               $cordovaCamera.cleanup();
                             }
                           });
                         }, 10);
                       }, function(err) {
-                        $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('CAMERA_CANCELLED'));
+                        rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('CAMERA_CANCELLED'));
                       });
                     } else {
                       $ionicPopup.prompt({
@@ -1787,11 +1787,11 @@ module.exports = function (app) {
                         inputType: 'text',
                         inputPlaceholder: 'http://example.com/image.jpg'
                       }).then(function(res) {
-                        $rootScope.log('Your url is' + res);
+                        rootScope.log('Your url is' + res);
                         if (res) {
                           var url = res.trim();
                           var final = " ![image](" + url + ")";
-                          $rootScope.log(final);
+                          rootScope.log(final);
                           if ($scope.data.comment) {
                             $scope.data.comment += final;
                           } else {
@@ -1814,25 +1814,25 @@ module.exports = function (app) {
                   }
                   $scope.reply = function (xx) {
                     
-                    var wif = $rootScope.user.password
-                    ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                    : $rootScope.user.privatePostingKey;
+                    var wif = rootScope.user.password
+                    ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                    : rootScope.user.privatePostingKey;
 
                     if (!$scope.editc) {
-                        $rootScope.$broadcast('show:loading');
-                        if ($rootScope.user) {
+                        rootScope.$broadcast('show:loading');
+                        if (rootScope.user) {
 
                           var t = new Date();
                           var timeformat = t.getFullYear().toString()+(t.getMonth()+1).toString()+t.getDate().toString()+"t"+t.getHours().toString()+t.getMinutes().toString()+t.getSeconds().toString()+t.getMilliseconds().toString()+"z";
                           console.log($scope.post.json_metadata);
-                          var json = {tags: angular.fromJson($scope.post.json_metadata).tags[0] || ["ewhaleshares"], app: 'ewhaleshares/'+$rootScope.$storage.appversion, format: 'markdown+html', community: 'ewhaleshares' };                              
+                          var json = {tags: angular.fromJson($scope.post.json_metadata).tags[0] || ["evisionindustry"], app: 'evisionindustry/'+rootScope.$storage.appversion, format: 'markdown+html', community: 'evisionindustry' };                              
                           var operations_array = [];
 
                           operations_array = [
                             ['comment', {
                               parent_author: $scope.post.author,
                               parent_permlink: $scope.post.permlink,
-                              author: $rootScope.user.username,
+                              author: rootScope.user.username,
                               permlink: "re-"+$scope.post.author.replace(/\./g, "")+"-"+timeformat,
                               title: "",
                               body: $scope.data.comment,
@@ -1841,20 +1841,20 @@ module.exports = function (app) {
                             ['comment_options', {
                               allow_curation_rewards: true,
                               allow_votes: true,
-                              author: $rootScope.user.username,
+                              author: rootScope.user.username,
                               permlink: "re-"+$scope.post.author.replace(/\./g, "")+"-"+timeformat,  
-                              max_accepted_payout: "1000000.000 "+$rootScope.$storage.platformdunit,
-                              percent_whaleshares_dollars: 10000,
-                              extensions: $rootScope.$storage.chain == 'golos'?[]:[[0, { "beneficiaries": [{ "account":"swapbit", "weight":1000 }] }]]
+                              max_accepted_payout: "1000000.000 "+rootScope.$storage.platformdunit,
+                              percent_visionindustry_dollars: 10000,
+                              extensions: rootScope.$storage.chain == 'golos'?[]:[[0, { "beneficiaries": [{ "account":"swapbit", "weight":1000 }] }]]
                             }]
                             ];
                           
-                          window.whaleshares.broadcast.send({ operations: operations_array, extensions: [] }, { posting: wif }, function(err, result) {
+                          window.visionindustry.broadcast.send({ operations: operations_array, extensions: [] }, { posting: wif }, function(err, result) {
                             //console.log(err, result);
                             $scope.replying = false;
                             if (err) {
                               var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-                              $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message);
+                              rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message);
                             } else {
                               $scope.closeModal();
                               $scope.replying = false;
@@ -1862,18 +1862,18 @@ module.exports = function (app) {
                               $scope.data.comment = "";
                               //setTimeout(function() {
                               $scope.$evalAsync(function( $scope ) {
-                                $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('COMMENT_SUBMITTED'));
-                                //$rootScope.$broadcast('hide:loading');
-                                //$rootScope.$emit("update:content");  
-                                $rootScope.$broadcast('hide:loading');
+                                rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('COMMENT_SUBMITTED'));
+                                //rootScope.$broadcast('hide:loading');
+                                //rootScope.$emit("update:content");  
+                                rootScope.$broadcast('hide:loading');
                               });
                               //}, 1);
                             }
-                            $rootScope.$broadcast('hide:loading');
+                            rootScope.$broadcast('hide:loading');
                           });
                         } else {
-                          $rootScope.$broadcast('hide:loading');
-                          $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+                          rootScope.$broadcast('hide:loading');
+                          rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
                         }
                     } else {
 
@@ -1881,12 +1881,12 @@ module.exports = function (app) {
                         // Putting body into buffer will expand Unicode characters into their true length
                         if (patch && patch.length < new Buffer($scope.data.comment, 'utf-8').length) {
                           $scope.data.comment2 = patch;
-                          //$rootScope.log(patch);
+                          //rootScope.log(patch);
                         }
-                        $rootScope.$broadcast('show:loading');
-                        if ($rootScope.user) {
+                        rootScope.$broadcast('show:loading');
+                        if (rootScope.user) {
                           var operations_array = [];
-                          var json = {tags: angular.fromJson($scope.post.json_metadata).tags[0] || ["ewhaleshares"], app: 'ewhaleshares/'+$rootScope.$storage.appversion, format: 'markdown+html', community: 'ewhaleshares' };
+                          var json = {tags: angular.fromJson($scope.post.json_metadata).tags[0] || ["evisionindustry"], app: 'evisionindustry/'+rootScope.$storage.appversion, format: 'markdown+html', community: 'evisionindustry' };
                           operations_array = [
                             ['comment', {
                               parent_author: $scope.post.parent_author,
@@ -1899,12 +1899,12 @@ module.exports = function (app) {
                             }]
                             ];
                           
-                          window.whaleshares.broadcast.send({ operations: operations_array, extensions: [] }, { posting: wif }, function(err, result) {
+                          window.visionindustry.broadcast.send({ operations: operations_array, extensions: [] }, { posting: wif }, function(err, result) {
                             //console.log(err, result);
                             $scope.replying = false;
                             if (err) {
                               var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-                                $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
+                                rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
                               } else {
                                 $scope.closeModal();
                                 $scope.replying = false;
@@ -1912,64 +1912,64 @@ module.exports = function (app) {
                                 $scope.data.comment = "";
                                 //setTimeout(function() {
                                 $scope.$evalAsync(function( $scope ) {
-                                  $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('COMMENT_SUBMITTED'));
-                                  $rootScope.$broadcast('hide:loading');
-                                  //$rootScope.$emit("update:content");  
+                                  rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('COMMENT_SUBMITTED'));
+                                  rootScope.$broadcast('hide:loading');
+                                  //rootScope.$emit("update:content");  
                                 });
                                 //}, 1);
                               }
-                              $rootScope.$broadcast('hide:loading');
+                              rootScope.$broadcast('hide:loading');
                           });
                         } else {
-                          $rootScope.$broadcast('hide:loading');
-                          $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+                          rootScope.$broadcast('hide:loading');
+                          rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
                         }
                     }
-                  $rootScope.$broadcast('hide:loading');
+                  rootScope.$broadcast('hide:loading');
                 }
                 $scope.replyToComment = function(comment) {
-                    $rootScope.log('reply to comment')
-                    //$rootScope.$storage.sitem = comment;
+                    rootScope.log('reply to comment')
+                    //rootScope.$storage.sitem = comment;
                     $scope.isreplying(comment, true);
                 }
                 $scope.editComment = function(comment) {
-                    $rootScope.log('edit to comment')
-                    //$rootScope.$storage.sitem = comment;
+                    rootScope.log('edit to comment')
+                    //rootScope.$storage.sitem = comment;
                     $scope.isreplying(comment, false);
                 }
                 $scope.deleteComment = function(comment) {
-                    $rootScope.log('delete to comment '+ angular.toJson(comment));
+                    rootScope.log('delete to comment '+ angular.toJson(comment));
                     var confirmPopup = $ionicPopup.confirm({
                         title: $filter('translate')('ARE_YOU_SURE'),
                         template: $filter('translate')('DELETE_COMMENT')
                     });
                     confirmPopup.then(function(res) {
                         if(res) {
-                            $rootScope.log('You are sure');
-                            $rootScope.$broadcast('show:loading');
-                            if ($rootScope.user) {
+                            rootScope.log('You are sure');
+                            rootScope.$broadcast('show:loading');
+                            if (rootScope.user) {
 
-                              var wif = $rootScope.user.password
-                              ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                              : $rootScope.user.privatePostingKey;
+                              var wif = rootScope.user.password
+                              ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                              : rootScope.user.privatePostingKey;
 
-                              window.whaleshares.broadcast.deleteComment(wif, comment.author, comment.permlink, function(err, result) {
+                              window.visionindustry.broadcast.deleteComment(wif, comment.author, comment.permlink, function(err, result) {
                                 //console.log(err, result);
                                 if (err) {
                                   var message = err.message?(err.message.split(":")[2]?err.message.split(":")[2].split('.')[0]:err.message.split(":")[0]):err;
-                                  $rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
+                                  rootScope.showAlert($filter('translate')('ERROR'), $filter('translate')('BROADCAST_ERROR')+" "+message)
                                 } else {
-                                  $rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('DELETED_COMMENT'));
-                                  //$rootScope.$emit("update:content");                                
+                                  rootScope.showMessage($filter('translate')('SUCCESS'), $filter('translate')('DELETED_COMMENT'));
+                                  //rootScope.$emit("update:content");                                
                                 }
-                                $rootScope.$broadcast('hide:loading');
+                                rootScope.$broadcast('hide:loading');
                               });
                             } else {
-                              $rootScope.$broadcast('hide:loading');
-                              $rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
+                              rootScope.$broadcast('hide:loading');
+                              rootScope.showAlert($filter('translate')('WARNING'), $filter('translate')('LOGIN_TO_X'));
                             }
                         } else {
-                          $rootScope.log('You are not sure');
+                          rootScope.log('You are not sure');
                         }
                     });
                 }
@@ -2003,9 +2003,9 @@ module.exports = function (app) {
                             </li>\
                           </ul>\
                         </ion-list>',
-            controller: function($scope, $rootScope) {
+            controller: function($scope, rootScope) {
                 /*$scope.toggleComment = function(comment) {
-                  //$rootScope.log('toggleComment');
+                  //rootScope.log('toggleComment');
                   if (comment.showChildren) {
                       comment.showChildren = false;
                   } else {
@@ -2016,7 +2016,7 @@ module.exports = function (app) {
         }
     }
 
-    function ius($q, $ionicLoading, $cordovaFileTransfer, $ionicPlatform, $filter, $rootScope, API_END_POINT) {
+    function ius($q, $ionicLoading, $cordovaFileTransfer, $ionicPlatform, $filter, rootScope, API_END_POINT) {
         var service = {};
         service.uploadImage = uploadImage;
         return service;
@@ -2041,16 +2041,16 @@ module.exports = function (app) {
           });
           function uploadFile() {
             // Add the Cloudinary "upload preset" name to the headers
-            // "https://api.cloudinary.com/v1_1/ewhaleshares/image/upload"
+            // "https://api.cloudinary.com/v1_1/evisionindustry/image/upload"
             var uploadOptions = {
-              params : { 'username': $rootScope.user.username},
+              params : { 'username': rootScope.user.username},
               fileKey: 'postimage'
             };
             $ionicPlatform.ready(function() {
               //API_END_POINT+"/api/upload"
-              var wif = $rootScope.user.password
-                    ? window.whaleshares.auth.toWif($rootScope.user.username, $rootScope.user.password, 'posting')
-                    : $rootScope.user.privatePostingKey;
+              var wif = rootScope.user.password
+                    ? window.visionindustry.auth.toWif(rootScope.user.username, rootScope.user.password, 'posting')
+                    : rootScope.user.privatePostingKey;
 const crypto = require('crypto')
 import { FileOpener } from '@ionic-native/file-opener';
 let fileOpener = new FileOpener();
@@ -2058,10 +2058,10 @@ const imageHash = crypto.createHash('sha256')
     .update('ImageSigningChallenge')
     .update(fs.readFileSync(imageURI))
     .digest()
-let signed = whaleshares.auth.signTransaction(imageHash, wif);
+let signed = visionindustry.auth.signTransaction(imageHash, wif);
 console.log(signed);
-console.log('http://35.231.87.178:4321/' + $rootScope.user.username  +'/' + signed);
-                $cordovaFileTransfer.upload('http://35.231.87.178:4321/' + $rootScope.user.username  +'/' + signed, imageURI, uploadOptions).then(function(result) {
+console.log('http://35.231.87.178:4321/' + rootScope.user.username  +'/' + signed);
+                $cordovaFileTransfer.upload('http://35.231.87.178:4321/' + rootScope.user.username  +'/' + signed, imageURI, uploadOptions).then(function(result) {
                     // Let the user know the upload is completed
                     $ionicLoading.show({template : $filter('translate')('UPLOAD_COMPLETED'), duration: 1000});
                     // Result has a "response" property that is escaped

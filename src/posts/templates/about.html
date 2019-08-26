@@ -4,8 +4,8 @@
       </ion-nav-back-button>
       <ion-nav-buttons side='left'>
         <button class="button button-icon button-clear" ng-if="!$root.voiceOver" menu-toggle="left">
-         <img ng-if="$root.user" src="https://imgp.whaleshares.io/profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/ewhaleshares_white.png\'" onabort="this.src=\'img/ewhaleshares_white.png\'"/>
-          <i ng-if="!$root.user" class="icon ion-navicon"></i> 
+         <img ng-if="$$root.user" src="https://media.vit.tube/view//profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/evisionindustry_white.png\'" onabort="this.src=\'img/evisionindustry_white.png\'"/>
+          <i ng-if="!$$root.user" class="icon ion-navicon"></i> 
         </button>
         <a href class="button button-icon ion-more" ng-if="$root.voiceOver" menu-toggle="left">{{::translations.menu}}</a>
       </ion-nav-buttons>
@@ -14,24 +14,24 @@
       </ion-nav-title>
   </ion-nav-bar>
   <ion-content class="padding" ng-class="{'theme-dark':$root.$storage.theme == 'night'}">
-    <center><img src="img/ewhaleshares.png" width="40%"></center>
+    <center><img src="img/evisionindustry.png" width="40%"></center>
     <p><b>WhalesApp</b> {{'ABOUT_2'|translate}} <div ng-bind-html="'ABOUT_11'|translate"></div>
     </p>
-<h3>Following two people forked eSteem for WLS</h3>
-<p ng-of="$root.user">WhalesApp CEO and CoFounder <a href="#app/profile/dcrazy">DCrazy</a></p>
+<h3>Following two people forked eSteem for VIT</h3>
+<p ng-of="$$root.user">WhalesApp CEO and CoFounder <a href="#app/profile/dcrazy">DCrazy</a></p>
    
 
-    <p ng-of="$root.user">WhalesApp CTO and CoFounder <a href="#app/profile/swapbit">swapbit</a></p>
+    <p ng-of="$$root.user">WhalesApp CTO and CoFounder <a href="#app/profile/swapbit">swapbit</a></p>
 <h3>Rest of the original eSteem credits...'</h3>
-    <p ng-if="$root.user">{{"FOUNDER"|translate}} <a href="#app/profile/good-karma">good-karma</a></p>
-    <p ng-if="$root.user">{{"LEAD_PRODUCT"|translate}} <a href="#app/profile/dunsky">dunsky</a></p>
+    <p ng-if="$$root.user">{{"FOUNDER"|translate}} <a href="#app/profile/good-karma">good-karma</a></p>
+    <p ng-if="$$root.user">{{"LEAD_PRODUCT"|translate}} <a href="#app/profile/dunsky">dunsky</a></p>
 
-    <div class="tcenter" ng-if="$root.user"><span ng-if="!$root.isWitnessVoted()"><button class="button button-positive" ng-click="$root.voteWitness('swapbit')">{{'ABOUT_8'|translate}}</button></span></div>
-<div class="tcenter" ng-if="$root.user"><span ng-if="!$root.isWitnessVoted2()"><button class="button button-positive" ng-click="$root.voteWitness('dcrazy')">Vote DCrazy as witness</button></span></div>
+    <div class="tcenter" ng-if="$$root.user"><span ng-if="!$root.isWitnessVoted()"><button class="button button-positive" ng-click="$root.voteWitness('swapbit')">{{'ABOUT_8'|translate}}</button></span></div>
+<div class="tcenter" ng-if="$$root.user"><span ng-if="!$root.isWitnessVoted2()"><button class="button button-positive" ng-click="$root.voteWitness('dcrazy')">Vote DCrazy as witness</button></span></div>
     <p>
     <b><u>{{'ABOUT_9'|translate}}</u></b>
-    <br><a href="mailto:info@ewhaleshares.ws?Subject=Feedback">info@ewhaleshares.ws</a>
-    <br><a href="https://ewhaleshares.ws">https://ewhaleshares.ws</a>
+    <br><a href="mailto:info@evisionindustry.ws?Subject=Feedback">info@evisionindustry.ws</a>
+    <br><a href="https://evisionindustry.ws">https://evisionindustry.ws</a>
     </p>
     <p>
         <b><u>{{'TRANSLATIONS'|translate}}</u></b><br>
@@ -40,7 +40,7 @@
         Deutsch - <a href="#app/profile/dez1337">dez1337</a>, <a href="#app/profile/homosapiens">homosapiens</a>, <a href="#app/profile/uwelang">uwelang</a>, <a href="#app/profile/alexpfeiffer">alexpfeiffer</a>, <a href="#app/profile/juicypop">juicypop</a><br>
         Français - <a href="#app/profile/pickoum">pickoum</a>, <a href="#app/profile/dimitrya123">dimitrya123</a><br>
         Español - <a href="#app/profile/dresden">dresden</a>, <a href="#app/profile/pgarcgo">pgarcgo</a><br>
-        Ελληνικά - <a href="#app/profile/liondani">liondani</a>, <a href="#app/profile/whalesharesychicken1">whalesharesychicken1</a><a href="#app/profile/dimitrisp">dimitrisp</a><br>
+        Ελληνικά - <a href="#app/profile/liondani">liondani</a>, <a href="#app/profile/visionindustryychicken1">visionindustryychicken1</a><a href="#app/profile/dimitrisp">dimitrisp</a><br>
         Български - <a href="#app/profile/rossenpavlov">rossenpavlov</a><br>
         Nederlands - <a href="#app/profile/maxse">maxse</a>, <a href="#app/profile/edje">edje</a><br>
         Magyar - <a href="#app/profile/tibonova">tibonova</a><br>
@@ -91,10 +91,10 @@
         <!--
         new contributors:
         
-        Chinese simplified - http://translate.ewhaleshares.ws/profile/ginafraser, http://translate.ewhaleshares.ws/profile/kaiching77
+        Chinese simplified - http://translate.evisionindustry.ws/profile/ginafraser, http://translate.evisionindustry.ws/profile/kaiching77
         Danish - Katharsisdrill, jeppeskovkristensen
         Malay - krishko650
-        Arabic - whalesharesmaster
+        Arabic - visionindustrymaster
         Romanian - bitkoin, cosminalexandru, shinsan
         German - junu944
         Swedish - liyagajardo
@@ -104,7 +104,7 @@
         German - sarasate, komischername
         Portuguese - kartoshki, ardaia
         Persian - cnsaad
-        Arabic - whalesharesmaster, moataz
+        Arabic - visionindustrymaster, moataz
         
         Serbian - Destruxia, jovana19, keysikg
         Nepali - gaborsoter, aashishkandel
@@ -112,12 +112,12 @@
         Indonesian - jamhuery
         
         Chinese tr - kenchung
-        Italian - http://translate.ewhaleshares.ws/profile/duranzo89
-        Portuguese - http://translate.ewhaleshares.ws/profile/jose.filipe.higino
+        Italian - http://translate.evisionindustry.ws/profile/duranzo89
+        Portuguese - http://translate.evisionindustry.ws/profile/jose.filipe.higino
         Lithuanian - andykava
         Swedish - bymma, ericsson93
         Norwegian - bymma
-        Arabic - mo-whaleshares
+        Arabic - mo-visionindustry
         Filipino = janreyqm1
         German - juicypop
         Czech - orchevadesign
@@ -135,7 +135,7 @@
     </p>
     <p>
     <b><u>{{'ABOUT_10'|translate}}</u></b>
-    <br><a href="https://whaleshares.io">https://whaleshares.io</a>
+    <br><a href="https://touchit.social">https://touchit.social</a>
     </p>
   </ion-content>
 </ion-view>

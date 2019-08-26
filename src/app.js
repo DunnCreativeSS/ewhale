@@ -1,2 +1,2 @@
 require('./posts')
-//require('whalesharesjs-lib')
+//require('visionindustryjs-lib')

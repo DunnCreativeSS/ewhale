@@ -4,8 +4,8 @@
       </ion-nav-back-button>
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear" ng-if="!$root.voiceOver" menu-toggle="left">
-          <img ng-if="$root.user" src="https://imgp.whaleshares.io/profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/ewhaleshares_white.png\'" onabort="this.src=\'img/ewhaleshares_white.png\'"/>
-          <i ng-if="!$root.user" class="icon ion-navicon"></i>
+          <img ng-if="$$root.user" src="https://media.vit.tube/view//profileimage/{{$root.user.username}}/128x128" class="headerAvatar" onerror="this.src=\'img/evisionindustry_white.png\'" onabort="this.src=\'img/evisionindustry_white.png\'"/>
+          <i ng-if="!$$root.user" class="icon ion-navicon"></i>
         </button>
       </ion-nav-buttons>
       <ion-nav-title on-tap="showActivityFilters()">
@@ -18,7 +18,7 @@
       <div ng-repeat="row in data.votes" class="">
           <div class="item item-divider">{{ row.key }}</div>
           <div ng-repeat="xx in row['records']" class="item item-avatar">
-              <img src="https://imgp.whaleshares.io/profileimage/{{xx.voter}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.voter)"/>
+              <img src="https://media.vit.tube/view//profileimage/{{xx.voter}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.voter)"/>
               <h2 ng-click="open(xx)">{{xx.voter}}&nbsp;&nbsp;{{xx.weight/100}}%</h2>
               <p ng-click="open(xx)">{{xx.permlink}}</p>
           </div>
@@ -32,7 +32,7 @@
       <div ng-repeat="row in data.replies" class="">
           <div class="item item-divider">{{ row.key }}</div>
           <div ng-repeat="xx in row['records']" class="item item-avatar">
-              <img src="https://imgp.whaleshares.io/profileimage/{{xx.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.author)"/>
+              <img src="https://media.vit.tube/view//profileimage/{{xx.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.author)"/>
               <h2 ng-click="open(xx)">{{xx.author}}</h2>
               <p ng-click="open(xx)">{{xx.body | postSummary}}</p>
           </div>
@@ -42,7 +42,7 @@
       <div ng-repeat="row in data.mentions" class="">
           <div class="item item-divider">{{ row.key }}</div>
           <div ng-repeat="xx in row['records']" class="item item-avatar">
-              <img src="https://imgp.whaleshares.io/profileimage/{{xx.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.author)"/>
+              <img src="https://media.vit.tube/view//profileimage/{{xx.author}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.author)"/>
               <h2 ng-click="open(xx)">{{xx.author}}</h2>
               <p ng-click="open(xx)">{{xx.permlink}}</p>
           </div>
@@ -56,7 +56,7 @@
       <div ng-repeat="row in data.follows" class="">
           <div class="item item-divider">{{ row.key }}</div>
           <div ng-repeat="xx in row['records']" class="item item-avatar">
-              <img src="https://imgp.whaleshares.io/profileimage/{{xx.follower}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap='$root.openAccount(xx.follower)'/>
+              <img src="https://media.vit.tube/view//profileimage/{{xx.follower}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap='$root.openAccount(xx.follower)'/>
               <h2><a href="#/app/profile/{{xx.follower}}">{{xx.follower}}</a></h2>
               <p><div ng-if="xx.blog">following</div><div ng-if="!xx.blog">unfollowed</div></p>
           </div>
@@ -69,19 +69,19 @@
       <div ng-repeat="row in data.reblogs" class="">
           <div class="item item-divider">{{ row.key }}</div>
           <div ng-repeat="xx in row['records']" class="item item-avatar">
-              <img src="https://imgp.whaleshares.io/profileimage/{{xx.account}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx.account)"/>
-              <h2><a href="#/app/profile/{{xx.account}}">{{xx.account}}</a></h2>
+              <img src="https://media.vit.tube/view//profileimage/{{$xx.account}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount($xx.account)"/>
+              <h2><a href="#/app/profile/{{$xx.account}}">{{$xx.account}}</a></h2>
               <p><a href="#/app/post/tag/{{xx.json[1].author}}/{{xx.permlink}}">{{xx.permlink}}</a></p>
           </div>
       </div>
       <!--<div class="item" ng-repeat="xx in data.reblogs">
-        {{xx.timestamp|timeago}}&nbsp;<b><a href="#/app/profile/{{xx.account}}">{{xx.account}}</a></b>&nbsp;<a href="#/app/post/tag/{{xx.json[1].author}}/{{xx.permlink}}">{{xx.permlink}}</a>
+        {{xx.timestamp|timeago}}&nbsp;<b><a href="#/app/profile/{{$xx.account}}">{{$xx.account}}</a></b>&nbsp;<a href="#/app/post/tag/{{xx.json[1].author}}/{{xx.permlink}}">{{xx.permlink}}</a>
       </div>-->
     </div>
     <div class="list" ng-if="filter.activity =='leaderboard'">
       <center class="gray italic">last 30 days</center>
       <div class="item item-avatar" ng-repeat="xx in data.leaderboard" href="#/app/profile/{{xx._id}}">
-        <img src="https://imgp.whaleshares.io/profileimage/{{xx._id}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx._id)"/>
+        <img src="https://media.vit.tube/view//profileimage/{{xx._id}}/128x128" onerror="this.src=\'img/logo.png\'" onabort="this.src=\'img/logo.png\'" on-tap="$root.openAccount(xx._id)"/>
         <h2>{{$index+1}}.&nbsp;<a href="#/app/profile/{{xx._id}}">{{xx._id}}</a></h2>
         <p>{{xx.count}}</p>
       </div>

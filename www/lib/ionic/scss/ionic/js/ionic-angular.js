@@ -75,7 +75,7 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
  */
 IonicModule
 .factory('$ionicActionSheet', [
-  '$rootScope',
+  'rootScope',
   '$compile',
   '$animate',
   '$timeout',
@@ -83,7 +83,7 @@ IonicModule
   '$ionicPlatform',
   '$ionicBody',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
+function(rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
 
   return {
     show: actionSheet
@@ -118,7 +118,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
    * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
    */
   function actionSheet(opts) {
-    var scope = $rootScope.$new(true);
+    var scope = rootScope.$new(true);
 
     extend(scope, {
       cancel: noop,
@@ -148,7 +148,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
     var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
-      $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
+      rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
       noop;
 
     // removes the actionSheet from the screen
@@ -312,7 +312,7 @@ jqLite.prototype.removeClass = function(cssClasses) {
  * @usage
  *
  * ```js
- * function MyController($scope, $ionicBackdrop, $timeout, $rootScope) {
+ * function MyController($scope, $ionicBackdrop, $timeout, rootScope) {
  *   //Show a backdrop for one second
  *   $scope.action = function() {
  *     $ionicBackdrop.retain();
@@ -336,8 +336,8 @@ jqLite.prototype.removeClass = function(cssClasses) {
  */
 IonicModule
 .factory('$ionicBackdrop', [
-  '$document', '$timeout', '$$rAF', '$rootScope',
-function($document, $timeout, $$rAF, $rootScope) {
+  '$document', '$timeout', '$$rAF', 'rootScope',
+function($document, $timeout, $$rAF, rootScope) {
 
   var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
@@ -369,7 +369,7 @@ function($document, $timeout, $$rAF, $rootScope) {
     backdropHolds++;
     if (backdropHolds === 1) {
       el.addClass('visible');
-      $rootScope.$broadcast('backdrop.shown');
+      rootScope.$broadcast('backdrop.shown');
       $$rAF(function() {
         // If we're still at >0 backdropHolds after async...
         if (backdropHolds >= 1) el.addClass('active');
@@ -379,7 +379,7 @@ function($document, $timeout, $$rAF, $rootScope) {
   function release() {
     if (backdropHolds === 1) {
       el.removeClass('active');
-      $rootScope.$broadcast('backdrop.hidden');
+      rootScope.$broadcast('backdrop.hidden');
       $timeout(function() {
         // If we're still at 0 backdropHolds after async...
         if (backdropHolds === 0) el.removeClass('visible');
@@ -638,14 +638,14 @@ IonicModule
 
 IonicModule
 .factory('$ionicHistory', [
-  '$rootScope',
+  'rootScope',
   '$state',
   '$location',
   '$window',
   '$timeout',
   '$ionicViewSwitcher',
   '$ionicNavViewDelegate',
-function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
+function(rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -750,7 +750,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       parentScope = parentScope.$parent;
     }
     // no history for the parent, use the root
-    return { historyId: 'root', scope: $rootScope };
+    return { historyId: 'root', scope: rootScope };
   }
 
   function setNavViews(viewId) {
@@ -1352,7 +1352,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           nextViewOptions = nextViewOptions || {};
           extend(nextViewOptions, opts);
           if (nextViewOptions.expire) {
-              deregisterStateChangeListener = $rootScope.$on('$stateChangeSuccess', function() {
+              deregisterStateChangeListener = rootScope.$on('$stateChangeSuccess', function() {
                 nextViewExpireTimer = $timeout(function() {
                   nextViewOptions = null;
                   }, nextViewOptions.expire);
@@ -1435,21 +1435,21 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 }])
 
 .run([
-  '$rootScope',
+  'rootScope',
   '$state',
   '$location',
   '$document',
   '$ionicPlatform',
   '$ionicHistory',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
+function(rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
 
   // always reset the keyboard state when change stage
-  $rootScope.$on('$ionicView.beforeEnter', function() {
+  rootScope.$on('$ionicView.beforeEnter', function() {
     ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
   });
 
-  $rootScope.$on('$ionicHistory.change', function(e, data) {
+  rootScope.$on('$ionicHistory.change', function(e, data) {
     if (!data) return null;
 
     var viewHistory = $ionicHistory.viewHistory();
@@ -1480,12 +1480,12 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
     }
   });
 
-  $rootScope.$ionicGoBack = function(backCount) {
+  rootScope.$ionicGoBack = function(backCount) {
     $ionicHistory.goBack(backCount);
   };
 
   // Set the document title when a new view is shown
-  $rootScope.$on('$ionicView.afterEnter', function(ev, data) {
+  rootScope.$on('$ionicView.afterEnter', function(ev, data) {
     if (data && data.title) {
       $document[0].title = data.title;
     }
@@ -2255,9 +2255,9 @@ IonicModule
   '$log',
   '$compile',
   '$ionicPlatform',
-  '$rootScope',
+  'rootScope',
   'IONIC_BACK_PRIORITY',
-function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $ionicPlatform, $rootScope, IONIC_BACK_PRIORITY) {
+function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $ionicPlatform, rootScope, IONIC_BACK_PRIORITY) {
 
   var loaderInstance;
   //default values
@@ -2276,7 +2276,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
      *  - `{string=}` `templateUrl` The url of an html template to load as the content of the indicator.
-     *  - `{object=}` `scope` The scope to be a child of. Default: creates a child of $rootScope.
+     *  - `{object=}` `scope` The scope to be a child of. Default: creates a child of rootScope.
      *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop. By default it will be shown.
      *  - `{boolean=}` `hideOnStateChange` Whether to hide the loading spinner when navigating
      *    to a new state. Default false.
@@ -2394,8 +2394,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     deregisterStateListener1();
     deregisterStateListener2();
     if (options.hideOnStateChange) {
-      deregisterStateListener1 = $rootScope.$on('$stateChangeSuccess', hideLoader);
-      deregisterStateListener2 = $rootScope.$on('$stateChangeError', hideLoader);
+      deregisterStateListener1 = rootScope.$on('$stateChangeSuccess', hideLoader);
+      deregisterStateListener2 = rootScope.$on('$stateChangeError', hideLoader);
     }
 
     //If loading.show() was called previously, cancel it and show with our new options
@@ -2483,7 +2483,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
  */
 IonicModule
 .factory('$ionicModal', [
-  '$rootScope',
+  'rootScope',
   '$ionicBody',
   '$compile',
   '$timeout',
@@ -2494,7 +2494,7 @@ IonicModule
   '$ionicClickBlock',
   '$window',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
+function(rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
   /**
    * @ngdoc controller
@@ -2517,7 +2517,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @description Creates a new modal controller instance.
      * @param {object} options An options object with the following properties:
      *  - `{object=}` `scope` The scope to be a child of.
-     *    Default: creates a child of $rootScope.
+     *    Default: creates a child of rootScope.
      *  - `{string=}` `animation` The animation to show & hide with.
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
@@ -2709,7 +2709,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal
-    var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
+    var scope = options.scope && options.scope.$new() || rootScope.$new(true);
 
     options.viewType = options.viewType || 'modal';
 
@@ -3222,7 +3222,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
    * @description Creates a new popover controller instance.
    * @param {object} options An options object with the following properties:
    *  - `{object=}` `scope` The scope to be a child of.
-   *    Default: creates a child of $rootScope.
+   *    Default: creates a child of rootScope.
    *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
    *    the popover when shown.  Default: false.
    *  - `{boolean=}` `backdropClickToClose` Whether to close the popover on clicking the backdrop.
@@ -3404,13 +3404,13 @@ IonicModule
   '$ionicBackdrop',
   '$q',
   '$timeout',
-  '$rootScope',
+  'rootScope',
   '$ionicBody',
   '$compile',
   '$ionicPlatform',
   '$ionicModal',
   'IONIC_BACK_PRIORITY',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
@@ -3580,7 +3580,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     }, options || {});
 
     var self = {};
-    self.scope = (options.scope || $rootScope).$new();
+    self.scope = (options.scope || rootScope).$new();
     self.element = jqLite(POPUP_TPL);
     self.responseDeferred = $q.defer();
 
@@ -3759,7 +3759,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showPrompt(opts) {
-    var scope = $rootScope.$new(true);
+    var scope = rootScope.$new(true);
     scope.data = {};
     scope.data.fieldtype = opts.inputType ? opts.inputType : 'text';
     scope.data.response = opts.defaultText ? opts.defaultText : '';
@@ -4490,9 +4490,9 @@ IonicModule
   '$controller',
   '$http',
   '$q',
-  '$rootScope',
+  'rootScope',
   '$templateCache',
-function($compile, $controller, $http, $q, $rootScope, $templateCache) {
+function($compile, $controller, $http, $q, rootScope, $templateCache) {
 
   return {
     load: fetchTemplate,
@@ -4522,7 +4522,7 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
 
     return templatePromise.then(function(template) {
       var controller;
-      var scope = options.scope || $rootScope.$new();
+      var scope = options.scope || rootScope.$new();
 
       //Incase template doesn't have just one root element, do this
       var element = jqLite('<div>').html(template).contents();
@@ -7576,8 +7576,8 @@ IonicModule
   '$ionicHistory',
   '$ionicScrollDelegate',
   'IONIC_BACK_PRIORITY',
-  '$rootScope',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, $rootScope) {
+  'rootScope',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, rootScope) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -7632,10 +7632,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'left');
+      rootScope.$emit('$ionicSideMenuClose', 'left');
     } else {
       self.openPercentage(100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'left');
+      rootScope.$emit('$ionicSideMenuOpen', 'left');
     }
   };
 
@@ -7651,10 +7651,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'right');
+      rootScope.$emit('$ionicSideMenuClose', 'right');
     } else {
       self.openPercentage(-100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'right');
+      rootScope.$emit('$ionicSideMenuOpen', 'right');
     }
   };
 
@@ -7671,8 +7671,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    */
   self.close = function() {
     self.openPercentage(0);
-    $rootScope.$emit('$ionicSideMenuClose', 'left');
-    $rootScope.$emit('$ionicSideMenuClose', 'right');
+    rootScope.$emit('$ionicSideMenuClose', 'left');
+    rootScope.$emit('$ionicSideMenuClose', 'right');
   };
 
   /**
@@ -8619,8 +8619,8 @@ IonicModule
   '$element',
   '$attrs',
   '$compile',
-  '$rootScope',
-function($scope, $element, $attrs, $compile, $rootScope) {
+  'rootScope',
+function($scope, $element, $attrs, $compile, rootScope) {
   var self = this;
   var navElementHtml = {};
   var navViewCtrl;
@@ -8657,7 +8657,7 @@ function($scope, $element, $attrs, $compile, $rootScope) {
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 
-      if (!$rootScope.$$phase) $scope.$digest();
+      if (!rootScope.$$phase) $scope.$digest();
       viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
 
       var navBarItems = {};
@@ -8936,8 +8936,8 @@ var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP//
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
 var DEFAULT_RENDER_BUFFER = 3;
 
-CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
-function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, $rootScope, $timeout) {
+CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', 'rootScope', '$timeout'];
+function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, rootScope, $timeout) {
   return {
     restrict: 'A',
     priority: 1000,
@@ -8993,7 +8993,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scrollCtrl.$element.on('scroll-resize', refreshDimensions);
 
     angular.element($window).on('resize', onResize);
-    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
+    var unlistenToExposeAside = rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
       scrollCtrl.scrollView.resize();
       onResize();
     }));
@@ -9228,7 +9228,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
 
       computedStyleScope[keyExpr] = (listGetter(scope) || [])[0];
-      if (!$rootScope.$$phase) computedStyleScope.$digest();
+      if (!rootScope.$$phase) computedStyleScope.$digest();
       containerNode.appendChild(computedStyleNode);
 
       var style = $window.getComputedStyle(computedStyleNode);
@@ -9242,8 +9242,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
 }
 
-RepeatManagerFactory.$inject = ['$rootScope', '$window', '$$rAF'];
-function RepeatManagerFactory($rootScope, $window, $$rAF) {
+RepeatManagerFactory.$inject = ['rootScope', '$window', '$$rAF'];
+function RepeatManagerFactory(rootScope, $window, $$rAF) {
   var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0, rowPrimarySize: 0 };
 
   return function RepeatController(options) {
@@ -9534,7 +9534,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         }
       }
       if (forceRerender) {
-        var rootScopePhase = $rootScope.$$phase;
+        var rootScopePhase = rootScope.$$phase;
         while (itemsEntering.length) {
           item = itemsEntering.pop();
           if (!rootScopePhase) item.scope.$digest();
@@ -9550,7 +9550,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       digestEnteringItems.running = true;
 
       $$rAF(function process() {
-        var rootScopePhase = $rootScope.$$phase;
+        var rootScopePhase = rootScope.$$phase;
         while (itemsEntering.length) {
           item = itemsEntering.pop();
           if (item.isShown) {

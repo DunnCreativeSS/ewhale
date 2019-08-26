@@ -15083,7 +15083,7 @@ function bootstrap(element, modules, config) {
 
     modules.unshift('ng');
     var injector = createInjector(modules, config.strictDi);
-    injector.invoke(['$rootScope', '$rootElement', '$compile', '$injector',
+    injector.invoke(['rootScope', '$rootElement', '$compile', '$injector',
        function bootstrapApply(scope, element, compile, injector) {
         scope.$apply(function() {
           element.data('$injector', injector);
@@ -15945,7 +15945,7 @@ function publishExternalAPI(angular) {
         $location: $LocationProvider,
         $log: $LogProvider,
         $parse: $ParseProvider,
-        $rootScope: $RootScopeProvider,
+        rootScope: $RootScopeProvider,
         $q: $QProvider,
         $$q: $$QProvider,
         $sce: $SceProvider,
@@ -16069,10 +16069,10 @@ function publishExternalAPI(angular) {
  *   camelCase directive name, then the controller for this directive will be retrieved (e.g.
  *   `'ngModel'`).
  * - `injector()` - retrieves the injector of the current element or its parent.
- * - `scope()` - retrieves the {@link ng.$rootScope.Scope scope} of the current
+ * - `scope()` - retrieves the {@link ng.rootScope.Scope scope} of the current
  *   element or its parent. Requires {@link guide/production#disabling-debug-data Debug Data} to
  *   be enabled.
- * - `isolateScope()` - retrieves an isolate {@link ng.$rootScope.Scope scope} if one is attached directly to the
+ * - `isolateScope()` - retrieves an isolate {@link ng.rootScope.Scope scope} if one is attached directly to the
  *   current element. This getter should be used only on elements that contain a directive which starts a new isolate
  *   scope. Calling `scope()` on this element always returns the original non-isolate scope.
  *   Requires {@link guide/production#disabling-debug-data Debug Data} to be enabled.
@@ -17161,9 +17161,9 @@ var $$HashMapProvider = [function() {
  *
  *   // use the injector to kick off your application
  *   // use the type inference to auto inject arguments, or use implicit injection
- *   $injector.invoke(function($rootScope, $compile, $document) {
- *     $compile($document)($rootScope);
- *     $rootScope.$digest();
+ *   $injector.invoke(function(rootScope, $compile, $document) {
+ *     $compile($document)(rootScope);
+ *     rootScope.$digest();
  *   });
  * ```
  *
@@ -17418,7 +17418,7 @@ function annotate(fn, strictDi, name) {
  *
  * ```js
  *   // We wish to write this (not minification / obfuscation safe)
- *   injector.invoke(function($compile, $rootScope) {
+ *   injector.invoke(function($compile, rootScope) {
  *     // ...
  *   });
  *
@@ -17426,18 +17426,18 @@ function annotate(fn, strictDi, name) {
  *   var tmpFn = function(obfuscatedCompile, obfuscatedRootScope) {
  *     // ...
  *   };
- *   tmpFn.$inject = ['$compile', '$rootScope'];
+ *   tmpFn.$inject = ['$compile', 'rootScope'];
  *   injector.invoke(tmpFn);
  *
  *   // To better support inline function the inline annotation is supported
- *   injector.invoke(['$compile', '$rootScope', function(obfCompile, obfRootScope) {
+ *   injector.invoke(['$compile', 'rootScope', function(obfCompile, obfRootScope) {
  *     // ...
  *   }]);
  *
  *   // Therefore
  *   expect(injector.annotate(
- *      ['$compile', '$rootScope', function(obfus_$compile, obfus_$rootScope) {}])
- *    ).toEqual(['$compile', '$rootScope']);
+ *      ['$compile', 'rootScope', function(obfus_$compile, obfus_rootScope) {}])
+ *    ).toEqual(['$compile', 'rootScope']);
  * ```
  *
  * @param {Function|Array.<string|Function>} fn Function for which dependent service names need to
@@ -18065,7 +18065,7 @@ function $AnchorScrollProvider() {
    * @kind function
    * @requires $window
    * @requires $location
-   * @requires $rootScope
+   * @requires rootScope
    *
    * @description
    * When called, it scrolls to the element related to the specified `hash` or (if omitted) to the
@@ -18200,7 +18200,7 @@ function $AnchorScrollProvider() {
        </file>
      </example>
    */
-  this.$get = ['$window', '$location', '$rootScope', function($window, $location, $rootScope) {
+  this.$get = ['$window', '$location', 'rootScope', function($window, $location, rootScope) {
     var document = $window.document;
 
     // Helper function to get first anchor from a NodeList
@@ -18286,13 +18286,13 @@ function $AnchorScrollProvider() {
     // does not scroll when user clicks on anchor link that is currently on
     // (no url change, no $location.hash() change), browser native does scroll
     if (autoScrollingEnabled) {
-      $rootScope.$watch(function autoScrollWatch() {return $location.hash();},
+      rootScope.$watch(function autoScrollWatch() {return $location.hash();},
         function autoScrollWatchAction(newVal, oldVal) {
           // skip the initial scroll if $location.hash is empty
           if (newVal === oldVal && newVal === '') return;
 
           jqLiteDocumentLoaded(function() {
-            $rootScope.$evalAsync(scroll);
+            rootScope.$evalAsync(scroll);
           });
         });
     }
@@ -18364,8 +18364,8 @@ var $$CoreAnimateQueueProvider = function() {
   var postDigestQueue = new HashMap();
   var postDigestElements = [];
 
-  this.$get = ['$$AnimateRunner', '$rootScope',
-       function($$AnimateRunner,   $rootScope) {
+  this.$get = ['$$AnimateRunner', 'rootScope',
+       function($$AnimateRunner,   rootScope) {
     return {
       enabled: noop,
       on: noop,
@@ -18449,7 +18449,7 @@ var $$CoreAnimateQueueProvider = function() {
         postDigestElements.push(element);
 
         if (postDigestElements.length === 1) {
-          $rootScope.$$postDigest(handleCSSClassChanges);
+          rootScope.$$postDigest(handleCSSClassChanges);
         }
       }
     }
@@ -19422,7 +19422,7 @@ function Browser(window, document, $log, $sniffer) {
    * @private
    * Remove popstate and hashchange handler from window.
    *
-   * NOTE: this api is intended for use only by $rootScope.
+   * NOTE: this api is intended for use only by rootScope.
    */
   self.$$applicationDestroyed = function() {
     jqLite(window).off('hashchange popstate', cacheStateAndFireUrlChange);
@@ -19946,7 +19946,7 @@ function $TemplateCacheProvider() {
  *
  * @description
  * Compiles an HTML string or DOM into a template and produces a template function, which
- * can then be used to link {@link ng.$rootScope.Scope `scope`} and the template together.
+ * can then be used to link {@link ng.rootScope.Scope `scope`} and the template together.
  *
  * The compilation is a process of walking the DOM tree and matching DOM elements to
  * {@link ng.$compileProvider#directive directives}.
@@ -20093,11 +20093,11 @@ function $TemplateCacheProvider() {
  *   `=?` or `=?attr`. If the binding expression is non-assignable, or if the attribute isn't
  *   optional and doesn't exist, an exception ({@link error/$compile/nonassign `$compile:nonassign`})
  *   will be thrown upon discovering changes to the local value, since it will be impossible to sync
- *   them back to the parent scope. By default, the {@link ng.$rootScope.Scope#$watch `$watch`}
+ *   them back to the parent scope. By default, the {@link ng.rootScope.Scope#$watch `$watch`}
  *   method is used for tracking changes, and the equality check is based on object identity.
  *   However, if an object literal or an array literal is passed as the binding expression, the
  *   equality check is done by value (using the {@link angular.equals} function). It's also possible
- *   to watch the evaluated value shallowly with {@link ng.$rootScope.Scope#$watchCollection
+ *   to watch the evaluated value shallowly with {@link ng.rootScope.Scope#$watchCollection
  *   `$watchCollection`}: use `=*` or `=*attr` (`=*?` or `=*?attr` if the attribute is optional).
  *
   * * `<` or `<attr` - set up a one-way (one-directional) binding between a local scope property and an
@@ -20114,7 +20114,7 @@ function $TemplateCacheProvider() {
  *     sets the same value. That means if your bound value is an object, changes to its properties
  *     in the isolated scope will be reflected in the parent scope (because both reference the same object).
  *     2. one-way binding watches changes to the **identity** of the parent value. That means the
- *     {@link ng.$rootScope.Scope#$watch `$watch`} on the parent value only fires if the reference
+ *     {@link ng.rootScope.Scope#$watch `$watch`} on the parent value only fires if the reference
  *     to the value has changed. In most cases, this should not be of concern, but can be important
  *     to know if you one-way bind to an object, and then replace that object in the isolated scope.
  *     If you now change a property of the object in your parent scope, the change will not be
@@ -20393,8 +20393,8 @@ function $TemplateCacheProvider() {
  * executed after the template has been cloned. This is where most of the directive logic will be
  * put.
  *
- *   * `scope` - {@link ng.$rootScope.Scope Scope} - The scope to be used by the
- *     directive for registering {@link ng.$rootScope.Scope#$watch watches}.
+ *   * `scope` - {@link ng.rootScope.Scope Scope} - The scope to be used by the
+ *     directive for registering {@link ng.rootScope.Scope#$watch watches}.
  *
  *   * `iElement` - instance element - The element where the directive is to be used. It is safe to
  *     manipulate the children of the element only in `postLink` function since the children have
@@ -20566,7 +20566,7 @@ function $TemplateCacheProvider() {
  * The `$parent` scope hierarchy will look like this:
  *
    ```
-   - $rootScope
+   - rootScope
      - isolate
        - transclusion
    ```
@@ -20574,7 +20574,7 @@ function $TemplateCacheProvider() {
  * but the scopes will inherit prototypically from different scopes to their `$parent`.
  *
    ```
-   - $rootScope
+   - rootScope
      - transclusion
    - isolate
    ```
@@ -20692,7 +20692,7 @@ function $TemplateCacheProvider() {
  * @returns {function(scope, cloneAttachFn=, options=)} a link function which is used to bind template
  * (a DOM element/tree) to a scope. Where:
  *
- *  * `scope` - A {@link ng.$rootScope.Scope Scope} to bind to.
+ *  * `scope` - A {@link ng.rootScope.Scope Scope} to bind to.
  *  * `cloneAttachFn` - If `cloneAttachFn` is provided, then the link function will clone the
  *  `template` and call the `cloneAttachFn` function allowing the caller to attach the
  *  cloned elements to the DOM document at the appropriate place. The `cloneAttachFn` is
@@ -21163,9 +21163,9 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
   this.$get = [
             '$injector', '$interpolate', '$exceptionHandler', '$templateRequest', '$parse',
-            '$controller', '$rootScope', '$sce', '$animate', '$$sanitizeUri',
+            '$controller', 'rootScope', '$sce', '$animate', '$$sanitizeUri',
     function($injector,   $interpolate,   $exceptionHandler,   $templateRequest,   $parse,
-             $controller,   $rootScope,   $sce,   $animate,   $$sanitizeUri) {
+             $controller,   rootScope,   $sce,   $animate,   $$sanitizeUri) {
 
     var SIMPLE_ATTR_NAME = /^\w/;
     var specialAttrHolder = document.createElement('div');
@@ -21186,7 +21186,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           throw $compileMinErr('infchng', '{0} $onChanges() iterations reached. Aborting!\n', TTL);
         }
         // We must run this hook in an apply since the $$postDigest runs outside apply
-        $rootScope.$apply(function() {
+        rootScope.$apply(function() {
           for (var i = 0, ii = onChangesQueue.length; i < ii; ++i) {
             onChangesQueue[i]();
           }
@@ -21423,7 +21423,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             listeners = ($$observers[key] || ($$observers[key] = []));
 
         listeners.push(fn);
-        $rootScope.$evalAsync(function() {
+        rootScope.$evalAsync(function() {
           if (!listeners.$$inter && attrs.hasOwnProperty(key) && !isUndefined(attrs[key])) {
             // no one registered attribute interpolation function, so lets call it manually
             fn(attrs[key]);
@@ -23851,7 +23851,7 @@ function $HttpProvider() {
    * @description
    *
    * Configure $http service to combine processing of multiple http responses received at around
-   * the same time via {@link ng.$rootScope.Scope#$applyAsync $rootScope.$applyAsync}. This can result in
+   * the same time via {@link ng.rootScope.Scope#$applyAsync rootScope.$applyAsync}. This can result in
    * significant performance improvement for bigger applications that make many HTTP requests
    * concurrently (common during application bootstrap).
    *
@@ -23911,8 +23911,8 @@ function $HttpProvider() {
    **/
   var interceptorFactories = this.interceptors = [];
 
-  this.$get = ['$httpBackend', '$$cookieReader', '$cacheFactory', '$rootScope', '$q', '$injector',
-      function($httpBackend, $$cookieReader, $cacheFactory, $rootScope, $q, $injector) {
+  this.$get = ['$httpBackend', '$$cookieReader', '$cacheFactory', 'rootScope', '$q', '$injector',
+      function($httpBackend, $$cookieReader, $cacheFactory, rootScope, $q, $injector) {
 
     var defaultCache = $cacheFactory('$http');
 
@@ -23940,7 +23940,7 @@ function $HttpProvider() {
      * @name $http
      * @requires ng.$httpBackend
      * @requires $cacheFactory
-     * @requires $rootScope
+     * @requires rootScope
      * @requires $q
      * @requires $injector
      *
@@ -24743,7 +24743,7 @@ function $HttpProvider() {
      * Makes the request.
      *
      * !!! ACCESSES CLOSURE VARS:
-     * $httpBackend, defaults, $log, $rootScope, defaultCache, $http.pendingRequests
+     * $httpBackend, defaults, $log, rootScope, defaultCache, $http.pendingRequests
      */
     function sendReq(config, reqData) {
       var deferred = $q.defer(),
@@ -24823,10 +24823,10 @@ function $HttpProvider() {
         }
 
         if (useApplyAsync) {
-          $rootScope.$applyAsync(resolveHttpPromise);
+          rootScope.$applyAsync(resolveHttpPromise);
         } else {
           resolveHttpPromise();
-          if (!$rootScope.$$phase) $rootScope.$apply();
+          if (!rootScope.$$phase) rootScope.$apply();
         }
       }
 
@@ -25447,8 +25447,8 @@ function $InterpolateProvider() {
 }
 
 function $IntervalProvider() {
-  this.$get = ['$rootScope', '$window', '$q', '$$q', '$browser',
-       function($rootScope,   $window,   $q,   $$q,   $browser) {
+  this.$get = ['rootScope', '$window', '$q', '$$q', '$browser',
+       function(rootScope,   $window,   $q,   $$q,   $browser) {
     var intervals = {};
 
 
@@ -25483,7 +25483,7 @@ function $IntervalProvider() {
       * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
       *   indefinitely.
       * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+      *   will invoke `fn` within the {@link ng.rootScope.Scope#$apply $apply} block.
       * @param {...*=} Pass additional parameters to the executed function.
       * @returns {promise} A promise which will be notified on each iteration.
       *
@@ -25593,7 +25593,7 @@ function $IntervalProvider() {
         if (skipApply) {
           $browser.defer(callback);
         } else {
-          $rootScope.$evalAsync(callback);
+          rootScope.$evalAsync(callback);
         }
         deferred.notify(iteration++);
 
@@ -25603,7 +25603,7 @@ function $IntervalProvider() {
           delete intervals[promise.$$intervalId];
         }
 
-        if (!skipApply) $rootScope.$apply();
+        if (!skipApply) rootScope.$apply();
 
       }, delay);
 
@@ -26431,7 +26431,7 @@ function $LocationProvider() {
    * Broadcasted before a URL will change.
    *
    * This change can be prevented by calling
-   * `preventDefault` method of the event. See {@link ng.$rootScope.Scope#$on} for more
+   * `preventDefault` method of the event. See {@link ng.rootScope.Scope#$on} for more
    * details about event object. Upon successful change
    * {@link ng.$location#$locationChangeSuccess $locationChangeSuccess} is fired.
    *
@@ -26462,8 +26462,8 @@ function $LocationProvider() {
    * @param {string=} oldState History state object that was before it was changed.
    */
 
-  this.$get = ['$rootScope', '$browser', '$sniffer', '$rootElement', '$window',
-      function($rootScope, $browser, $sniffer, $rootElement, $window) {
+  this.$get = ['rootScope', '$browser', '$sniffer', '$rootElement', '$window',
+      function(rootScope, $browser, $sniffer, $rootElement, $window) {
     var $location,
         LocationMode,
         baseHref = $browser.baseHref(), // if base[href] is undefined, it defaults to ''
@@ -26545,7 +26545,7 @@ function $LocationProvider() {
           event.preventDefault();
           // update location manually
           if ($location.absUrl() != $browser.url()) {
-            $rootScope.$apply();
+            rootScope.$apply();
             // hack to work around FF6 bug 684208 when scenario runner clicks on links
             $window.angular['ff-684208-preventDefault'] = true;
           }
@@ -26570,7 +26570,7 @@ function $LocationProvider() {
         return;
       }
 
-      $rootScope.$evalAsync(function() {
+      rootScope.$evalAsync(function() {
         var oldUrl = $location.absUrl();
         var oldState = $location.$$state;
         var defaultPrevented;
@@ -26578,7 +26578,7 @@ function $LocationProvider() {
         $location.$$parse(newUrl);
         $location.$$state = newState;
 
-        defaultPrevented = $rootScope.$broadcast('$locationChangeStart', newUrl, oldUrl,
+        defaultPrevented = rootScope.$broadcast('$locationChangeStart', newUrl, oldUrl,
             newState, oldState).defaultPrevented;
 
         // if the location was changed by a `$locationChangeStart` handler then stop
@@ -26594,11 +26594,11 @@ function $LocationProvider() {
           afterLocationChange(oldUrl, oldState);
         }
       });
-      if (!$rootScope.$$phase) $rootScope.$digest();
+      if (!rootScope.$$phase) rootScope.$digest();
     });
 
     // update browser
-    $rootScope.$watch(function $locationWatch() {
+    rootScope.$watch(function $locationWatch() {
       var oldUrl = trimEmptyHash($browser.url());
       var newUrl = trimEmptyHash($location.absUrl());
       var oldState = $browser.state();
@@ -26609,9 +26609,9 @@ function $LocationProvider() {
       if (initializing || urlOrStateChanged) {
         initializing = false;
 
-        $rootScope.$evalAsync(function() {
+        rootScope.$evalAsync(function() {
           var newUrl = $location.absUrl();
-          var defaultPrevented = $rootScope.$broadcast('$locationChangeStart', newUrl, oldUrl,
+          var defaultPrevented = rootScope.$broadcast('$locationChangeStart', newUrl, oldUrl,
               $location.$$state, oldState).defaultPrevented;
 
           // if the location was changed by a `$locationChangeStart` handler then stop
@@ -26640,7 +26640,7 @@ function $LocationProvider() {
     return $location;
 
     function afterLocationChange(oldUrl, oldState) {
-      $rootScope.$broadcast('$locationChangeSuccess', $location.absUrl(), oldUrl,
+      rootScope.$broadcast('$locationChangeSuccess', $location.absUrl(), oldUrl,
         $location.$$state, oldState);
     }
 }];
@@ -28820,7 +28820,7 @@ function $ParseProvider() {
 /**
  * @ngdoc service
  * @name $q
- * @requires $rootScope
+ * @requires rootScope
  *
  * @description
  * A service that helps you run functions asynchronously, and use their return values (or exceptions)
@@ -28997,7 +28997,7 @@ function $ParseProvider() {
  *
  *  There are two main differences:
  *
- * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
+ * - $q is integrated with the {@link ng.rootScope.Scope} Scope model observation
  *   mechanism in angular, which means faster propagation of resolution or rejection into your
  *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
@@ -29006,7 +29006,7 @@ function $ParseProvider() {
  * # Testing
  *
  *  ```js
- *    it('should simulate promise', inject(function($q, $rootScope) {
+ *    it('should simulate promise', inject(function($q, rootScope) {
  *      var deferred = $q.defer();
  *      var promise = deferred.promise;
  *      var resolvedValue;
@@ -29022,7 +29022,7 @@ function $ParseProvider() {
  *      expect(resolvedValue).toBeUndefined();
  *
  *      // Propagate promise resolution to 'then' functions using $apply().
- *      $rootScope.$apply();
+ *      rootScope.$apply();
  *      expect(resolvedValue).toEqual(123);
  *    }));
  *  ```
@@ -29035,9 +29035,9 @@ function $ParseProvider() {
  */
 function $QProvider() {
 
-  this.$get = ['$rootScope', '$exceptionHandler', function($rootScope, $exceptionHandler) {
+  this.$get = ['rootScope', '$exceptionHandler', function(rootScope, $exceptionHandler) {
     return qFactory(function(callback) {
-      $rootScope.$evalAsync(callback);
+      rootScope.$evalAsync(callback);
     }, $exceptionHandler);
   }];
 }
@@ -29469,15 +29469,15 @@ function $$RAFProvider() { //rAF
 
 /**
  * @ngdoc provider
- * @name $rootScopeProvider
+ * @name rootScopeProvider
  * @description
  *
- * Provider for the $rootScope service.
+ * Provider for the rootScope service.
  */
 
 /**
  * @ngdoc method
- * @name $rootScopeProvider#digestTtl
+ * @name rootScopeProvider#digestTtl
  * @description
  *
  * Sets the number of `$digest` iterations the scope should attempt to execute before giving up and
@@ -29499,10 +29499,10 @@ function $$RAFProvider() { //rAF
 
 /**
  * @ngdoc service
- * @name $rootScope
+ * @name rootScope
  * @description
  *
- * Every application has a single root {@link ng.$rootScope.Scope scope}.
+ * Every application has a single root {@link ng.rootScope.Scope scope}.
  * All other scopes are descendant scopes of the root scope. Scopes provide separation
  * between the model and the view, via a mechanism for watching the model for changes.
  * They also provide event emission/broadcast and subscription facility. See the
@@ -29510,7 +29510,7 @@ function $$RAFProvider() { //rAF
  */
 function $RootScopeProvider() {
   var TTL = 10;
-  var $rootScopeMinErr = minErr('$rootScope');
+  var rootScopeMinErr = minErr('rootScope');
   var lastDirtyWatch = null;
   var applyAsyncId = null;
 
@@ -29567,12 +29567,12 @@ function $RootScopeProvider() {
 
     /**
      * @ngdoc type
-     * @name $rootScope.Scope
+     * @name rootScope.Scope
      *
      * @description
-     * A root scope can be retrieved using the {@link ng.$rootScope $rootScope} key from the
+     * A root scope can be retrieved using the {@link ng.rootScope rootScope} key from the
      * {@link auto.$injector $injector}. Child scopes are created using the
-     * {@link ng.$rootScope.Scope#$new $new()} method. (Most scopes are created automatically when
+     * {@link ng.rootScope.Scope#$new $new()} method. (Most scopes are created automatically when
      * compiled HTML template is executed.) See also the {@link guide/scope Scopes guide} for
      * an in-depth introduction and usage examples.
      *
@@ -29580,7 +29580,7 @@ function $RootScopeProvider() {
      * # Inheritance
      * A scope can inherit from a parent scope, as in this example:
      * ```js
-         var parent = $rootScope;
+         var parent = rootScope;
          var child = parent.$new();
 
          parent.salutation = "Hello";
@@ -29592,7 +29592,7 @@ function $RootScopeProvider() {
      * ```
      *
      * When interacting with `Scope` in tests, additional helper methods are available on the
-     * instances of `Scope` type. See {@link ngMock.$rootScope.Scope ngMock Scope} for additional
+     * instances of `Scope` type. See {@link ngMock.rootScope.Scope ngMock Scope} for additional
      * details.
      *
      *
@@ -29620,7 +29620,7 @@ function $RootScopeProvider() {
 
     /**
      * @ngdoc property
-     * @name $rootScope.Scope#$id
+     * @name rootScope.Scope#$id
      *
      * @description
      * Unique scope ID (monotonically increasing) useful for debugging.
@@ -29628,7 +29628,7 @@ function $RootScopeProvider() {
 
      /**
       * @ngdoc property
-      * @name $rootScope.Scope#$parent
+      * @name rootScope.Scope#$parent
       *
       * @description
       * Reference to the parent scope.
@@ -29636,7 +29636,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc property
-       * @name $rootScope.Scope#$root
+       * @name rootScope.Scope#$root
        *
        * @description
        * Reference to the root scope.
@@ -29646,16 +29646,16 @@ function $RootScopeProvider() {
       constructor: Scope,
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$new
+       * @name rootScope.Scope#$new
        * @kind function
        *
        * @description
-       * Creates a new child {@link ng.$rootScope.Scope scope}.
+       * Creates a new child {@link ng.rootScope.Scope scope}.
        *
-       * The parent scope will propagate the {@link ng.$rootScope.Scope#$digest $digest()} event.
-       * The scope can be removed from the scope hierarchy using {@link ng.$rootScope.Scope#$destroy $destroy()}.
+       * The parent scope will propagate the {@link ng.rootScope.Scope#$digest $digest()} event.
+       * The scope can be removed from the scope hierarchy using {@link ng.rootScope.Scope#$destroy $destroy()}.
        *
-       * {@link ng.$rootScope.Scope#$destroy $destroy()} must be called on a scope when it is
+       * {@link ng.rootScope.Scope#$destroy $destroy()} must be called on a scope when it is
        * desired for the scope and its child scopes to be permanently detached from the parent and
        * thus stop participating in model change detection and listener notification by invoking.
        *
@@ -29664,7 +29664,7 @@ function $RootScopeProvider() {
        *         When creating widgets, it is useful for the widget to not accidentally read parent
        *         state.
        *
-       * @param {Scope} [parent=this] The {@link ng.$rootScope.Scope `Scope`} that will be the `$parent`
+       * @param {Scope} [parent=this] The {@link ng.rootScope.Scope `Scope`} that will be the `$parent`
        *                              of the newly created scope. Defaults to `this` scope if not provided.
        *                              This is used when creating a transclude scope to correctly place it
        *                              in the scope hierarchy while maintaining the correct prototypical
@@ -29710,16 +29710,16 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$watch
+       * @name rootScope.Scope#$watch
        * @kind function
        *
        * @description
        * Registers a `listener` callback to be executed whenever the `watchExpression` changes.
        *
-       * - The `watchExpression` is called on every call to {@link ng.$rootScope.Scope#$digest
+       * - The `watchExpression` is called on every call to {@link ng.rootScope.Scope#$digest
        *   $digest()} and should return the value that will be watched. (`watchExpression` should not change
        *   its value when executed multiple times with the same input because it may be executed multiple
-       *   times by {@link ng.$rootScope.Scope#$digest $digest()}. That is, `watchExpression` should be
+       *   times by {@link ng.rootScope.Scope#$digest $digest()}. That is, `watchExpression` should be
        *   [idempotent](http://en.wikipedia.org/wiki/Idempotence).
        * - The `listener` is called only when the value from the current `watchExpression` and the
        *   previous call to `watchExpression` are not equal (with the exception of the initial run,
@@ -29736,13 +29736,13 @@ function $RootScopeProvider() {
        *   iteration limit is 10 to prevent an infinite loop deadlock.
        *
        *
-       * If you want to be notified whenever {@link ng.$rootScope.Scope#$digest $digest} is called,
+       * If you want to be notified whenever {@link ng.rootScope.Scope#$digest $digest} is called,
        * you can register a `watchExpression` function with no `listener`. (Be prepared for
        * multiple calls to your `watchExpression` because it will execute multiple times in a
-       * single {@link ng.$rootScope.Scope#$digest $digest} cycle if a change is detected.)
+       * single {@link ng.rootScope.Scope#$digest $digest} cycle if a change is detected.)
        *
        * After a watcher is registered with the scope, the `listener` fn is called asynchronously
-       * (via {@link ng.$rootScope.Scope#$evalAsync $evalAsync}) to initialize the
+       * (via {@link ng.rootScope.Scope#$evalAsync $evalAsync}) to initialize the
        * watcher. In rare cases, this is undesirable because the listener is called when the result
        * of `watchExpression` didn't change. To detect this scenario within the `listener` fn, you
        * can compare the `newVal` and `oldVal`. If these two values are identical (`===`) then the
@@ -29752,8 +29752,8 @@ function $RootScopeProvider() {
        *
        * # Example
        * ```js
-           // let's assume that scope was dependency injected as the $rootScope
-           var scope = $rootScope;
+           // let's assume that scope was dependency injected as the rootScope
+           var scope = rootScope;
            scope.name = 'misko';
            scope.counter = 0;
 
@@ -29809,7 +29809,7 @@ function $RootScopeProvider() {
        *
        *
        * @param {(function()|string)} watchExpression Expression that is evaluated on each
-       *    {@link ng.$rootScope.Scope#$digest $digest} cycle. A change in the return value triggers
+       *    {@link ng.rootScope.Scope#$digest $digest} cycle. A change in the return value triggers
        *    a call to the `listener`.
        *
        *    - `string`: Evaluated as {@link guide/expression expression}
@@ -29864,11 +29864,11 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$watchGroup
+       * @name rootScope.Scope#$watchGroup
        * @kind function
        *
        * @description
-       * A variant of {@link ng.$rootScope.Scope#$watch $watch()} where it watches an array of `watchExpressions`.
+       * A variant of {@link ng.rootScope.Scope#$watch $watch()} where it watches an array of `watchExpressions`.
        * If any one expression in the collection changes the `listener` is executed.
        *
        * - The items in the `watchExpressions` array are observed via standard $watch operation and are examined on every
@@ -29876,7 +29876,7 @@ function $RootScopeProvider() {
        * - The `listener` is called whenever any expression in the `watchExpressions` array changes.
        *
        * @param {Array.<string|Function(scope)>} watchExpressions Array of expressions that will be individually
-       * watched using {@link ng.$rootScope.Scope#$watch $watch()}
+       * watched using {@link ng.rootScope.Scope#$watch $watch()}
        *
        * @param {function(newValues, oldValues, scope)} listener Callback called whenever the return value of any
        *    expression in `watchExpressions` changes
@@ -29948,7 +29948,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$watchCollection
+       * @name rootScope.Scope#$watchCollection
        * @kind function
        *
        * @description
@@ -29987,7 +29987,7 @@ function $RootScopeProvider() {
        *
        * @param {string|function(scope)} obj Evaluated as {@link guide/expression expression}. The
        *    expression value should evaluate to an object or an array which is observed on each
-       *    {@link ng.$rootScope.Scope#$digest $digest} cycle. Any shallow change within the
+       *    {@link ng.rootScope.Scope#$digest $digest} cycle. Any shallow change within the
        *    collection will trigger a call to the `listener`.
        *
        * @param {function(newCollection, oldCollection, scope)} listener a callback function called
@@ -30135,13 +30135,13 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$digest
+       * @name rootScope.Scope#$digest
        * @kind function
        *
        * @description
-       * Processes all of the {@link ng.$rootScope.Scope#$watch watchers} of the current scope and
-       * its children. Because a {@link ng.$rootScope.Scope#$watch watcher}'s listener can change
-       * the model, the `$digest()` keeps calling the {@link ng.$rootScope.Scope#$watch watchers}
+       * Processes all of the {@link ng.rootScope.Scope#$watch watchers} of the current scope and
+       * its children. Because a {@link ng.rootScope.Scope#$watch watcher}'s listener can change
+       * the model, the `$digest()` keeps calling the {@link ng.rootScope.Scope#$watch watchers}
        * until no more listeners are firing. This means that it is possible to get into an infinite
        * loop. This function will throw `'Maximum iteration limit exceeded.'` if the number of
        * iterations exceeds 10.
@@ -30149,12 +30149,12 @@ function $RootScopeProvider() {
        * Usually, you don't call `$digest()` directly in
        * {@link ng.directive:ngController controllers} or in
        * {@link ng.$compileProvider#directive directives}.
-       * Instead, you should call {@link ng.$rootScope.Scope#$apply $apply()} (typically from within
+       * Instead, you should call {@link ng.rootScope.Scope#$apply $apply()} (typically from within
        * a {@link ng.$compileProvider#directive directive}), which will force a `$digest()`.
        *
        * If you want to be notified whenever `$digest()` is called,
        * you can register a `watchExpression` function with
-       * {@link ng.$rootScope.Scope#$watch $watch()} with no `listener`.
+       * {@link ng.rootScope.Scope#$watch $watch()} with no `listener`.
        *
        * In unit tests, you may need to call `$digest()` to simulate the scope life cycle.
        *
@@ -30197,7 +30197,7 @@ function $RootScopeProvider() {
         // Check for changes to browser url that happened in sync before the call to $digest
         $browser.$$checkUrlChange();
 
-        if (this === $rootScope && applyAsyncId !== null) {
+        if (this === rootScope && applyAsyncId !== null) {
           // If this is the root scope, and $applyAsync has scheduled a deferred $apply(), then
           // cancel the scheduled $apply and flush the queue of expressions to be evaluated.
           $browser.defer.cancel(applyAsyncId);
@@ -30279,7 +30279,7 @@ function $RootScopeProvider() {
 
           if ((dirty || asyncQueue.length) && !(ttl--)) {
             clearPhase();
-            throw $rootScopeMinErr('infdig',
+            throw rootScopeMinErr('infdig',
                 '{0} $digest() iterations reached. Aborting!\n' +
                 'Watchers fired in the last 5 iterations: {1}',
                 TTL, watchLog);
@@ -30301,7 +30301,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc event
-       * @name $rootScope.Scope#$destroy
+       * @name rootScope.Scope#$destroy
        * @eventType broadcast on scope being destroyed
        *
        * @description
@@ -30313,12 +30313,12 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$destroy
+       * @name rootScope.Scope#$destroy
        * @kind function
        *
        * @description
        * Removes the current scope (and all of its children) from the parent scope. Removal implies
-       * that calls to {@link ng.$rootScope.Scope#$digest $digest()} will no longer
+       * that calls to {@link ng.rootScope.Scope#$digest $digest()} will no longer
        * propagate to the current scope and its children. Removal also implies that the current
        * scope is eligible for garbage collection.
        *
@@ -30341,8 +30341,8 @@ function $RootScopeProvider() {
         this.$broadcast('$destroy');
         this.$$destroyed = true;
 
-        if (this === $rootScope) {
-          //Remove handlers attached to window when $rootScope is removed
+        if (this === rootScope) {
+          //Remove handlers attached to window when rootScope is removed
           $browser.$$applicationDestroyed();
         }
 
@@ -30370,7 +30370,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$eval
+       * @name rootScope.Scope#$eval
        * @kind function
        *
        * @description
@@ -30380,7 +30380,7 @@ function $RootScopeProvider() {
        *
        * # Example
        * ```js
-           var scope = ng.$rootScope.Scope();
+           var scope = ng.rootScope.Scope();
            scope.a = 1;
            scope.b = 2;
 
@@ -30402,7 +30402,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$evalAsync
+       * @name rootScope.Scope#$evalAsync
        * @kind function
        *
        * @description
@@ -30413,7 +30413,7 @@ function $RootScopeProvider() {
        *
        *   - it will execute after the function that scheduled the evaluation (preferably before DOM
        *     rendering).
-       *   - at least one {@link ng.$rootScope.Scope#$digest $digest cycle} will be performed after
+       *   - at least one {@link ng.rootScope.Scope#$digest $digest cycle} will be performed after
        *     `expression` execution.
        *
        * Any exceptions from the execution of the expression are forwarded to the
@@ -30433,10 +30433,10 @@ function $RootScopeProvider() {
       $evalAsync: function(expr, locals) {
         // if we are outside of an $digest loop and this is the first time we are scheduling async
         // task also schedule async auto-flush
-        if (!$rootScope.$$phase && !asyncQueue.length) {
+        if (!rootScope.$$phase && !asyncQueue.length) {
           $browser.defer(function() {
             if (asyncQueue.length) {
-              $rootScope.$digest();
+              rootScope.$digest();
             }
           });
         }
@@ -30450,7 +30450,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$apply
+       * @name rootScope.Scope#$apply
        * @kind function
        *
        * @description
@@ -30458,7 +30458,7 @@ function $RootScopeProvider() {
        * framework. (For example from browser DOM events, setTimeout, XHR or third party libraries).
        * Because we are calling into the angular framework we need to perform proper scope life
        * cycle of {@link ng.$exceptionHandler exception handling},
-       * {@link ng.$rootScope.Scope#$digest executing watches}.
+       * {@link ng.rootScope.Scope#$digest executing watches}.
        *
        * ## Life cycle
        *
@@ -30479,11 +30479,11 @@ function $RootScopeProvider() {
        * Scope's `$apply()` method transitions through the following stages:
        *
        * 1. The {@link guide/expression expression} is executed using the
-       *    {@link ng.$rootScope.Scope#$eval $eval()} method.
+       *    {@link ng.rootScope.Scope#$eval $eval()} method.
        * 2. Any exceptions from the execution of the expression are forwarded to the
        *    {@link ng.$exceptionHandler $exceptionHandler} service.
-       * 3. The {@link ng.$rootScope.Scope#$watch watch} listeners are fired immediately after the
-       *    expression was executed using the {@link ng.$rootScope.Scope#$digest $digest()} method.
+       * 3. The {@link ng.rootScope.Scope#$watch watch} listeners are fired immediately after the
+       *    expression was executed using the {@link ng.rootScope.Scope#$digest $digest()} method.
        *
        *
        * @param {(string|function())=} exp An angular expression to be executed.
@@ -30505,7 +30505,7 @@ function $RootScopeProvider() {
           $exceptionHandler(e);
         } finally {
           try {
-            $rootScope.$digest();
+            rootScope.$digest();
           } catch (e) {
             $exceptionHandler(e);
             throw e;
@@ -30515,7 +30515,7 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$applyAsync
+       * @name rootScope.Scope#$applyAsync
        * @kind function
        *
        * @description
@@ -30543,11 +30543,11 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$on
+       * @name rootScope.Scope#$on
        * @kind function
        *
        * @description
-       * Listens on events of a given type. See {@link ng.$rootScope.Scope#$emit $emit} for
+       * Listens on events of a given type. See {@link ng.rootScope.Scope#$emit $emit} for
        * discussion of event life cycle.
        *
        * The event listener function format is: `function(event, args...)`. The `event` object
@@ -30596,25 +30596,25 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$emit
+       * @name rootScope.Scope#$emit
        * @kind function
        *
        * @description
        * Dispatches an event `name` upwards through the scope hierarchy notifying the
-       * registered {@link ng.$rootScope.Scope#$on} listeners.
+       * registered {@link ng.rootScope.Scope#$on} listeners.
        *
        * The event life cycle starts at the scope on which `$emit` was called. All
-       * {@link ng.$rootScope.Scope#$on listeners} listening for `name` event on this scope get
+       * {@link ng.rootScope.Scope#$on listeners} listening for `name` event on this scope get
        * notified. Afterwards, the event traverses upwards toward the root scope and calls all
        * registered listeners along the way. The event will stop propagating if one of the listeners
        * cancels it.
        *
-       * Any exception emitted from the {@link ng.$rootScope.Scope#$on listeners} will be passed
+       * Any exception emitted from the {@link ng.rootScope.Scope#$on listeners} will be passed
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
        * @param {string} name Event name to emit.
        * @param {...*} args Optional one or more arguments which will be passed onto the event listeners.
-       * @return {Object} Event object (see {@link ng.$rootScope.Scope#$on}).
+       * @return {Object} Event object (see {@link ng.rootScope.Scope#$on}).
        */
       $emit: function(name, args) {
         var empty = [],
@@ -30669,24 +30669,24 @@ function $RootScopeProvider() {
 
       /**
        * @ngdoc method
-       * @name $rootScope.Scope#$broadcast
+       * @name rootScope.Scope#$broadcast
        * @kind function
        *
        * @description
        * Dispatches an event `name` downwards to all child scopes (and their children) notifying the
-       * registered {@link ng.$rootScope.Scope#$on} listeners.
+       * registered {@link ng.rootScope.Scope#$on} listeners.
        *
        * The event life cycle starts at the scope on which `$broadcast` was called. All
-       * {@link ng.$rootScope.Scope#$on listeners} listening for `name` event on this scope get
+       * {@link ng.rootScope.Scope#$on listeners} listening for `name` event on this scope get
        * notified. Afterwards, the event propagates to all direct and indirect scopes of the current
        * scope and calls all registered listeners along the way. The event cannot be canceled.
        *
-       * Any exception emitted from the {@link ng.$rootScope.Scope#$on listeners} will be passed
+       * Any exception emitted from the {@link ng.rootScope.Scope#$on listeners} will be passed
        * onto the {@link ng.$exceptionHandler $exceptionHandler} service.
        *
        * @param {string} name Event name to broadcast.
        * @param {...*} args Optional one or more arguments which will be passed onto the event listeners.
-       * @return {Object} Event object, see {@link ng.$rootScope.Scope#$on}
+       * @return {Object} Event object, see {@link ng.rootScope.Scope#$on}
        */
       $broadcast: function(name, args) {
         var target = this,
@@ -30743,26 +30743,26 @@ function $RootScopeProvider() {
       }
     };
 
-    var $rootScope = new Scope();
+    var rootScope = new Scope();
 
-    //The internal queues. Expose them on the $rootScope for debugging/testing purposes.
-    var asyncQueue = $rootScope.$$asyncQueue = [];
-    var postDigestQueue = $rootScope.$$postDigestQueue = [];
-    var applyAsyncQueue = $rootScope.$$applyAsyncQueue = [];
+    //The internal queues. Expose them on the rootScope for debugging/testing purposes.
+    var asyncQueue = rootScope.$$asyncQueue = [];
+    var postDigestQueue = rootScope.$$postDigestQueue = [];
+    var applyAsyncQueue = rootScope.$$applyAsyncQueue = [];
 
-    return $rootScope;
+    return rootScope;
 
 
     function beginPhase(phase) {
-      if ($rootScope.$$phase) {
-        throw $rootScopeMinErr('inprog', '{0} already in progress', $rootScope.$$phase);
+      if (rootScope.$$phase) {
+        throw rootScopeMinErr('inprog', '{0} already in progress', rootScope.$$phase);
       }
 
-      $rootScope.$$phase = phase;
+      rootScope.$$phase = phase;
     }
 
     function clearPhase() {
-      $rootScope.$$phase = null;
+      rootScope.$$phase = null;
     }
 
     function incrementWatchersCount(current, count) {
@@ -30801,7 +30801,7 @@ function $RootScopeProvider() {
     function scheduleApplyAsync() {
       if (applyAsyncId === null) {
         applyAsyncId = $browser.defer(function() {
-          $rootScope.$apply(flushApplyAsync);
+          rootScope.$apply(flushApplyAsync);
         });
       }
     }
@@ -32160,8 +32160,8 @@ function $TemplateRequestProvider() {
 }
 
 function $$TestabilityProvider() {
-  this.$get = ['$rootScope', '$browser', '$location',
-       function($rootScope,   $browser,   $location) {
+  this.$get = ['rootScope', '$browser', '$location',
+       function(rootScope,   $browser,   $location) {
 
     /**
      * @name $testability
@@ -32254,7 +32254,7 @@ function $$TestabilityProvider() {
     testability.setLocation = function(url) {
       if (url !== $location.url()) {
         $location.url(url);
-        $rootScope.$digest();
+        rootScope.$digest();
       }
     };
 
@@ -32275,8 +32275,8 @@ function $$TestabilityProvider() {
 }
 
 function $TimeoutProvider() {
-  this.$get = ['$rootScope', '$browser', '$q', '$$q', '$exceptionHandler',
-       function($rootScope,   $browser,   $q,   $$q,   $exceptionHandler) {
+  this.$get = ['rootScope', '$browser', '$q', '$$q', '$exceptionHandler',
+       function(rootScope,   $browser,   $q,   $$q,   $exceptionHandler) {
 
     var deferreds = {};
 
@@ -32304,7 +32304,7 @@ function $TimeoutProvider() {
       * @param {function()=} fn A function, whose execution should be delayed.
       * @param {number=} [delay=0] Delay in milliseconds.
       * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+      *   will invoke `fn` within the {@link ng.rootScope.Scope#$apply $apply} block.
       * @param {...*=} Pass additional parameters to the executed function.
       * @returns {Promise} Promise that will be resolved when the timeout is reached. The promise
       *   will be resolved with the return value of the `fn` function.
@@ -32334,7 +32334,7 @@ function $TimeoutProvider() {
           delete deferreds[promise.$$timeoutId];
         }
 
-        if (!skipApply) $rootScope.$apply();
+        if (!skipApply) rootScope.$apply();
       }, delay);
 
       promise.$$timeoutId = timeoutId;
@@ -38168,7 +38168,7 @@ forEach(
   'click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' '),
   function(eventName) {
     var directiveName = directiveNormalize('ng-' + eventName);
-    ngEventDirectives[directiveName] = ['$parse', '$rootScope', function($parse, $rootScope) {
+    ngEventDirectives[directiveName] = ['$parse', 'rootScope', function($parse, rootScope) {
       return {
         restrict: 'A',
         compile: function($element, attr) {
@@ -38182,7 +38182,7 @@ forEach(
               var callback = function() {
                 fn(scope, {$event:event});
               };
-              if (forceAsyncEvents[eventName] && $rootScope.$$phase) {
+              if (forceAsyncEvents[eventName] && rootScope.$$phase) {
                 scope.$evalAsync(callback);
               } else {
                 scope.$apply(callback);
@@ -39451,8 +39451,8 @@ is set to `true`. The parse error is stored in `ngModel.$error.parse`.
  *
  *
  */
-var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', '$rootScope', '$q', '$interpolate',
-    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, $rootScope, $q, $interpolate) {
+var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$parse', '$animate', '$timeout', 'rootScope', '$q', '$interpolate',
+    function($scope, $exceptionHandler, $attr, $element, $parse, $animate, $timeout, rootScope, $q, $interpolate) {
   this.$viewValue = Number.NaN;
   this.$modelValue = Number.NaN;
   this.$$rawModelValue = undefined; // stores the parsed modelValue / model set from scope regardless of validity.
@@ -40071,7 +40071,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
       pendingDebounce = $timeout(function() {
         ctrl.$commitViewValue();
       }, debounceDelay);
-    } else if ($rootScope.$$phase) {
+    } else if (rootScope.$$phase) {
       ctrl.$commitViewValue();
     } else {
       $scope.$apply(function() {
@@ -40308,7 +40308,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
      </file>
  * </example>
  */
-var ngModelDirective = ['$rootScope', function($rootScope) {
+var ngModelDirective = ['rootScope', function(rootScope) {
   return {
     restrict: 'A',
     require: ['ngModel', '^?form', '^?ngModelOptions'],
@@ -40352,7 +40352,7 @@ var ngModelDirective = ['$rootScope', function($rootScope) {
           element.on('blur', function() {
             if (modelCtrl.$touched) return;
 
-            if ($rootScope.$$phase) {
+            if (rootScope.$$phase) {
               scope.$evalAsync(modelCtrl.$setTouched);
             } else {
               scope.$apply(modelCtrl.$setTouched);
@@ -41753,7 +41753,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *
  * # Tracking and Duplicates
  *
- * `ngRepeat` uses {@link $rootScope.Scope#$watchCollection $watchCollection} to detect changes in
+ * `ngRepeat` uses {@link rootScope.Scope#$watchCollection $watchCollection} to detect changes in
  * the collection. When a change happens, ngRepeat then makes the corresponding changes to the DOM:
  *
  * * When an item is added, a new instance of the template is added to the DOM.
@@ -43408,8 +43408,8 @@ var SelectController =
  *   </file>
  *   <file name="app.js">
  *     angular.module('nonStringSelect', [])
- *       .run(function($rootScope) {
- *         $rootScope.model = { id: 2 };
+ *       .run(function(rootScope) {
+ *         rootScope.model = { id: 2 };
  *       })
  *       .directive('convertToNumber', function() {
  *         return {
@@ -45641,8 +45641,8 @@ var $$AnimateCssDriverProvider = ['$$animationProvider', function($$animationPro
     return node.parentNode && node.parentNode.nodeType === 11;
   }
 
-  this.$get = ['$animateCss', '$rootScope', '$$AnimateRunner', '$rootElement', '$sniffer', '$$jqLite', '$document',
-       function($animateCss,   $rootScope,   $$AnimateRunner,   $rootElement,   $sniffer,   $$jqLite,   $document) {
+  this.$get = ['$animateCss', 'rootScope', '$$AnimateRunner', '$rootElement', '$sniffer', '$$jqLite', '$document',
+       function($animateCss,   rootScope,   $$AnimateRunner,   $rootElement,   $sniffer,   $$jqLite,   $document) {
 
     // only browsers that support these properties can render animations
     if (!$sniffer.animations && !$sniffer.transitions) return noop;
@@ -46339,9 +46339,9 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
     return hasMatchingClasses(nA, cR) || hasMatchingClasses(nR, cA);
   });
 
-  this.$get = ['$$rAF', '$rootScope', '$rootElement', '$document', '$$HashMap',
+  this.$get = ['$$rAF', 'rootScope', '$rootElement', '$document', '$$HashMap',
                '$$animation', '$$AnimateRunner', '$templateRequest', '$$jqLite', '$$forceReflow',
-       function($$rAF,   $rootScope,   $rootElement,   $document,   $$HashMap,
+       function($$rAF,   rootScope,   $rootElement,   $document,   $$HashMap,
                 $$animation,   $$AnimateRunner,   $templateRequest,   $$jqLite,   $$forceReflow) {
 
     var activeAnimationsLookup = new $$HashMap();
@@ -46358,7 +46358,7 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
         if (postDigestCalled) {
           fn();
         } else {
-          $rootScope.$$postDigest(function() {
+          rootScope.$$postDigest(function() {
             postDigestCalled = true;
             fn();
           });
@@ -46370,7 +46370,7 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
     // compiled. The $templateRequest.totalPendingRequests variable keeps track of
     // all of the remote templates being currently downloaded. If there are no
     // templates currently downloading then the watcher will still fire anyway.
-    var deregisterWatch = $rootScope.$watch(
+    var deregisterWatch = rootScope.$watch(
       function() { return $templateRequest.totalPendingRequests === 0; },
       function(isEmpty) {
         if (!isEmpty) return;
@@ -46383,8 +46383,8 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
         // use $postDigest, it's important that the code below executes at the end.
         // This basically means that the page is fully downloaded and compiled before
         // any animations are triggered.
-        $rootScope.$$postDigest(function() {
-          $rootScope.$$postDigest(function() {
+        rootScope.$$postDigest(function() {
+          rootScope.$$postDigest(function() {
             // we check for null directly in the event that the application already called
             // .enabled() with whatever arguments that it provided it with
             if (animationsEnabled === null) {
@@ -46694,7 +46694,7 @@ var $$AnimateQueueProvider = ['$animateProvider', function($animateProvider) {
 
       markElementAnimationState(element, PRE_DIGEST_STATE, newAnimation);
 
-      $rootScope.$$postDigest(function() {
+      rootScope.$$postDigest(function() {
         var animationDetails = activeAnimationsLookup.get(node);
         var animationCancelled = !animationDetails;
         animationDetails = animationDetails || {};
@@ -46948,8 +46948,8 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
     return element.data(RUNNER_STORAGE_KEY);
   }
 
-  this.$get = ['$$jqLite', '$rootScope', '$injector', '$$AnimateRunner', '$$HashMap', '$$rAFScheduler',
-       function($$jqLite,   $rootScope,   $injector,   $$AnimateRunner,   $$HashMap,   $$rAFScheduler) {
+  this.$get = ['$$jqLite', 'rootScope', '$injector', '$$AnimateRunner', '$$HashMap', '$$rAFScheduler',
+       function($$jqLite,   rootScope,   $injector,   $$AnimateRunner,   $$HashMap,   $$rAFScheduler) {
 
     var animationQueue = [];
     var applyAnimationClasses = applyAnimationClassesFactory($$jqLite);
@@ -47089,7 +47089,7 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
       // were apart of the same postDigest flush call.
       if (animationQueue.length > 1) return runner;
 
-      $rootScope.$$postDigest(function() {
+      rootScope.$$postDigest(function() {
         var animations = [];
         forEach(animationQueue, function(entry) {
           // the element was destroyed early on which removed the runner
@@ -47424,7 +47424,7 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
  *  </file>
  * </example>
  */
-var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $rootScope) {
+var ngAnimateSwapDirective = ['$animate', 'rootScope', function($animate, rootScope) {
   return {
     restrict: 'A',
     transclude: 'element',
@@ -48016,8 +48016,8 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
             controller: 'ProfileController as profile'
           });
         }])
-        .run(['$rootScope', function($rootScope) {
-          $rootScope.records = [
+        .run(['rootScope', function(rootScope) {
+          rootScope.records = [
             { id:1, title: "Miss Beulah Roob" },
             { id:2, title: "Trent Morissette" },
             { id:3, title: "Miss Ava Pouros" },
@@ -48033,9 +48033,9 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
         .controller('HomeController', [function() {
           //empty
         }])
-        .controller('ProfileController', ['$rootScope', '$routeParams', function($rootScope, $routeParams) {
+        .controller('ProfileController', ['rootScope', '$routeParams', function(rootScope, $routeParams) {
           var index = parseInt($routeParams.id, 10);
-          var record = $rootScope.records[index - 1];
+          var record = rootScope.records[index - 1];
 
           this.title = record.title;
           this.id = record.id;
@@ -50871,9 +50871,9 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
    *   // location changes and route synchronization:
    *   $urlRouterProvider.deferIntercept();
    *
-   * }).run(function ($rootScope, $urlRouter, UserService) {
+   * }).run(function (rootScope, $urlRouter, UserService) {
    *
-   *   $rootScope.$on('$locationChangeSuccess', function(e) {
+   *   rootScope.$on('$locationChangeSuccess', function(e) {
    *     // UserService is an example service for managing user state
    *     if (UserService.isLoggedIn()) return;
    *
@@ -50905,7 +50905,7 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
    * @name ui.router.router.$urlRouter
    *
    * @requires $location
-   * @requires $rootScope
+   * @requires rootScope
    * @requires $injector
    * @requires $browser
    *
@@ -50913,8 +50913,8 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
    *
    */
   this.$get = $get;
-  $get.$inject = ['$location', '$rootScope', '$injector', '$browser'];
-  function $get(   $location,   $rootScope,   $injector,   $browser) {
+  $get.$inject = ['$location', 'rootScope', '$injector', '$browser'];
+  function $get(   $location,   rootScope,   $injector,   $browser) {
 
     var baseHref = $browser.baseHref(), location = $location.url(), lastPushedUrl;
 
@@ -50949,7 +50949,7 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
     }
 
     function listen() {
-      listener = listener || $rootScope.$on('$locationChangeSuccess', update);
+      listener = listener || rootScope.$on('$locationChangeSuccess', update);
       return listener;
     }
 
@@ -50970,8 +50970,8 @@ function $UrlRouterProvider(   $locationProvider,   $urlMatcherFactory) {
        * @example
        * <pre>
        * angular.module('app', ['ui.router'])
-       *   .run(function($rootScope, $urlRouter) {
-       *     $rootScope.$on('$locationChangeSuccess', function(evt) {
+       *   .run(function(rootScope, $urlRouter) {
+       *     rootScope.$on('$locationChangeSuccess', function(evt) {
        *       // Halt state change from even starting
        *       evt.preventDefault();
        *       // Perform custom logic
@@ -51744,7 +51744,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * @ngdoc object
    * @name ui.router.state.$state
    *
-   * @requires $rootScope
+   * @requires rootScope
    * @requires $q
    * @requires ui.router.state.$view
    * @requires $injector
@@ -51765,8 +51765,8 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * you're coming from.
    */
   this.$get = $get;
-  $get.$inject = ['$rootScope', '$q', '$view', '$injector', '$resolve', '$stateParams', '$urlRouter', '$location', '$urlMatcherFactory'];
-  function $get(   $rootScope,   $q,   $view,   $injector,   $resolve,   $stateParams,   $urlRouter,   $location,   $urlMatcherFactory) {
+  $get.$inject = ['rootScope', '$q', '$view', '$injector', '$resolve', '$stateParams', '$urlRouter', '$location', '$urlMatcherFactory'];
+  function $get(   rootScope,   $q,   $view,   $injector,   $resolve,   $stateParams,   $urlRouter,   $location,   $urlMatcherFactory) {
 
     var TransitionSuperseded = $q.reject(new Error('transition superseded'));
     var TransitionPrevented = $q.reject(new Error('transition prevented'));
@@ -51808,7 +51808,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
        * })
        * </pre>
        */
-      var evt = $rootScope.$broadcast('$stateNotFound', redirect, state, params);
+      var evt = rootScope.$broadcast('$stateNotFound', redirect, state, params);
 
       if (evt.defaultPrevented) {
         $urlRouter.update();
@@ -52073,7 +52073,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
          * @example
          *
          * <pre>
-         * $rootScope.$on('$stateChangeStart',
+         * rootScope.$on('$stateChangeStart',
          * function(event, toState, toParams, fromState, fromParams){
          *     event.preventDefault();
          *     // transitionTo() promise will be rejected with
@@ -52081,7 +52081,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
          * })
          * </pre>
          */
-        if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
+        if (rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
           $urlRouter.update();
           return TransitionPrevented;
         }
@@ -52159,7 +52159,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
          * @param {State} fromState The current state, pre-transition.
          * @param {Object} fromParams The params supplied to the `fromState`.
          */
-          $rootScope.$broadcast('$stateChangeSuccess', to.self, toParams, from.self, fromParams);
+          rootScope.$broadcast('$stateChangeSuccess', to.self, toParams, from.self, fromParams);
         }
         $urlRouter.update(true);
 
@@ -52186,7 +52186,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
          * @param {Object} fromParams The params supplied to the `fromState`.
          * @param {Error} error The resolve error object.
          */
-        evt = $rootScope.$broadcast('$stateChangeError', to.self, toParams, from.self, fromParams, error);
+        evt = rootScope.$broadcast('$stateChangeError', to.self, toParams, from.self, fromParams, error);
 
         if (!evt.defaultPrevented) {
             $urlRouter.update();
@@ -52447,13 +52447,13 @@ function $ViewProvider() {
    * @name ui.router.state.$view
    *
    * @requires ui.router.util.$templateFactory
-   * @requires $rootScope
+   * @requires rootScope
    *
    * @description
    *
    */
-  $get.$inject = ['$rootScope', '$templateFactory'];
-  function $get(   $rootScope,   $templateFactory) {
+  $get.$inject = ['rootScope', '$templateFactory'];
+  function $get(   rootScope,   $templateFactory) {
     return {
       // $view.load('full.viewName', { template: ..., controller: ..., resolve: ..., async: false, params: ... })
       /**
@@ -52499,7 +52499,7 @@ function $ViewProvider() {
          * });
          * </pre>
          */
-          $rootScope.$broadcast('$viewContentLoading', options);
+          rootScope.$broadcast('$viewContentLoading', options);
         }
         return result;
       }
@@ -53258,7 +53258,7 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
  */
 IonicModule
 .factory('$ionicActionSheet', [
-  '$rootScope',
+  'rootScope',
   '$compile',
   '$animate',
   '$timeout',
@@ -53266,7 +53266,7 @@ IonicModule
   '$ionicPlatform',
   '$ionicBody',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
+function(rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicPlatform, $ionicBody, IONIC_BACK_PRIORITY) {
 
   return {
     show: actionSheet
@@ -53301,7 +53301,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
    * @returns {function} `hideSheet` A function which, when called, hides & cancels the action sheet.
    */
   function actionSheet(opts) {
-    var scope = $rootScope.$new(true);
+    var scope = rootScope.$new(true);
 
     extend(scope, {
       cancel: noop,
@@ -53331,7 +53331,7 @@ function($rootScope, $compile, $animate, $timeout, $ionicTemplateLoader, $ionicP
     var sheetEl = jqLite(element[0].querySelector('.action-sheet-wrapper'));
 
     var stateChangeListenDone = scope.cancelOnStateChange ?
-      $rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
+      rootScope.$on('$stateChangeSuccess', function() { scope.cancel(); }) :
       noop;
 
     // removes the actionSheet from the screen
@@ -53495,7 +53495,7 @@ jqLite.prototype.removeClass = function(cssClasses) {
  * @usage
  *
  * ```js
- * function MyController($scope, $ionicBackdrop, $timeout, $rootScope) {
+ * function MyController($scope, $ionicBackdrop, $timeout, rootScope) {
  *   //Show a backdrop for one second
  *   $scope.action = function() {
  *     $ionicBackdrop.retain();
@@ -53519,8 +53519,8 @@ jqLite.prototype.removeClass = function(cssClasses) {
  */
 IonicModule
 .factory('$ionicBackdrop', [
-  '$document', '$timeout', '$$rAF', '$rootScope',
-function($document, $timeout, $$rAF, $rootScope) {
+  '$document', '$timeout', '$$rAF', 'rootScope',
+function($document, $timeout, $$rAF, rootScope) {
 
   var el = jqLite('<div class="backdrop">');
   var backdropHolds = 0;
@@ -53552,7 +53552,7 @@ function($document, $timeout, $$rAF, $rootScope) {
     backdropHolds++;
     if (backdropHolds === 1) {
       el.addClass('visible');
-      $rootScope.$broadcast('backdrop.shown');
+      rootScope.$broadcast('backdrop.shown');
       $$rAF(function() {
         // If we're still at >0 backdropHolds after async...
         if (backdropHolds >= 1) el.addClass('active');
@@ -53562,7 +53562,7 @@ function($document, $timeout, $$rAF, $rootScope) {
   function release() {
     if (backdropHolds === 1) {
       el.removeClass('active');
-      $rootScope.$broadcast('backdrop.hidden');
+      rootScope.$broadcast('backdrop.hidden');
       $timeout(function() {
         // If we're still at 0 backdropHolds after async...
         if (backdropHolds === 0) el.removeClass('visible');
@@ -53821,14 +53821,14 @@ IonicModule
 
 IonicModule
 .factory('$ionicHistory', [
-  '$rootScope',
+  'rootScope',
   '$state',
   '$location',
   '$window',
   '$timeout',
   '$ionicViewSwitcher',
   '$ionicNavViewDelegate',
-function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
+function(rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $ionicNavViewDelegate) {
 
   // history actions while navigating views
   var ACTION_INITIAL_VIEW = 'initialView';
@@ -53933,7 +53933,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
       parentScope = parentScope.$parent;
     }
     // no history for the parent, use the root
-    return { historyId: 'root', scope: $rootScope };
+    return { historyId: 'root', scope: rootScope };
   }
 
   function setNavViews(viewId) {
@@ -54535,7 +54535,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
           nextViewOptions = nextViewOptions || {};
           extend(nextViewOptions, opts);
           if (nextViewOptions.expire) {
-              deregisterStateChangeListener = $rootScope.$on('$stateChangeSuccess', function() {
+              deregisterStateChangeListener = rootScope.$on('$stateChangeSuccess', function() {
                 nextViewExpireTimer = $timeout(function() {
                   nextViewOptions = null;
                   }, nextViewOptions.expire);
@@ -54618,21 +54618,21 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
 }])
 
 .run([
-  '$rootScope',
+  'rootScope',
   '$state',
   '$location',
   '$document',
   '$ionicPlatform',
   '$ionicHistory',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
+function(rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory, IONIC_BACK_PRIORITY) {
 
   // always reset the keyboard state when change stage
-  $rootScope.$on('$ionicView.beforeEnter', function() {
+  rootScope.$on('$ionicView.beforeEnter', function() {
     ionic.keyboard && ionic.keyboard.hide && ionic.keyboard.hide();
   });
 
-  $rootScope.$on('$ionicHistory.change', function(e, data) {
+  rootScope.$on('$ionicHistory.change', function(e, data) {
     if (!data) return null;
 
     var viewHistory = $ionicHistory.viewHistory();
@@ -54663,12 +54663,12 @@ function($rootScope, $state, $location, $document, $ionicPlatform, $ionicHistory
     }
   });
 
-  $rootScope.$ionicGoBack = function(backCount) {
+  rootScope.$ionicGoBack = function(backCount) {
     $ionicHistory.goBack(backCount);
   };
 
   // Set the document title when a new view is shown
-  $rootScope.$on('$ionicView.afterEnter', function(ev, data) {
+  rootScope.$on('$ionicView.afterEnter', function(ev, data) {
     if (data && data.title) {
       $document[0].title = data.title;
     }
@@ -55438,9 +55438,9 @@ IonicModule
   '$log',
   '$compile',
   '$ionicPlatform',
-  '$rootScope',
+  'rootScope',
   'IONIC_BACK_PRIORITY',
-function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $ionicPlatform, $rootScope, IONIC_BACK_PRIORITY) {
+function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, $timeout, $q, $log, $compile, $ionicPlatform, rootScope, IONIC_BACK_PRIORITY) {
 
   var loaderInstance;
   //default values
@@ -55459,7 +55459,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
      * @param {object} opts The options for the loading indicator. Available properties:
      *  - `{string=}` `template` The html content of the indicator.
      *  - `{string=}` `templateUrl` The url of an html template to load as the content of the indicator.
-     *  - `{object=}` `scope` The scope to be a child of. Default: creates a child of $rootScope.
+     *  - `{object=}` `scope` The scope to be a child of. Default: creates a child of rootScope.
      *  - `{boolean=}` `noBackdrop` Whether to hide the backdrop. By default it will be shown.
      *  - `{boolean=}` `hideOnStateChange` Whether to hide the loading spinner when navigating
      *    to a new state. Default false.
@@ -55577,8 +55577,8 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
     deregisterStateListener1();
     deregisterStateListener2();
     if (options.hideOnStateChange) {
-      deregisterStateListener1 = $rootScope.$on('$stateChangeSuccess', hideLoader);
-      deregisterStateListener2 = $rootScope.$on('$stateChangeError', hideLoader);
+      deregisterStateListener1 = rootScope.$on('$stateChangeSuccess', hideLoader);
+      deregisterStateListener2 = rootScope.$on('$stateChangeError', hideLoader);
     }
 
     //If loading.show() was called previously, cancel it and show with our new options
@@ -55666,7 +55666,7 @@ function($ionicLoadingConfig, $ionicBody, $ionicTemplateLoader, $ionicBackdrop, 
  */
 IonicModule
 .factory('$ionicModal', [
-  '$rootScope',
+  'rootScope',
   '$ionicBody',
   '$compile',
   '$timeout',
@@ -55677,7 +55677,7 @@ IonicModule
   '$ionicClickBlock',
   '$window',
   'IONIC_BACK_PRIORITY',
-function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
+function(rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTemplateLoader, $$q, $log, $ionicClickBlock, $window, IONIC_BACK_PRIORITY) {
 
   /**
    * @ngdoc controller
@@ -55700,7 +55700,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      * @description Creates a new modal controller instance.
      * @param {object} options An options object with the following properties:
      *  - `{object=}` `scope` The scope to be a child of.
-     *    Default: creates a child of $rootScope.
+     *    Default: creates a child of rootScope.
      *  - `{string=}` `animation` The animation to show & hide with.
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
@@ -55892,7 +55892,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
 
   var createModal = function(templateString, options) {
     // Create a new scope for the modal
-    var scope = options.scope && options.scope.$new() || $rootScope.$new(true);
+    var scope = options.scope && options.scope.$new() || rootScope.$new(true);
 
     options.viewType = options.viewType || 'modal';
 
@@ -56405,7 +56405,7 @@ function($ionicModal, $ionicPosition, $document, $window) {
    * @description Creates a new popover controller instance.
    * @param {object} options An options object with the following properties:
    *  - `{object=}` `scope` The scope to be a child of.
-   *    Default: creates a child of $rootScope.
+   *    Default: creates a child of rootScope.
    *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
    *    the popover when shown.  Default: false.
    *  - `{boolean=}` `backdropClickToClose` Whether to close the popover on clicking the backdrop.
@@ -56587,13 +56587,13 @@ IonicModule
   '$ionicBackdrop',
   '$q',
   '$timeout',
-  '$rootScope',
+  'rootScope',
   '$ionicBody',
   '$compile',
   '$ionicPlatform',
   '$ionicModal',
   'IONIC_BACK_PRIORITY',
-function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
+function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, rootScope, $ionicBody, $compile, $ionicPlatform, $ionicModal, IONIC_BACK_PRIORITY) {
   //TODO allow this to be configured
   var config = {
     stackPushDelay: 75
@@ -56763,7 +56763,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
     }, options || {});
 
     var self = {};
-    self.scope = (options.scope || $rootScope).$new();
+    self.scope = (options.scope || rootScope).$new();
     self.element = jqLite(POPUP_TPL);
     self.responseDeferred = $q.defer();
 
@@ -56942,7 +56942,7 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
   }
 
   function showPrompt(opts) {
-    var scope = $rootScope.$new(true);
+    var scope = rootScope.$new(true);
     scope.data = {};
     scope.data.fieldtype = opts.inputType ? opts.inputType : 'text';
     scope.data.response = opts.defaultText ? opts.defaultText : '';
@@ -57673,9 +57673,9 @@ IonicModule
   '$controller',
   '$http',
   '$q',
-  '$rootScope',
+  'rootScope',
   '$templateCache',
-function($compile, $controller, $http, $q, $rootScope, $templateCache) {
+function($compile, $controller, $http, $q, rootScope, $templateCache) {
 
   return {
     load: fetchTemplate,
@@ -57705,7 +57705,7 @@ function($compile, $controller, $http, $q, $rootScope, $templateCache) {
 
     return templatePromise.then(function(template) {
       var controller;
-      var scope = options.scope || $rootScope.$new();
+      var scope = options.scope || rootScope.$new();
 
       //Incase template doesn't have just one root element, do this
       var element = jqLite('<div>').html(template).contents();
@@ -60759,8 +60759,8 @@ IonicModule
   '$ionicHistory',
   '$ionicScrollDelegate',
   'IONIC_BACK_PRIORITY',
-  '$rootScope',
-function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, $rootScope) {
+  'rootScope',
+function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $ionicHistory, $ionicScrollDelegate, IONIC_BACK_PRIORITY, rootScope) {
   var self = this;
   var rightShowing, leftShowing, isDragging;
   var startX, lastX, offsetX, isAsideExposed;
@@ -60815,10 +60815,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'left');
+      rootScope.$emit('$ionicSideMenuClose', 'left');
     } else {
       self.openPercentage(100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'left');
+      rootScope.$emit('$ionicSideMenuOpen', 'left');
     }
   };
 
@@ -60834,10 +60834,10 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
     self.content.enableAnimation();
     if (!shouldOpen) {
       self.openPercentage(0);
-      $rootScope.$emit('$ionicSideMenuClose', 'right');
+      rootScope.$emit('$ionicSideMenuClose', 'right');
     } else {
       self.openPercentage(-100);
-      $rootScope.$emit('$ionicSideMenuOpen', 'right');
+      rootScope.$emit('$ionicSideMenuOpen', 'right');
     }
   };
 
@@ -60854,8 +60854,8 @@ function($scope, $attrs, $ionicSideMenuDelegate, $ionicPlatform, $ionicBody, $io
    */
   self.close = function() {
     self.openPercentage(0);
-    $rootScope.$emit('$ionicSideMenuClose', 'left');
-    $rootScope.$emit('$ionicSideMenuClose', 'right');
+    rootScope.$emit('$ionicSideMenuClose', 'left');
+    rootScope.$emit('$ionicSideMenuClose', 'right');
   };
 
   /**
@@ -61802,8 +61802,8 @@ IonicModule
   '$element',
   '$attrs',
   '$compile',
-  '$rootScope',
-function($scope, $element, $attrs, $compile, $rootScope) {
+  'rootScope',
+function($scope, $element, $attrs, $compile, rootScope) {
   var self = this;
   var navElementHtml = {};
   var navViewCtrl;
@@ -61840,7 +61840,7 @@ function($scope, $element, $attrs, $compile, $rootScope) {
     if (transData && !transData.viewNotified) {
       transData.viewNotified = true;
 
-      if (!$rootScope.$$phase) $scope.$digest();
+      if (!rootScope.$$phase) $scope.$digest();
       viewTitle = isDefined($attrs.viewTitle) ? $attrs.viewTitle : $attrs.title;
 
       var navBarItems = {};
@@ -62119,8 +62119,8 @@ var ONE_PX_TRANSPARENT_IMG_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP//
 var WIDTH_HEIGHT_REGEX = /height:.*?px;\s*width:.*?px/;
 var DEFAULT_RENDER_BUFFER = 3;
 
-CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', '$rootScope', '$timeout'];
-function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, $rootScope, $timeout) {
+CollectionRepeatDirective.$inject = ['$ionicCollectionManager', '$parse', '$window', '$$rAF', 'rootScope', '$timeout'];
+function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$rAF, rootScope, $timeout) {
   return {
     restrict: 'A',
     priority: 1000,
@@ -62176,7 +62176,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
     scrollCtrl.$element.on('scroll-resize', refreshDimensions);
 
     angular.element($window).on('resize', onResize);
-    var unlistenToExposeAside = $rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
+    var unlistenToExposeAside = rootScope.$on('$ionicExposeAside', ionic.animationFrameThrottle(function() {
       scrollCtrl.scrollView.resize();
       onResize();
     }));
@@ -62411,7 +62411,7 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
       }
 
       computedStyleScope[keyExpr] = (listGetter(scope) || [])[0];
-      if (!$rootScope.$$phase) computedStyleScope.$digest();
+      if (!rootScope.$$phase) computedStyleScope.$digest();
       containerNode.appendChild(computedStyleNode);
 
       var style = $window.getComputedStyle(computedStyleNode);
@@ -62425,8 +62425,8 @@ function CollectionRepeatDirective($ionicCollectionManager, $parse, $window, $$r
 
 }
 
-RepeatManagerFactory.$inject = ['$rootScope', '$window', '$$rAF'];
-function RepeatManagerFactory($rootScope, $window, $$rAF) {
+RepeatManagerFactory.$inject = ['rootScope', '$window', '$$rAF'];
+function RepeatManagerFactory(rootScope, $window, $$rAF) {
   var EMPTY_DIMENSION = { primaryPos: 0, secondaryPos: 0, primarySize: 0, secondarySize: 0, rowPrimarySize: 0 };
 
   return function RepeatController(options) {
@@ -62717,7 +62717,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
         }
       }
       if (forceRerender) {
-        var rootScopePhase = $rootScope.$$phase;
+        var rootScopePhase = rootScope.$$phase;
         while (itemsEntering.length) {
           item = itemsEntering.pop();
           if (!rootScopePhase) item.scope.$digest();
@@ -62733,7 +62733,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
       digestEnteringItems.running = true;
 
       $$rAF(function process() {
-        var rootScopePhase = $rootScope.$$phase;
+        var rootScopePhase = rootScope.$$phase;
         while (itemsEntering.length) {
           item = itemsEntering.pop();
           if (item.isShown) {
